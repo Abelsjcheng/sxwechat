@@ -1,5 +1,9 @@
 # sxdatav_wechat
 
+> 农村信息综合展示平台(微信网页)   
+> 作者：sjcheng   
+> 版本：0.0.1   
+
 ## Project setup
 ```
 npm install
