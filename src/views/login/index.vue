@@ -33,9 +33,13 @@ export default {
   },
   methods: {
     open (menupath) {
-      console.log(1)
       this.$router.push(menupath)
     }
   }
 }
 </script>
+<style lang="less">
+.weui-tab__panel{
+  background-color: #F7F7FA;
+}
+</style>
