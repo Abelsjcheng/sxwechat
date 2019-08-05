@@ -31,6 +31,42 @@ export default new Router({
           name: 'mine',
           component: () =>
               import('@/views/mine/minePage')
+        },
+        {
+          path: 'home_info', // 二级url路径
+          name: 'info',
+          component: () =>
+              import('@/components/home/info')
+        },
+        {
+          path: 'home_project', // 二级url路径
+          name: 'project',
+          component: () =>
+              import('@/components/home/project')
+        },
+        {
+          path: 'home_quan', // 二级url路径
+          name: 'quan',
+          component: () =>
+              import('@/components/home/quan')
+        },
+        {
+          path: 'home_workguide', // 二级url路径
+          name: 'workguide',
+          component: () =>
+              import('@/components/home/workguide')
+        },
+        {
+          path: 'home_village', // 二级url路径
+          name: 'village',
+          component: () =>
+              import('@/components/home/village')
+        },
+        {
+          path: 'home_tourism', // 二级url路径
+          name: 'tourism',
+          component: () =>
+              import('@/components/home/tourism')
         }
       ]
     }
