@@ -5,8 +5,9 @@ import index from '../views/login/index.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
+  // base:'/dist', // tomcat配置
   routes: [
     {
       path: '/',
