@@ -17,7 +17,7 @@
           <br/>
           评论
         </div>
-        <div class="vux-1px-r">
+        <div>
           <span>5</span>
           <br/>
           获赞
