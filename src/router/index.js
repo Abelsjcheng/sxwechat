@@ -5,12 +5,11 @@ import index from '../views/login/index.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'hash',
+  mode: 'history',
   base: process.env.BASE_URL,
-  // base:'/dist', // tomcat配置
   routes: [
     {
-      path: '/', // 一级路由
+      path: '/',
       name: 'index',
       redirect: '/home', // 登录加载mainview
       component: index,
@@ -36,40 +35,65 @@ export default new Router({
       ]
     },
     {
-      path: '/home_info', // 一级url路径
+      path: '/home_info',
       name: 'info',
-      component: () =>
-          import('@/components/home/info')
+      redirect: '/home_info/policy', // 登录加载home_info
+      component: () => import('@/components/home/info'),
+      children: [
+        {
+          path: 'policy', // 二级url路径
+          name: 'policy',
+          component: () =>
+              import('@/components/Infopanel/policy') // 路由跳转
+        },
+        {
+          path: 'notice', // 二级url路径
+          name: 'notice',
+          component: () =>
+              import('@/components/Infopanel/notice')
+        },
+        {
+          path: 'news', // 二级url路径
+          name: 'news',
+          component: () =>
+              import('@/components/Infopanel/news')
+        }
+      ]
     },
     {
-      path: '/home_project', // 一级url路径
+      path: '/home_project', // 二级url路径
       name: 'project',
       component: () =>
           import('@/components/home/project')
     },
     {
-      path: '/home_quan', // 一级url路径
+      path: '/home_quan', // 二级url路径
       name: 'quan',
       component: () =>
           import('@/components/home/quan')
     },
     {
-      path: '/home_workguide', // 一级url路径
+      path: '/home_workguide', // 二级url路径
       name: 'workguide',
       component: () =>
           import('@/components/home/workguide')
     },
     {
-      path: '/home_village', // 一级url路径
+      path: '/home_village', // 二级url路径
       name: 'village',
       component: () =>
           import('@/components/home/village')
     },
     {
-      path: '/home_tourism', // 一级url路径
+      path: '/home_tourism', // 二级url路径
       name: 'tourism',
       component: () =>
           import('@/components/home/tourism')
+    },
+    {
+      path: '/home_partners',
+      name: 'partners',
+      component: () => import('@/components/home/partners')
     },
     {
       path: '/party_helppoor', // 一级url路径
