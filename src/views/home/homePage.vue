@@ -99,10 +99,7 @@ export default {
 </script>
 <style lang="less" scoped>
 @import '~vux/src/styles/1px.less';
-.weui-grids {
-  margin-top: 10px;
-  background-color: #fff;
-}
+
 .weather-box{
   padding: 15px;
   display: flex;
