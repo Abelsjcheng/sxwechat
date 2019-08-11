@@ -33,47 +33,44 @@
 </template>
 <script>
 
-import { Search, XHeader, ViewBox, Tab, TabItem, Icon } from 'vux'
+import { Search, XHeader, ViewBox, Tab, TabItem } from 'vux'
 
 export default {
   name: 'info', // 资讯
   components: {
-    Search, XHeader, ViewBox, Tab, TabItem,Icon 
+    Search, XHeader, ViewBox, Tab, TabItem
   }, // 注册组件
   data () { // 局内数据
-      // var $n3=$("#n3");//定位到input框
-    
     return {
-        results: [],
-        value: 'test'
-      }
+      results: [],
+      value: 'test'
+    }
   },
   methods: { // 方法函数
- 
-   setFocus () {
-        this.$refs.search.setFocus()
-      },
-      resultClick (item) {
-        window.alert('you click the result item: ' + JSON.stringify(item))
-      },
-      getResult (val) {
-        console.log('on-change', val)
-        this.results = val ? getResult(this.value) : []
-      },
-      onSubmit () {
-        this.$refs.search.setBlur()
-        this.$vux.toast.show({
-          type: 'text',
-          position: 'top',
-          text: 'on submit'
-        })
-      },
-      onFocus () {
-        console.log('on focus')
-      },
-      onCancel () {
-        console.log('on cancel')
-      },
+    setFocus () {
+      this.$refs.search.setFocus()
+    },
+    resultClick (item) {
+      window.alert('you click the result item: ' + JSON.stringify(item))
+    },
+    getResult (val) {
+      console.log('on-change', val)
+      this.results = val ? getResult(this.value) : []
+    },
+    onSubmit () {
+      this.$refs.search.setBlur()
+      this.$vux.toast.show({
+        type: 'text',
+        position: 'top',
+        text: 'on submit'
+      })
+    },
+    onFocus () {
+      console.log('on focus')
+    },
+    onCancel () {
+      console.log('on cancel')
+    },
     open (url) {
       this.$router.push(url)
     }
@@ -88,24 +85,19 @@ export default {
   },
   mounted () { // 初始化函数
 
-  },
+  }
 }
 
 function getResult (val) {
-    let rs = []
-    for (let i = 0; i < 20; i++) {
-       
-      rs.push({
-        
-        title: `${val} result: ${i + 1} `,
-        other: i,
-      })
-    }
-    return rs
+  let rs = []
+  for (let i = 0; i < 20; i++) {
+    rs.push({
+      title: `${val} result: ${i + 1} `,
+      other: i
+    })
   }
-//  $n3.change(function(){
-//       this.query_search($n3.val());//query_search为模糊查询的方法
-//   })
+  return rs
+}
 </script>
 
 <style lang="less" scoped>
