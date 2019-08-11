@@ -1,8 +1,8 @@
 <template>
-   <div>
-	<panel :list="list" type="4"></panel>
+  <div>
+    <panel :list="list" type="4"></panel>
     <load-more tip="正在加载"></load-more>
-</div>
+  </div>
 </template>
 
 <script>
@@ -10,36 +10,32 @@
 import { Panel, LoadMore } from 'vux'
 
 export default {
-    name:'notice', // 公告
-    components: {
-
-        Panel, LoadMore
-
-     }, // 注册组件
-    data() { // 局内数据
-        return{ 
-            list: [
-                {
-                src: '',
-                title: '公告一',
-                desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道',
-                url: {
-                    path: '',
-                    replace: false
-                },
-                meta: {
-                    other: '评论 20',
-                    date: '10分钟前'
-                }
-            },
-            {
-                src: '',
-                title: '公告二',
-                desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道',
-         url: {
+  name: 'notice', // 公告
+  components: { Panel, LoadMore }, // 注册组件
+  data () { // 局内数据
+    return {
+      list: [
+        {
+          src: '',
+          title: '公告一',
+          desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道',
+          url: {
             path: '',
             replace: false
-            },
+          },
+          meta: {
+            other: '评论 20',
+            date: '10分钟前'
+          }
+        },
+        {
+          src: '',
+          title: '公告二',
+          desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道',
+          url: {
+            path: '',
+            replace: false
+          },
           meta: {
             other: '评论 20',
             date: '10分钟前'

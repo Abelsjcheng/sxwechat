@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <panel :list="list" type="4"></panel>
-        <load-more tip="正在加载"></load-more>
-    </div>
+  <div>
+    <panel :list="list" type="4"></panel>
+    <load-more tip="正在加载"></load-more>
+  </div>
 </template>
 
 <script>
@@ -11,11 +11,7 @@ import { Panel, LoadMore } from 'vux'
 
 export default {
   name: 'news', // 新闻
-  components: {
-
-    Panel, LoadMore
-
-  }, // 注册组件
+  components: { Panel, LoadMore }, // 注册组件
   data () { // 局内数据
     return {
       list: [
@@ -70,7 +66,8 @@ export default {
             other: '评论 20',
             date: '10分钟前'
           }
-        }]
+        }
+      ]
     }
   },
   methods: { // 方法函数
