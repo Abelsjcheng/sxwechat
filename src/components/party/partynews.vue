@@ -10,64 +10,12 @@
   </div>
 </template>
 <script>
-import {Panel, LoadMore, viewBox, XHeader} from 'vux'
+import { Panel, LoadMore, ViewBox, XHeader } from 'vux'
 export default {
   name: 'partynews', // 党建新闻
-  components: {Panel, LoadMore, viewBox, XHeader}, // 注册组件
+  components: { Panel, LoadMore, ViewBox, XHeader }, // 注册组件
   data () { // 局内数据
     return {
-      list: [
-                    {
-                    src: '',
-                    title: '新闻一',
-                    desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道',
-                    url: {
-                        path: '',
-                        replace: false
-                    },
-                    meta: {
-                        other: '评论 20',
-                        date: '10分钟前'
-                    }
-                },
-                {
-                    src: '',
-                    title: '新闻二',
-                    desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道',
-                    url: {
-                        path: '',
-                        replace: false
-                    },
-                    meta: {
-                        other: '评论 20',
-                        date: '10分钟前'
-                    }},
-                    {
-                    src: '',
-                    title: '新闻三',
-                    desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道',
-                    url: {
-                        path: '',
-                        replace: false
-                    },
-                    meta: {
-                        other: '评论 20',
-                        date: '10分钟前'
-                    }
-                    },
-                    {
-                    src: '',
-                    title: '新闻四',
-                    desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道',
-                    url: {
-                        path: '',
-                        replace: false
-                    },
-                    meta: {
-                        other: '评论 20',
-                        date: '10分钟前'
-                    }
-                    }],
     }
   },
   methods: { // 方法函数

@@ -94,6 +94,30 @@ export default new Router({
       path: '/home_partners',
       name: 'partners',
       component: () => import('@/components/home/partners')
+    },
+    {
+      path: '/party_helppoor', // 一级url路径
+      name: 'helppoor',
+      component: () =>
+          import('@/components/party/helppoor')
+    },
+    {
+      path: '/party_partyactivity', // 一级url路径
+      name: 'partyactivity',
+      component: () =>
+          import('@/components/party/partyactivity')
+    },
+    {
+      path: '/party_partynews', // 一级url路径
+      name: 'partynews',
+      component: () =>
+          import('@/components/party/partynews')
+    },
+    {
+      path: '/party_shishizhenshi', // 一级url路径
+      name: 'shishizhenshi',
+      component: () =>
+          import('@/components/party/shishizhenshi')
     }
   ]
 })
