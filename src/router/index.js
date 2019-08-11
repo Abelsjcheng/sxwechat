@@ -89,7 +89,11 @@ export default new Router({
       name: 'tourism',
       component: () =>
           import('@/components/home/tourism')
+    },
+    {
+      path: '/home_partners',
+      name: 'partners',
+      component: () => import('@/components/home/partners')
     }
-
   ]
 })

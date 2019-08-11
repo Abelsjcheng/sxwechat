@@ -1,39 +1,39 @@
 <template>
     <div>
+        <x-header>合作伙伴</x-header>
         <grid :cols="3" :rows="4">
             <grid-item v-for="menu in menus" :key="menu.id" :label="menu.label" :link="{ url: menu.url}">
                 <img slot="icon" :src="menu.img">
             </grid-item>
         </grid>
-        
     </div>
 </template>
 <script>
 
-import { Grid, GridItem } from 'vux'
+import { Grid, GridItem, XHeader } from 'vux'
 
 export default {
-    
-    name: 'partners',//合作伙伴
 
-    components: { Grid, GridItem },
-    data() { // 局内数据
-        return{
-            menus: [
-                { label: '长沙党建', img: require('../../assets/img/partners/csdj.png'), url: 'https://mp.weixin.qq.com/mp/profile_ext?' }, // 异步加载图片
-                { label: '湖南农业大学', img: require('../../assets/img/partners/hnnd.jpg'), url: 'https://mp.weixin.qq.com/mp/profile_ext?' },
-                { label: '开福党建', img: require('../../assets/img/partners/kfdj.jpg'), url: 'https://mp.weixin.qq.com/mp/profile_ext?' },
-                { label: '思信网络', img: require('../../assets/img/partners/sxwl.jpg'), url: 'https://mp.weixin.qq.com/mp/profile_ext?' },
-                { label: '邵阳党建', img: require('../../assets/img/partners/sydj.jpg'), url: 'https://mp.weixin.qq.com/mp/profile_ext?' },
-                { label: '湖南广电党建', img: require('../../assets/img/partners/hngddj.jpg'), url: 'https://mp.weixin.qq.com/mp/profile_ext?' },
-                { label: '浏阳党建', img: require('../../assets/img/partners/lydj.jpg'), url: 'https://mp.weixin.qq.com/mp/profile_ext?' },
-                { label: '益阳党建', img: require('../../assets/img/partners/yydj.jpg'), url: 'https://mp.weixin.qq.com/mp/profile_ext?' },
-                { label: '长沙县党建', img: require('../../assets/img/partners/csxdj.jpg'), url: 'https://mp.weixin.qq.com/mp/profile_ext?' },
-                { label: '湘西党建', img: require('../../assets/img/partners/xxdj.jpg'), url: 'https://mp.weixin.qq.com/mp/profile_ext?' }
-            ],
-        }
-    },
-    computed: { // 计算属性
+  name: 'partners', // 合作伙伴
+
+  components: { Grid, GridItem, XHeader },
+  data () { // 局内数据
+    return {
+      menus: [
+        { label: '长沙党建', img: require('../../assets/img/partners/csdj.png'), url: '' }, // 异步加载图片
+        { label: '湖南农业大学', img: require('../../assets/img/partners/hnnd.jpg'), url: '' },
+        { label: '开福党建', img: require('../../assets/img/partners/kfdj.jpg'), url: '' },
+        { label: '思信网络', img: require('../../assets/img/partners/sxwl.jpg'), url: '' },
+        { label: '邵阳党建', img: require('../../assets/img/partners/sydj.jpg'), url: '' },
+        { label: '湖南广电党建', img: require('../../assets/img/partners/hngddj.jpg'), url: '' },
+        { label: '浏阳党建', img: require('../../assets/img/partners/lydj.jpg'), url: '' },
+        { label: '益阳党建', img: require('../../assets/img/partners/yydj.jpg'), url: '' },
+        { label: '长沙县党建', img: require('../../assets/img/partners/csxdj.jpg'), url: '' },
+        { label: '湘西党建', img: require('../../assets/img/partners/xxdj.jpg'), url: '' }
+      ]
+    }
+  },
+  computed: { // 计算属性
 
   },
   watch: { // 侦听器
@@ -56,4 +56,3 @@ export default {
   color: #666;
 }
 </style>
-

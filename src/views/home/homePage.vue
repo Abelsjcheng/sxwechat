@@ -91,7 +91,7 @@ export default {
       ],
       footer: {
         title: '更多',
-        url: ''
+        url: '/home_partners'
       }
     }
   }
