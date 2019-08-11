@@ -44,19 +44,19 @@ export default new Router({
           path: 'policy', // 二级url路径
           name: 'policy',
           component: () =>
-              import('@/components/panel/policy') // 路由跳转
+              import('@/components/Infopanel/policy') // 路由跳转
         },
         {
           path: 'notice', // 二级url路径
           name: 'notice',
           component: () =>
-              import('@/components/panel/notice')
+              import('@/components/Infopanel/notice')
         },
         {
           path: 'news', // 二级url路径
           name: 'news',
           component: () =>
-              import('@/components/panel/news')
+              import('@/components/Infopanel/news')
         }
       ]
     },
