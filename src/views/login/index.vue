@@ -1,17 +1,17 @@
 <template>
     <div style="height:100%;">
         <view-box ref="viewBox">
-            <router-view></router-view>
+            <router-view></router-view> <!-- 二级路由出口-->
             <tabbar class="vux-demo-tabbar" icon-class="vux-center"  slot="bottom">
-                <tabbar-item selected @on-item-click="open('/home')">
+                <tabbar-item selected :link="{ path: '/home'}">
                     <img slot="icon" src="../../assets/img/home.png">
                     <span slot="label">用户服务</span>
                 </tabbar-item>
-                <tabbar-item show-dot @on-item-click="open('/party')">
+                <tabbar-item show-dot :link="{ path: '/party'}">
                     <img slot="icon" src="../../assets/img/party.png">
                     <span slot="label">党建</span>
                 </tabbar-item>
-                <tabbar-item  @on-item-click="open('/mine')">
+                <tabbar-item  :link="{ path: '/mine'}">
                     <img slot="icon" src="../../assets/img/my.png">
                     <span slot="label">我的</span>
                 </tabbar-item>
@@ -32,9 +32,6 @@ export default {
     }
   },
   methods: {
-    open (menupath) {
-      this.$router.push(menupath)
-    }
   }
 }
 </script>
