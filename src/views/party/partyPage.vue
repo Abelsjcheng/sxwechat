@@ -8,7 +8,7 @@
       <swiper-item><p>认真学习贯彻习近平南湖重要讲话精神 争当贯彻落实党的十九大精神</p></swiper-item>
       <swiper-item><p>党员值班：某某某</p></swiper-item>
     </swiper>
-    <grid :show-lr-borders="false" :show-vertical-dividers="false">
+    <grid :show-lr-borders="false" :show-vertical-dividers="false" style="width:100%"> <!--ios系统不知为什么此处grid宽度会缩短 -->
       <grid-item v-for="menu in menus" :key="menu.id" :label="menu.label" :link="{ path: menu.path}">
         <img slot="icon" :src="menu.img">
       </grid-item>
