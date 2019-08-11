@@ -103,9 +103,9 @@ function getResult (val) {
     }
     return rs
   }
-  //  $n3.change(function(){
-  //       this.query_search($n3.val());//query_search为模糊查询的方法
-  //   })
+//  $n3.change(function(){
+//       this.query_search($n3.val());//query_search为模糊查询的方法
+//   })
 </script>
 
 <style lang="less" scoped>
