@@ -59,7 +59,7 @@ const baseList = [{
   fallbackImg: '../../assets/img/village/one.jpg'
 }]
 const urlList = baseList.map((item, index) => ({
-  url: 'http://localhost:8080/home_tourism',  
+  url: '/home_tourism',
   // 转向农家乐旅游信息
   img: item.img,
   fallbackImg: item.fallbackImg,
