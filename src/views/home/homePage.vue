@@ -41,7 +41,7 @@ export default {
       ],
       list: [
         {
-          src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
+          src: '',
           title: '标题一',
           desc: '由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道。',
           url: {
@@ -55,7 +55,7 @@ export default {
           }
         },
         {
-          src: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
+          src: '',
           title: '招聘城管协管员',
           desc: '招聘城管协管员。',
           url: {
