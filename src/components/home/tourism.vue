@@ -111,7 +111,6 @@
         </a>
       </div>
       </view-box>
-      
     </div>
 </template>
 <script>

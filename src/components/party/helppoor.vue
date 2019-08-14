@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <div style="height:100%;">
     <!-- 扶贫工作页面待写 -->
-    <div id="header" style="margin:2px;border-bottom:2px solid #ff0220 !important;background:rgba(255,192,255,0.3)">
-        <div id="logo">
-          <img style="margin:5px;width:20%;height:44px;" src="../../assets/img/menus/helppoor.png" alt="">
-          <span style="display:block;float:right;margin-right:7%;font-family:'华文行楷';color:#212121;font-size:25px;letter-spacing:5px">扶贫工作
-            <span style="display:block;float:right;font-size:13px;margin-top:30px;margin-left:-10px;font-family:'楷体'">--长沙县</span>
+    <view-box ref="viewBox">
+    <div slot="header" style="position:absolute;left:0;top:0;z-index:100;border-bottom:2px solid #ff0220 !important;background:rgba(250,230,250)">
+        <div id="logo" style="margin:2px;background:rgba(255,192,255,1)">
+          <img style="display:block;float:left;margin:5px;width:20%;height:44px;" src="../../assets/img/menus/helppoor.png" alt="">
+          <span style="display:block;float:left;margin-left:23px;font-family:'华文行楷';color:#212121;font-size:25px;letter-spacing:5px">扶贫工作
+            <span style="display:block;float:right;margin-right:32px;font-size:13px;margin-top:30px;margin-left:-10px;font-family:'楷体'">--长沙县</span>
           </span>
         </div>
     </div>
-    <div>
+    <div style="margin-top:60px;">
       <div id="content" style="margin:8px;">
             <dl>
                 <div>
@@ -46,12 +47,14 @@
             </dl>
         </div>
     </div>
+    </view-box>
   </div>
 </template>
 <script>
+import { ViewBox } from 'vux'
 export default {
   name: 'helppoor', // 扶贫工作
-  components: {}, // 注册组件
+  components: { ViewBox }, // 注册组件
   data () { // 局内数据
     return {
     }

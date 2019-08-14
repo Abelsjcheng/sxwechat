@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div style="height:100%;">
     <!-- 党建新闻页面待开发 -->
     <view-box ref="viewBox">
-      <x-header slot="header" style="background:#ef0210;">党建新闻</x-header>
-      <panel :list="list" type="4"></panel>
+      <div slot="header" style="position:absolute;width:100%;z-index:100;">
+        <x-header style="width:100%;position:absolute;left:0;top:0;z-index:100;background:#ef0210;">党建新闻</x-header>
+      </div>
+      <panel :list="list" type="4" style="margin-top:40px;"></panel>
       <load-more tip="正在加载"></load-more>
       <router-view></router-view>
     </view-box>
