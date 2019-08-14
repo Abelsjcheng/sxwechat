@@ -104,6 +104,7 @@
                  -->
         </div>
         <router-view></router-view>
+        <!-- 了解更多 -->
       <div slot="bottom">
         <a href="http://www.changsha.com.cn/" style="width:100%;background:linear-gradient(to right, #bbf990, #fffff9);font-family:'华文楷体';display:block;float:right;">
           <span style="border-left:3px solid #ff9;display:block;float:right;">去了解更多的旅游资讯......</span>
