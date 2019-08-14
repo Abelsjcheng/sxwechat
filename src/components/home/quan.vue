@@ -15,6 +15,12 @@
         <div>
           <span class="post-name">施景程 </span>
           <div class="post-text">值班地点: 暮云镇居委会二楼办公室联系方式: 18874083707 </div>
+          <div>
+            <img class="previewer-demo-img" v-for="(list,index) in posts[0].lists" :key="index" :src="list.src" height="80" width="80" @click="show(index)" >
+            <div v-transfer-dom>
+              <previewer :list="posts[0].lists" ref="previewer" :options="options" @on-index-change="logIndexChange"></previewer>
+            </div>
+          </div>
           <div class="post-time-ico">
             <div class="post-time">2小时前</div>
             <popover placement="left" :gutter=10 >
@@ -33,8 +39,13 @@
           </div>
         </div>
         <div class="post-content">
-          <div class="post-like">
-
+          <div style="border-bottom: 1px solid #D9D9D9;">
+            <i class="fa fa-heart-o"> </i>
+            <span v-for="post in posts" :key="post.id"> {{post.name}}, </span>
+          </div>
+          <div v-for="post in posts" :key="post.id"> 
+            <span>{{post.runame}} :</span>
+            <span>{{post.content}} </span>
           </div>
         </div>
       </cell>
@@ -45,13 +56,13 @@
   </div>
 </template>
 <script>
-import { XHeader, Actionsheet, TransferDom, Cell, Group, Popover } from 'vux'
+import { XHeader, Actionsheet, TransferDom, Cell, Group, Popover, Previewer } from 'vux'
 export default {
   name: 'quan', // 朋友圈
   directives: {
     TransferDom
   },
-  components: { XHeader, Actionsheet, Cell, Group, Popover }, // 注册组件
+  components: { XHeader, Actionsheet, Cell, Group, Popover, Previewer }, // 注册组件
   data () { // 局内数据
     return {
       menus: {
@@ -59,7 +70,45 @@ export default {
         menu2: '从相册选择'
       },
       showMenus: false,
-      good: '赞'
+      good: '赞',
+      posts: [
+        {
+          id: 1,
+          name: '施景程',
+          content: '模板样式测试',
+          runame: '施景程',
+          lists:[
+            {
+              id: 1,
+              src: require('../../assets/img/party/affair1.jpg')
+            },
+            {
+              id: 2,
+              src: require('../../assets/img/party/affair2.jpg')
+            },
+          ]
+        },
+        {
+          id: 2,
+          name: '王李沙',
+          content:'模板样式测试',
+          runame:'施景程 回复 王李沙'
+        },
+        {
+          id: 3,
+          name: '黄凤芝',
+          content: '模板样式测试',
+          runame: '施景程 回复 黄凤芝'
+        }
+      ],
+      options: {
+        getThumbBoundsFn (index) {
+          let thumbnail = document.querySelectorAll('.previewer-demo-img')[index] // 查找缩略图元素
+          let pageYScroll = window.pageYOffset || document.documentElement.scrollTop // 获取窗口滚动Y
+          let rect = thumbnail.getBoundingClientRect() // 可选获取水平滚动，获取元素相对于视区的位置
+          return {x: rect.left, y: rect.top + pageYScroll, w: rect.width } // w = width
+        }
+      }
     }
   },
   methods: { // 方法函数
@@ -73,6 +122,12 @@ export default {
       } else {
         this.good = '赞'
       }
+    },
+    show (index) { // 图片放大显示
+      this.$refs.previewer.show(index)
+    },
+    logIndexChange (arg) {
+      console.log(arg)
     }
   },
   computed: { // 计算属性
@@ -120,6 +175,7 @@ export default {
   color:#000;
 }
 .post-time-ico{
+  margin: 3px 0px;
   height: 25px;
   .post-time{
     float: left;
