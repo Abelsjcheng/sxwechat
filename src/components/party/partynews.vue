@@ -2,7 +2,7 @@
   <div>
     <!-- 党建新闻页面待开发 -->
     <view-box ref="viewBox">
-      <x-header slot="header">党建新闻</x-header>
+      <x-header slot="header" style="background:#ef0210;">党建新闻</x-header>
       <panel :list="list" type="4"></panel>
       <load-more tip="正在加载"></load-more>
       <router-view></router-view>
@@ -13,7 +13,7 @@
 import { Panel, LoadMore, ViewBox, XHeader } from 'vux'
 export default {
   name: 'partynews', // 党建新闻
-  components: { Panel, LoadMore, ViewBox, XHeader }, // 注册组件
+  components: { Panel, LoadMore, ViewBox, XHeader }, // 注册组件1
   data () { // 局内数据
     return {
       list: [
@@ -85,5 +85,4 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
 </style>
