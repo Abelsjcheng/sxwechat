@@ -8,15 +8,6 @@
           </x-header>
         </div>
         <div id="content" style="margin:8px;margin-top:40px;">
-          <!-- <div id="item" v-for="list in lists" :key="list.id">
-            <a :href="list.href">
-              <div>图片-->
-                <!-- <img :src="list.img" alt="加载失败...">
-                <span :text="list.text">{{text}}</span>
-              </div>
-            </a>
-          </div>
-        </div> -->
         <!-- 农家乐部分 -->
         <div>
           <div id="subtitle">
@@ -25,7 +16,7 @@
             </span>
           </div>
           <div style="float:left;width:46%;margin:5px;">
-            <a href="">
+            <a href="http://www.cschenwu.cn/#page1">
               <img src="http://www.0731xsxx.com/UploadFile//QQ%E6%88%AA%E5%9B%BE20140812083146.jpg" style="width:100%;" alt="">
               <span>
                 辰午山庄
@@ -33,7 +24,7 @@
             </a>
           </div>
           <div style="float:left;width:46%;margin:5px;">
-            <a href="">
+            <a href="https://baike.so.com/doc/3455498-3636051.html">
               <img src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qpic_cn/921ba06b4b0d830cc878098a71013cc4.jpg" style="width:100%;" alt="">
               <span>
                 金太阳现代休闲农庄
@@ -49,7 +40,7 @@
             </a>
           </div>
           <div style="float:left;width:46%;margin:5px;">
-            <a href="">
+            <a href="https://baike.so.com/doc/6357602-6571236.html">
               <img src="https://p1.ssl.qhimg.com/dr/270_500_/t01d7f8c1c34b6b36bc.jpg" style="width:100%;" alt="">
               <span>
                 千龙湖生态旅游度假村
@@ -61,7 +52,7 @@
         <div>
           <div id="subtitle">
            <span>旅游
-             <a href="">了解更多...</a>
+             <a href="http://www.bytravel.cn/view/index2356.html">了解更多...</a>
             </span>
           </div>
           <div style="float:left;width:46%;margin:5px;">
@@ -97,30 +88,6 @@
             </a>
           </div>
         </div>
-        <!-- 休闲部分 -->
-        <!-- <div>
-          <div id="subtitle">
-            <span>休闲
-              <a href="">了解更多...</a>
-            </span>
-          </div>
-          <div style="float:left;width:46%;margin:5px;">
-            <a href="">
-              <img src="https://c.cncnimg.cn/037/727/cb14_m.jpg" style="width:100%;" alt="">
-              <span>
-                辰午山庄
-              </span>
-            </a>
-          </div>
-          <div style="float:left;width:46%;margin:5px;">
-            <a href="">
-              <img src="https://c.cncnimg.cn/037/727/cb14_m.jpg" style="width:100%;" alt="">
-              <span>
-                金太阳现代休闲农庄
-              </span>
-            </a>
-          </div>
-        </div> -->
           <!-- <dl>
                 <div>
                     <dt>农家乐<a href="#" style="display:block;float:right">更多...</a></dt>
@@ -136,38 +103,28 @@
                 </div>
                  -->
         </div>
-        <!-- <div>
-        <group>
-          <x-switch title="Full popup" v-model="show1"></x-switch>
-        </group>
-        <toast v-model="showToast">You did it!</toast>
-        <div v-transfer-dom>
-          <popup v-model="show1" height="100%">
-            <div class="popup1">
-              <group>
-                <x-switch title="Another XSwitcher" v-model="show1"></x-switch>
-              </group>
-            </div>
-          </popup>
-          </div> 
-      </div>-->
         <router-view></router-view>
+      <div slot="bottom">
+        <a href="http://www.changsha.com.cn/" style="width:100%;background:linear-gradient(to right, #bbf990, #fffff9);font-family:'华文楷体';display:block;float:right;">
+          <span style="border-left:3px solid #ff9;display:block;float:right;">去了解更多的旅游资讯......</span>
+        </a>
+      </div>
       </view-box>
+      
     </div>
 </template>
 <script>
-import { XHeader, ViewBox, Popup, Group, Toast, XSwitch } from 'vux'
+import { XHeader, ViewBox } from 'vux'
 export default {
   name: 'tourism', // 旅游、休闲、农家乐
-  components: { XHeader, ViewBox, Popup, Toast, Group, XSwitch }, // 注册组件
+  components: { XHeader, ViewBox }, // 注册组件
   data () { // 局内数据
     return {
       show1: false,
       lists: []
     }
   },
-  methods: { 
-    
+  methods: {
   },
   computed: { // 计算属性
 
