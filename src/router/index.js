@@ -118,6 +118,30 @@ export default new Router({
       name: 'shishizhenshi',
       component: () =>
           import('@/components/party/shishizhenshi')
+    },
+    {
+      path: '/mine_dynamic',
+      name: 'dynamic',
+      component: () =>
+        import('@/components/mine/dynamic')
+    },
+    {
+      path: '/mine_collect',
+      name: 'collect',
+      component: () =>
+        import('@/components/mine/collect')
+    },
+    {
+      path: '/mine_comment',
+      name: 'comment',
+      component: () =>
+        import('@/components/mine/comment')
+    },
+    {
+      path: '/mine_dianzan',
+      name: 'dianzan',
+      component: () =>
+        import('@/components/mine/dianzan')
     }
   ]
 })

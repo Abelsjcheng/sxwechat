@@ -51,10 +51,10 @@ export default {
   data () {
     return {
       menus: [
-        { label: '我的动态', icon: 'fa fa-bandcamp', style: 'font-size: 24px;color: #09bb07;', path: '/home_info' }, // 异步加载图片
-        { label: '我的收藏', icon: 'fa fa-star', style: 'font-size: 24px;color: rgb(215, 185, 68);', path: '/home_project' },
-        { label: '我的评论', icon: 'fa fa-comment', style: 'font-size: 24px;color: #828afc;', path: '/home_quan' },
-        { label: '我的点赞', icon: 'fa fa-thumbs-up', style: 'font-size: 24px;color: #f74c31;', path: '/home_workguide' }
+        { label: '我的动态', icon: 'fa fa-bandcamp', style: 'font-size: 24px;color: #09bb07;', path: '/mine_dynamic' }, // 异步加载图片
+        { label: '我的收藏', icon: 'fa fa-star', style: 'font-size: 24px;color: rgb(215, 185, 68);', path: '/mine_collect' },
+        { label: '我的评论', icon: 'fa fa-comment', style: 'font-size: 24px;color: #828afc;', path: '/mine_comment' },
+        { label: '我的点赞', icon: 'fa fa-thumbs-up', style: 'font-size: 24px;color: #f74c31;', path: '/mine_dianzan' }
       ]
     }
   }
