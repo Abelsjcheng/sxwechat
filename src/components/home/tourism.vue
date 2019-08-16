@@ -40,7 +40,7 @@
             </a>
           </div>
           <div style="float:left;width:46%;margin:5px;">
-            <a href="https://baike.so.com/doc/6357602-6571236.html">
+            <a href="https://www.qianlonghu.com/">
               <img src="https://p1.ssl.qhimg.com/dr/270_500_/t01d7f8c1c34b6b36bc.jpg" style="width:100%;" alt="">
               <span>
                 千龙湖生态旅游度假村
@@ -125,6 +125,7 @@ export default {
     }
   },
   methods: {
+    
   },
   computed: { // 计算属性
 

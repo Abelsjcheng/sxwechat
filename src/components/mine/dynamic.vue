@@ -6,7 +6,7 @@
                 <x-header>我的动态</x-header>
             </div>
             <div>
-                <panel :list="list" type="5" style="margin-top:0px;"></panel>
+                <panel :list="list" type="5" style="margin-top:0px;color:#200;background:rgba(255,245,205,0.5);"></panel>
             </div>
         </view-box>
     </div>
