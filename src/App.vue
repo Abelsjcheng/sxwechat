@@ -27,5 +27,12 @@ body {
   left: 0;
   top: 0;
 }
-
+body /deep/ .vux-popover-arrow-right {
+  border-top:0px;
+  border-bottom:0px;
+  border-left:0px;
+  top:0%;
+  transform:0;
+  right:0px;
+}
 </style>
