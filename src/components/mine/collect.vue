@@ -3,7 +3,7 @@
         <!-- 我的收藏页面待完成 -->
         <view-box>
            <div slot="header">
-                <x-header>我的收藏</x-header>
+                <x-header :left-options="{backText: ''}">我的收藏</x-header>
             </div>
             <div>
                 <panel :list="list" type="5" style="margin-top:0px;"></panel>

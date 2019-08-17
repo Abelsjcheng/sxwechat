@@ -25,7 +25,7 @@
             <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('/home_info/news')">新闻</tab-item>
           </tab>
         </div>
-          <div style="padding-top:115px;">
+          <div style="padding-top:130px;">
             <router-view></router-view>
           </div>
       </view-box>
