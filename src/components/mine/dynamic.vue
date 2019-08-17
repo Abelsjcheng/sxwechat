@@ -1,14 +1,5 @@
 <template>
     <div style="height:100%;">
-        <!-- 我的动态页面待完成 -->
-        <!-- <view-box>
-           <div slot="header">
-                <x-header>我的动态</x-header>
-            </div>
-            <div>
-                <panel :list="list" type="5" style="margin-top:0px;color:#200;background:rgba(255,245,205,0.5);"></panel>
-            </div>
-        </view-box> -->
       <x-header :left-options="{backText: ''}" style="background-color:rgba(200,250,250,0.2);">
         <div style="color:#212121;font-family:'华文行楷'">我的动态</div>
       <!-- <x-icon slot="right" type="edit" size="35" style="fill:#fff;position:relative;top:-8px;"  @click="showMenus = true"></x-icon> -->
