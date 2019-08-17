@@ -28,7 +28,7 @@
                         <i class="fa fa-heart-o" aria-hidden="true"></i>
                         {{ pcircle.ispr?'取消': '赞' }}
                       </div>
-                      <div class="like" @click="openinput(index)">
+                      <div class="like" @click="openpopup(index)">
                         <i class="fa fa-comment-o" aria-hidden="true"></i>
                         评论
                       </div>
@@ -42,9 +42,9 @@
                   <i class="fa fa-heart-o"> </i>
                   <span v-for="(like,index) in pcircle.TbPcpraise" :key="index"> {{like.uname}}, </span>
                 </div>
-                <div v-show="pcircle.TbPccomment && pcircle.TbPccomment.length>0" v-for="(rcomment,index) in pcircle.TbPccomment" :key="index">
+                <div v-show="pcircle.TbPccomment && pcircle.TbPccomment.length>0" v-for="(rcomment,rindex) in pcircle.TbPccomment" :key="rindex">
                   <span>{{rcomment.runame}} :</span>
-                  <span style="color:#000">{{rcomment.ccontent}} </span>
+                  <span style="color:#000" @click="reply(rcomment,index)">{{rcomment.ccontent}} </span>
                 </div>
               </div>
             </cell>
@@ -64,37 +64,36 @@
         <previewer :list="imglist" ref="previewer" :options="options()" @on-index-change="logIndexChange"></previewer>
       </div>
       <div v-transfer-dom>
-        <popup v-model="openwindowshow.inputshow"  @on-hide="closeInput" @on-show="onFocus">
-          <x-input placeholder="评论" v-model="mytext" :show-clear="false" style="padding: 5px 15px;" ref="inputcomment" @on-focus="onFocus" @on-blur="closeInput" @on-enter="inputpcontent">
-            <i slot="right" class="fa fa-smile-o" style="font-size:32px;padding-left:5px;" @click="showemotion()" ></i>
+        <popup v-model="openwindowshow.inputshow"  @on-hide="closepopup" >
+          <x-input :placeholder="inputplaceholder" v-model="mytext" :show-clear="false" style="padding: 5px 15px;" ref="inputcomment" @on-focus="onFocus"  @on-enter="inputpcontent">
+            <i slot="right" :class="openwindowshow.IsKeyorEmo?'fa fa-smile-o':'fa fa-keyboard-o'" style="font-size:32px;padding-left:5px;" @click="showemotion()" ></i>
           </x-input>
-          <section class="wechatEmotion-container" v-show="openwindowshow.emotionshow">
-            <ul class="emotion-list">
-              <li v-for="(item,index) in list" v-bind:key="index"  class="vux-center-h emotion-list-item" @click="addEmotion(item)">
-                <emotion is-gif>{{item}}</emotion>
-              </li>
-            </ul>
-          </section>
+          <swiper dots-position="center" height="175px" v-show="openwindowshow.emotionshow">
+            <swiper-item class="black" v-for="(i,index) in 5" v-bind:key="index" >
+              <section class="wechatEmotion-container" >
+              <ul class="emotion-list">
+                <li v-for="(item,index) in list.slice(23*(i-1),23*i)" v-bind:key="index"  class="vux-center-h emotion-list-item" @click="addEmotion(item)">
+                  <emotion is-gif>{{item}}</emotion>
+                </li>
+              </ul>
+              </section>
+            </swiper-item>
+          </swiper>
         </popup>
       </div>
-      <!-- <div v-show="openwindowshow.inputshow" :style="Inputposition" >
-        <x-input placeholder="评论" :show-clear="false" style="padding: 5px 15px;" ref="inputcomment" @on-focus="onFocus" @on-blur="closeInput">
-          <i slot="right" class="fa fa-smile-o" style="font-size:32px;padding-left:5px;"></i>
-        </x-input>
-      </div> -->
   </div>
 </template>
 <script>
-import { XHeader, Actionsheet, TransferDom, Cell, Group, Popover, Previewer, XInput, Scroller, LoadMore, Popup, WechatEmotion as Emotion } from 'vux'
+import { XHeader, Actionsheet, TransferDom, Cell, Group, Popover, Previewer, XInput, Scroller, LoadMore, Popup, WechatEmotion as Emotion, Swiper, SwiperItem } from 'vux'
 export default {
   name: 'quan', // 朋友圈
   directives: {
     TransferDom
   },
-  components: { XHeader, Actionsheet, Cell, Group, Popover, Previewer, XInput, Scroller, LoadMore, Popup, Emotion }, // 注册组件
+  components: { XHeader, Actionsheet, Cell, Group, Popover, Previewer, XInput, Scroller, LoadMore, Popup, Emotion, Swiper, SwiperItem }, // 注册组件
   data () { // 局内数据
     return {
-      imgWidth: '375px',
+      imgWidth: '80px',
       menus: {
         menu1: '拍照',
         menu2: '从相册选择'
@@ -102,7 +101,9 @@ export default {
       showMenus: false,
       good: '赞',
       imglist: [],
-      mytext: "",
+      mytext: '',
+      inputplaceholder: '评论',
+      replycomment: '',
       list: ['微笑', '撇嘴', '色', '发呆', '得意', '流泪', '害羞', '闭嘴', '睡', '大哭', '尴尬', '发怒', '调皮', '呲牙', '惊讶', '难过', '酷', '冷汗', '抓狂', '吐', '偷笑', '可爱', '白眼', '傲慢', '饥饿', '困', '惊恐', '流汗', '憨笑', '大兵', '奋斗', '咒骂', '疑问', '嘘', '晕', '折磨', '衰', '骷髅', '敲打', '再见', '擦汗', '抠鼻', '鼓掌', '糗大了', '坏笑', '左哼哼', '右哼哼', '哈欠', '鄙视', '委屈', '快哭了', '阴险', '亲亲', '吓', '可怜', '菜刀', '西瓜', '啤酒', '篮球', '乒乓', '咖啡', '饭', '猪头', '玫瑰', '凋谢', '示爱', '爱心', '心碎', '蛋糕', '闪电', '炸弹', '刀', '足球', '瓢虫', '便便', '月亮', '太阳', '礼物', '拥抱', '强', '弱', '握手', '胜利', '抱拳', '勾引', '拳头', '差劲', '爱你', 'NO', 'OK', '爱情', '飞吻', '跳跳', '发抖', '怄火', '转圈', '磕头', '回头', '跳绳', '挥手', '激动', '街舞', '献吻', '左太极', '右太极'],
       status: {
         pullupStatus: 'default',
@@ -467,10 +468,11 @@ export default {
         'background-color': '#fbf9fe'
       },
       pid: 0,
-      openwindowshow:{
+      openwindowshow: {
         pop: false,
         inputshow: false,
-        emotionshow:false
+        emotionshow: false,
+        IsKeyorEmo: true // true:表情 false：键盘
       }
     }
   },
@@ -485,58 +487,54 @@ export default {
         this.pcircles[index].ispr = 1
       }
     },
-    show (imglist,imgindex,index) { // 图片放大显示
-      this.pid=index
-      this.imglist=imglist
+    show (imglist, imgindex, index) { // 图片放大显示
+      this.pid = index
+      this.imglist = imglist
       this.$nextTick(() => {
         this.$refs.previewer.show(imgindex)
       })
-      
     },
     logIndexChange (arg) {
       console.log(arg)
     },
-    openinput (index) { // 显示评论输入框
-      this.openwindowshow.inputshow=true
+    openpopup (index) { // 显示评论输入框
+      this.inputplaceholder = '评论:'
+      this.pid = index
+      this.openwindowshow.inputshow = true
       this.$nextTick(() => {
         this.$refs.inputcomment.focus()
-        //document.querySelector('#pid'+index).scrollIntoView(); // 页面交互问题
+        // document.querySelector('#pid'+index).scrollIntoView(); // 页面交互问题
       })
-      
-      
     },
-    onFocus (val, $event) { // input聚焦函数
-      //this.openwindowshow.inputshow=true
-
-    },
-    closeInput (val) { // input失焦函数 关闭输入框
-      //this.openwindowshow.inputshow = false
-      //解决苹果不回弹页面
-      setTimeout(()=>{
-        if(document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA'){
+    closepopup (val) { // popup弹窗关闭
+      this.openwindowshow.emotionshow = false
+      this.openwindowshow.IsKeyorEmo = true
+      // 解决苹果不回弹页面
+      setTimeout(() => {
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
           return
         }
-        let result = 'pc';
-          if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { //判断iPhone|iPad|iPod|iOS
-              result = 'ios'
-          }else if(/(Android)/i.test(navigator.userAgent)) {  //判断Android
-              result = 'android'
-          }
-        if( result = 'ios' ){
-          document.activeElement.scrollIntoViewIfNeeded(true);
+        let result = 'pc'
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { // 判断iPhone|iPad|iPod|iOS
+          result = 'ios'
+        } else if (/(Android)/i.test(navigator.userAgent)) { // 判断Android
+          result = 'android'
         }
-      },100)
+        if (result === 'ios') {
+          document.activeElement.scrollIntoViewIfNeeded(true)
+        }
+      }, 100)
     },
     options () { // previewer配置
-      let that=this
+      let that = this
       return {
         getThumbBoundsFn (index) {
-          let thumbnail = document.querySelectorAll('.previewer-demo-img'+that.pid)[index] // 查找缩略图元素
+          let thumbnail = document.querySelectorAll('.previewer-demo-img' + that.pid)[index] // 查找缩略图元素
           let pageYScroll = window.pageYOffset || document.documentElement.scrollTop // 获取窗口滚动Y
           let rect = thumbnail.getBoundingClientRect() // 可选获取水平滚动，获取元素相对于视区的位置
           return { x: rect.left, y: rect.top + pageYScroll, w: rect.width } // w = width
         }
-      }   
+      }
     },
     loadMore () { // 上拉刷新
       // get
@@ -547,61 +545,96 @@ export default {
       }, 2000)
     },
     refresh () { // 下拉刷新
-      // get 
+      // get
       setTimeout(() => {
         this.$nextTick(() => {
           setTimeout(() => {
-            this.$refs.scroller.donePulldown() // 	设置下拉刷新操作完成，在数据加载后执行
+            this.$refs.scroller.donePulldown() // 设置下拉刷新操作完成，在数据加载后执行
           }, 10)
         })
       }, 2000)
     },
     onScroll (pos) { // 页面滚动触发函数
-      if(this.openwindowshow.pop){
-        console.log(1)
-        this.openwindowshow.pop=false
-      }else if(this.openwindowshow.inputshow){
-        this.$refs.inputcomment.blur()
+      if (this.openwindowshow.pop) {
+        this.openwindowshow.pop = false
+      } else if (this.openwindowshow.inputshow) {
+        this.openwindowshow.inputshow = false
       }
-      
     },
-    openpop () {
-      this.openwindowshow.pop=true
+    openpop () { // 打开评论点赞功能窗
+      this.openwindowshow.pop = true
     },
-    closepop () {
-      this.openwindowshow.pop=false
+    closepop () { // 关闭评论点赞功能窗
+      this.openwindowshow.pop = false
     },
-    addEmotion (emotion) {
-
-      this.mytext=this.mytext+'['+emotion+']' // 去input值
-      this.openwindowshow.emotionshow=false
+    onFocus () { // 当表情框显示后input再焦距 时需关闭表情框
+      this.openwindowshow.emotionshow = false
+      this.openwindowshow.IsKeyorEmo = true
+    },
+    addEmotion (emotion) { // input中添加表情
+      this.mytext = this.mytext + '[' + emotion + ']'
+    },
+    showemotion () { // 点击表情/keybroad图标
+      if (this.openwindowshow.IsKeyorEmo) {
+        this.$refs.inputcomment.blur()
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.openwindowshow.IsKeyorEmo = false //显示键盘图标
+            this.openwindowshow.emotionshow = true // 键盘->表情框
+          }, 100)
+        })
+      } else {
+        this.openwindowshow.emotionshow = false // 关闭表情框
+        this.openwindowshow.IsKeyorEmo = true  //显示笑脸图标
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$refs.inputcomment.focus() // 表情框->键盘
+          }, 100)
+        })
+      }
+    },
+    inputpcontent () { // 输入框点击 小键盘回车键
+      let that = this
+      if (this.replycomment != null || this.replycomment !== '') {
+        this.pcircles[this.pid].TbPccomment.push(
+          {
+            runame: '施景程 回复' + this.replycomment.uname,
+            ccontent: this.mytext.replace(/\[[\u4E00-\u9FA5]{1,3}\]/gi, function (word) { // 转表情图片
+              let newWord = word.replace(/\[|\]/gi, '')
+              let index = that.list.indexOf(newWord)
+              return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`
+            }) })
+      } else {
+        this.pcircles[this.pid].TbPccomment.push(
+          {
+            runame: '施景程',
+            ccontent: this.mytext.replace(/\[[\u4E00-\u9FA5]{1,3}\]/gi, function (word) {
+              let newWord = word.replace(/\[|\]/gi, '')
+              let index = that.list.indexOf(newWord)
+              return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`
+            }) })
+      }
+      this.mytext = ''
+      this.openwindowshow.inputshow = false
+    },
+    reply (pcomment, index) { // 回复评论打开弹窗
+      this.openwindowshow.inputshow = true
+      this.inputplaceholder = '回复 ' + pcomment.uname + ':'
+      this.mytext = ''
+      this.replycomment = pcomment
+      this.pid = index
       this.$nextTick(() => {
         this.$refs.inputcomment.focus()
       })
-    },
-    showemotion () { // 显示表情框
-    
-      this.openwindowshow.emotionshow=true
-    },
-    inputpcontent () { // 输入框点击 小键盘回车键
-      let that=this
-      this.pcircles[0].pcontent = this.mytext.replace(/\[[\u4E00-\u9FA5]{1,3}\]/gi,function(word){ // 转表情图片
-                let newWord = word.replace(/\[|\]/gi,'');
-                let index = that.list.indexOf(newWord);
-                return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`
-              });
-      this.openwindowshow.inputshow=false
     }
   },
   computed: { // 计算属性
-    
   },
   watch: { // 侦听器
   },
   mounted () { // 初始化函数
     // 根据实际手机屏幕 获取图片宽高
     this.imgWidth = parseInt((Number(window.screen.width) - 140) / 3) + 'px'
-    
   }
 }
 </script>
@@ -610,7 +643,7 @@ export default {
   margin-top: 0px
 }
 .weui-tab /deep/ .weui-tab__panel{
-  padding-bottom: 0px; 
+  padding-bottom: 0px;
 }
 .quan-headbg{
   position:relative;
@@ -707,7 +740,8 @@ body /deep/ .vux-popover-arrow-right {
       .emotion-list-item{
         list-style: none;
         float: left;
-        width: 14.285714%;
+        height: 27%;
+        width: 12.5%;
         padding: 5px 0;
         text-align: center;
       }
