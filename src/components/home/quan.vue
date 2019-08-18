@@ -1,7 +1,7 @@
 <template>
   <div class="quan" style="height:100%;">
       <x-header :left-options="{backText: ''}">朋友圈
-        <x-icon slot="right" type="camera" size="35" style="fill:#fff;position:relative;top:-8px;"  @click="showMenus = true"></x-icon>
+        <x-icon slot="right" type="camera" size="35" style="fill:#fff;position:relative;top:-8px;"  @click="openwindowshow.showMenus = true"></x-icon>
       </x-header>
       <scroller lock-x scrollbar-y use-pullup use-pulldown @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" @on-scroll="onScroll" ref="scroller" height="-46" v-model="status">
         <div>
@@ -13,16 +13,16 @@
           </div>
           <group>
             <cell align-items="flex-start"  value-align="left" v-for="(pcircle,index) in pcircles" :key="index" :id="'pid'+index">
-              <img slot="title" :src="pcircle.headimg" width="45" height="45" style="margin-right:1em;border-radius: 6px;">
+              <img slot="title" :src="pcircle.headimg" width="45" height="45" style="margin-right:1em;border-radius: 6px;"> <!--发表说说的用户头像 -->
               <div>
-                <span class="post-name">{{pcircle.name}} </span>
-                <div class="post-text" v-html="pcircle.pcontent"> </div>
+                <span class="post-name">{{pcircle.name}} </span> <!--发表说说的用户昵称 -->
+                <div class="post-text" v-html="pcircle.pcontent"> </div> <!--说说的内容 -->
                 <div v-show="pcircle.imgurl && pcircle.imgurl.length>0"> <!-- 判断是否有图片-->
                   <img :class="'previewer-demo-img'+index" v-for="(list,imgindex) in pcircle.imgurl" :key="imgindex" :src="list.src" width="100" :style="{width: imgWidth, height: imgWidth}" @click="show(pcircle.imgurl,imgindex,index)" >
                 </div>
                 <div class="post-time-ico">
-                  <div class="post-time">{{pcircle.adddate}}</div>
-                  <popover placement="left" @on-show="openpop()" @on-hide="closepop()" :gutter=10 >
+                  <div class="post-time">{{pcircle.adddate}}</div> <!--发表说说的时间 -->
+                  <popover placement="left" @on-show="openpop()" @on-hide="closepop()" :gutter=10 > <!--评论点赞功能弹窗 -->
                     <div slot="content" class="popover-demo-content" v-show="openwindowshow.pop">
                       <div class="like"  @click="isgood(index)">
                         <i class="fa fa-heart-o" aria-hidden="true"></i>
@@ -37,14 +37,14 @@
                   </popover>
                 </div>
               </div>
-              <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0">
+              <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0"> 
                 <div style="border-bottom: 1px solid #D9D9D9;" v-show="pcircle.TbPcpraise && pcircle.TbPcpraise.length>0">
                   <i class="fa fa-heart-o"> </i>
-                  <span v-for="(like,index) in pcircle.TbPcpraise" :key="index"> {{like.uname}}, </span>
+                  <span v-for="(like,index) in pcircle.TbPcpraise" :key="index"> {{like.uname}}, </span> <!--点赞人的昵称 -->
                 </div>
                 <div v-show="pcircle.TbPccomment && pcircle.TbPccomment.length>0" v-for="(rcomment,rindex) in pcircle.TbPccomment" :key="rindex">
-                  <span>{{rcomment.runame}} :</span>
-                  <span style="color:#000" @click="reply(rcomment,index)">{{rcomment.ccontent}} </span>
+                  <span>{{rcomment.runame}} :</span> <!--评论人姓名 -->
+                  <span style="color:#000" @click="reply(rcomment,index)">{{rcomment.ccontent}} </span> <!--评论内容 -->
                 </div>
               </div>
             </cell>
@@ -58,17 +58,18 @@
         </div>
       </scroller>
       <div v-transfer-dom>
-        <actionsheet :menus="menus" v-model="showMenus" @on-click-menu="click" show-cancel></actionsheet>
+        <actionsheet :menus="menus" v-model="openwindowshow.showMenus" @on-click-menu="click" show-cancel></actionsheet>
       </div>
       <div v-transfer-dom> <!--图片查看器 -->
-        <previewer :list="imglist" ref="previewer" :options="options()" @on-index-change="logIndexChange"></previewer>
+        <previewer :list="imglist" ref="previewer" :options="options()"></previewer>
       </div>
       <div v-transfer-dom>
-        <popup v-model="openwindowshow.inputshow"  @on-hide="closepopup" >
-          <x-input :placeholder="inputplaceholder" v-model="mytext" :show-clear="false" style="padding: 5px 15px;" ref="inputcomment" @on-focus="onFocus"  @on-enter="inputpcontent">
-            <i slot="right" :class="openwindowshow.IsKeyorEmo?'fa fa-smile-o':'fa fa-keyboard-o'" style="font-size:32px;padding-left:5px;" @click="showemotion()" ></i>
-          </x-input>
-          <swiper dots-position="center" height="175px" v-show="openwindowshow.emotionshow">
+        <div style="position: absolute;bottom:0px;width:100%;background-color: #fbf9fe;"  v-show="openwindowshow.inputshow">
+          <div class="quan-inputcell"> <!--评论输入框 -->
+            <input type="text" :placeholder="inputplaceholder" v-model="mytext" ref="inputcomment" class="quan-input" @focus="onFocus" @keyup.enter="inputpcontent" @blur="onblur">
+            <i slot="right" :class="openwindowshow.IsKeyorEmo?'fa fa-smile-o':'fa fa-keyboard-o'" style="font-size:34px;padding-left:5px;color: #999999;" @click="showemotion()" ></i>
+          </div>
+          <swiper dots-position="center" height="175px" v-show="openwindowshow.emotionshow"> <!--表情包 -->
             <swiper-item class="black" v-for="(i,index) in 5" v-bind:key="index" >
               <section class="wechatEmotion-container" >
               <ul class="emotion-list">
@@ -79,35 +80,42 @@
               </section>
             </swiper-item>
           </swiper>
-        </popup>
+        </div>
       </div>
   </div>
 </template>
 <script>
-import { XHeader, Actionsheet, TransferDom, Cell, Group, Popover, Previewer, XInput, Scroller, LoadMore, Popup, WechatEmotion as Emotion, Swiper, SwiperItem } from 'vux'
+import { XHeader, Actionsheet, TransferDom, Cell, Group, Popover, Previewer, Scroller, LoadMore, Popup, WechatEmotion as Emotion, Swiper, SwiperItem } from 'vux'
 export default {
   name: 'quan', // 朋友圈
   directives: {
     TransferDom
   },
-  components: { XHeader, Actionsheet, Cell, Group, Popover, Previewer, XInput, Scroller, LoadMore, Popup, Emotion, Swiper, SwiperItem }, // 注册组件
+  components: { XHeader, Actionsheet, Cell, Group, Popover, Previewer, Scroller, LoadMore, Popup, Emotion, Swiper, SwiperItem }, // 注册组件
   data () { // 局内数据
     return {
-      imgWidth: '80px',
-      menus: {
+      imgWidth: '80px', // 说说图片大小
+      menus: { // 发表说说菜单
         menu1: '拍照',
         menu2: '从相册选择'
       },
-      showMenus: false,
-      good: '赞',
-      imglist: [],
-      mytext: '',
-      inputplaceholder: '评论',
-      replycomment: '',
+      pid: 0, // 用于给当前说说/评论进行编号
+      openwindowshow: {
+        showMenus: false,  // 菜单显示判断
+        pop: false, // 点赞评论功能弹窗显示判断
+        inputshow: false, // 输入框弹窗显示判断
+        emotionshow: false, // 表情框显示判断
+        IsKeyorEmo: true // true:表情 false：键盘
+      },
+      good: '赞', // 赞/取消
+      imglist: [], // 存储图片
+      mytext: '', // input的value
+      inputplaceholder: '评论', // 评论/ **回复 **
+      replycomment: '', // 要回复那个人所发的评论信息
       list: ['微笑', '撇嘴', '色', '发呆', '得意', '流泪', '害羞', '闭嘴', '睡', '大哭', '尴尬', '发怒', '调皮', '呲牙', '惊讶', '难过', '酷', '冷汗', '抓狂', '吐', '偷笑', '可爱', '白眼', '傲慢', '饥饿', '困', '惊恐', '流汗', '憨笑', '大兵', '奋斗', '咒骂', '疑问', '嘘', '晕', '折磨', '衰', '骷髅', '敲打', '再见', '擦汗', '抠鼻', '鼓掌', '糗大了', '坏笑', '左哼哼', '右哼哼', '哈欠', '鄙视', '委屈', '快哭了', '阴险', '亲亲', '吓', '可怜', '菜刀', '西瓜', '啤酒', '篮球', '乒乓', '咖啡', '饭', '猪头', '玫瑰', '凋谢', '示爱', '爱心', '心碎', '蛋糕', '闪电', '炸弹', '刀', '足球', '瓢虫', '便便', '月亮', '太阳', '礼物', '拥抱', '强', '弱', '握手', '胜利', '抱拳', '勾引', '拳头', '差劲', '爱你', 'NO', 'OK', '爱情', '飞吻', '跳跳', '发抖', '怄火', '转圈', '磕头', '回头', '跳绳', '挥手', '激动', '街舞', '献吻', '左太极', '右太极'],
       status: {
-        pullupStatus: 'default',
-        pulldownStatus: 'default'
+        pullupStatus: 'default', // 上拉加载状态
+        pulldownStatus: 'default' // 下拉加载状态
       },
       pcircles: [
         {
@@ -467,18 +475,17 @@ export default {
         bottom: '0px',
         'background-color': '#fbf9fe'
       },
-      pid: 0,
-      openwindowshow: {
-        pop: false,
-        inputshow: false,
-        emotionshow: false,
-        IsKeyorEmo: true // true:表情 false：键盘
-      }
     }
   },
   methods: { // 方法函数
-    click (key) {
+    click (key) { // 点击菜单
       console.log(key)
+    },
+    openpop () { // 打开评论点赞功能窗
+      this.openwindowshow.pop = true
+    },
+    closepop () { // 关闭评论点赞功能窗
+      this.openwindowshow.pop = false
     },
     isgood (index) { // 判断更改点赞图标
       if (this.pcircles[index].ispr) {
@@ -493,37 +500,6 @@ export default {
       this.$nextTick(() => {
         this.$refs.previewer.show(imgindex)
       })
-    },
-    logIndexChange (arg) {
-      console.log(arg)
-    },
-    openpopup (index) { // 显示评论输入框
-      this.inputplaceholder = '评论:'
-      this.pid = index
-      this.openwindowshow.inputshow = true
-      this.$nextTick(() => {
-        this.$refs.inputcomment.focus()
-        // document.querySelector('#pid'+index).scrollIntoView(); // 页面交互问题
-      })
-    },
-    closepopup (val) { // popup弹窗关闭
-      this.openwindowshow.emotionshow = false
-      this.openwindowshow.IsKeyorEmo = true
-      // 解决苹果不回弹页面
-      setTimeout(() => {
-        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
-          return
-        }
-        let result = 'pc'
-        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { // 判断iPhone|iPad|iPod|iOS
-          result = 'ios'
-        } else if (/(Android)/i.test(navigator.userAgent)) { // 判断Android
-          result = 'android'
-        }
-        if (result === 'ios') {
-          document.activeElement.scrollIntoViewIfNeeded(true)
-        }
-      }, 100)
     },
     options () { // previewer配置
       let that = this
@@ -561,15 +537,40 @@ export default {
         this.openwindowshow.inputshow = false
       }
     },
-    openpop () { // 打开评论点赞功能窗
-      this.openwindowshow.pop = true
+    openpopup (index) { // 显示评论输入框
+      this.inputplaceholder = '评论:'
+      this.pid = index // 对要评论的说说进行编号存储
+      this.openwindowshow.inputshow = true // 显示输入框
+      this.$nextTick(() => {
+        this.$refs.inputcomment.focus()
+        // document.querySelector('#pid'+index).scrollIntoView(); // 页面交互问题
+      })
     },
-    closepop () { // 关闭评论点赞功能窗
-      this.openwindowshow.pop = false
+    closepopup (val) { // popup弹窗关闭
+      this.$refs.inputcomment.blur() 
+      this.openwindowshow.emotionshow = false
+      this.openwindowshow.IsKeyorEmo = true
     },
     onFocus () { // 当表情框显示后input再焦距 时需关闭表情框
       this.openwindowshow.emotionshow = false
       this.openwindowshow.IsKeyorEmo = true
+    },
+    onblur () {
+      // 解决苹果不回弹页面
+      setTimeout(() => {
+        if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+          return
+        }
+        let result = 'pc'
+        if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { // 判断iPhone|iPad|iPod|iOS
+          result = 'ios'
+        } else if (/(Android)/i.test(navigator.userAgent)) { // 判断Android
+          result = 'android'
+        }
+        if (result === 'ios') {
+          document.activeElement.scrollIntoViewIfNeeded(true)
+        }
+      }, 100)
     },
     addEmotion (emotion) { // input中添加表情
       this.mytext = this.mytext + '[' + emotion + ']'
@@ -587,9 +588,7 @@ export default {
         this.openwindowshow.emotionshow = false // 关闭表情框
         this.openwindowshow.IsKeyorEmo = true  //显示笑脸图标
         this.$nextTick(() => {
-          setTimeout(() => {
-            this.$refs.inputcomment.focus() // 表情框->键盘
-          }, 100)
+          this.$refs.inputcomment.focus() // 表情框->键盘
         })
       }
     },
@@ -631,10 +630,21 @@ export default {
   computed: { // 计算属性
   },
   watch: { // 侦听器
+    'openwindowshow.inputshow'(val){
+      if (val === false) {
+        this.closepopup()
+      }
+    }
   },
   mounted () { // 初始化函数
     // 根据实际手机屏幕 获取图片宽高
     this.imgWidth = parseInt((Number(window.screen.width) - 140) / 3) + 'px'
+    let that=this
+    document.addEventListener('click',function(e){
+          if(e.target.className !== 'fa fa-smile-o' && e.target.className !== 'quan-input' && e.target.className !== 'quan-inputcell'&& e.target.className !== 'like' && e.target.className !== 'fa fa-keyboard-o'){
+            that.openwindowshow.inputshow = false
+          }
+    })
   }
 }
 </script>
@@ -709,6 +719,22 @@ export default {
 .previewer-demo-img{
   margin-right: 5px;
 }
+.quan-inputcell{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 5px 15px;
+  .quan-input{
+    border: 0px;
+    height: 2em;
+    font-size: 17px;
+    line-height: 2em;
+    width: 100%;
+  }
+}
 .weui-cell /deep/ .weui-input{
   background-color: #fff;
   height: 2.0em;
@@ -727,6 +753,8 @@ body /deep/ .vux-popover-arrow-right {
 .quan /deep/ .weui-loadmore{
   margin: auto auto;
 }
+
+
 .wechatEmotion-container{
     background: rgba(238, 238, 238, 0.5);
     .emotion-list{
