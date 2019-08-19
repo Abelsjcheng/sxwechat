@@ -1,17 +1,17 @@
 <template>
 <div>
   <panel :list="list" type="4"></panel>
-  <load-more tip="正在加载"></load-more>
+  <!-- <load-more tip="正在加载"></load-more> -->
 </div>
 </template>
 
 <script>
 
-import { Panel, LoadMore } from 'vux'
+import { Panel } from 'vux'
 
 export default {
   name: 'policy', // 政策
-  components: { Panel, LoadMore }, // 注册组件
+  components: { Panel }, // 注册组件
   data () { // 局内数据
     return {
       list: [

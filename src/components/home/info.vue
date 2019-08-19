@@ -25,25 +25,37 @@
             <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('/home_info/news')">新闻</tab-item>
           </tab>
         </div>
+        <scroller lock-x scrollbar-y use-pullup use-pulldown @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" @on-scroll="onScroll" ref="scroller" height="-46" v-model="status">
           <div style="padding-top:130px;">
             <router-view></router-view>
           </div>
+          <div slot="pullup" class="xs-plugin-pullup-container xs-plugin-pullup-up" style="position: absolute; width: 100%; height: 40px; bottom: -40px; text-align: center;">
+          <span v-show="status.pullupStatus === 'loading'"><load-more tip="正在加载"></load-more></span>
+        </div>
+        <div slot="pulldown" class="xs-plugin-pulldown-container xs-plugin-pulldown-down" style="position: absolute; width: 100%; height: 60px; line-height: 60px; top: -60px; text-align: center;">
+          <span v-show="status.pulldownStatus === 'loading'"><load-more tip="正在加载"></load-more></span>
+        </div>
+      </scroller>
       </view-box>
     </div>
 </template>
 <script>
 
-import { Search, XHeader, ViewBox, Tab, TabItem } from 'vux'
+import { Search, XHeader, ViewBox, Tab, TabItem, Scroller, LoadMore  } from 'vux'
 
 export default {
   name: 'info', // 资讯
   components: {
-    Search, XHeader, ViewBox, Tab, TabItem
+    Search, XHeader, ViewBox, Tab, TabItem, Scroller, LoadMore 
   }, // 注册组件
   data () { // 局内数据
     return {
       results: [],
-      value: 'test'
+      value: 'test',
+      status: {
+        pullupStatus: 'default',
+        pulldownStatus: 'default'
+      },
     }
   },
   methods: { // 方法函数
@@ -73,6 +85,33 @@ export default {
     },
     open (url) {
       this.$router.push(url)
+    },
+    loadMore () { // 上拉刷新
+      // get
+      setTimeout(() => {
+        setTimeout(() => {
+          this.$refs.scroller.donePullup() // 设置上拉刷新操作完成，在数据加载后执行
+        }, 10)
+      }, 2000)
+    },
+    refresh () { // 下拉刷新
+      // get 
+      setTimeout(() => {
+        this.$nextTick(() => {
+          setTimeout(() => {
+            this.$refs.scroller.donePulldown() // 	设置下拉刷新操作完成，在数据加载后执行
+          }, 10)
+        })
+      }, 2000)
+    },
+    onScroll (pos) { // 页面滚动触发函数
+      if(this.openwindowshow.pop){
+        console.log(1)
+        this.openwindowshow.pop=false
+      }else if(this.openwindowshow.inputshow){
+        this.$refs.inputcomment.blur()
+      }
+      
     }
   },
   computed: { // 计算属性
@@ -101,5 +140,7 @@ function getResult (val) {
 </script>
 
 <style lang="less" scoped>
-
+.weui-loadmore{
+  margin: auto auto;
+}
 </style>
