@@ -1,67 +1,99 @@
 <template>
   <div style="height:100%;">
-    <x-header class="vux-scroller-header">项目公开</x-header>
-    <scroller lock-x scrollbar-y use-pullup use-pulldown @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" ref="scroller" height="-46" v-model="status">
-      
-      <div class="box2">
-        <p style="padding-top:500px">
-          <popover placement="top" style="margin: 20px;" >
-            <div slot="content" class="popover-demo-content">
-              hello world
-            </div>
-          <button class="btn btn-default">111</button>
-          </popover>
-        </p>
-        <p v-for="(i,index) in n" v-bind:key="index">placeholder {{i}}</p>
-
+    <view-box ref="viewBox" body-padding-top="90px" body-padding-bottom="0" >
+      <div slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;">
+        <x-header class="vux-scroller-header">项目公开</x-header>
+        <tab>
+          <tab-item selected @on-item-click="onItemClick(1)" badge-label="1">未建</tab-item>
+          <tab-item @on-item-click="onItemClick(2)" badge-label="2">在建</tab-item>
+          <tab-item @on-item-click="onItemClick(3)" badge-label="3">已建</tab-item>
+        </tab>
       </div>
-      <div slot="pullup" class="xs-plugin-pullup-container xs-plugin-pullup-up" style="position: absolute; width: 100%; height: 40px; bottom: -40px; text-align: center;">
-        <span v-show="status.pullupStatus === 'loading'"><load-more tip="正在加载"></load-more></span>
+      <div>
+        <panel :list="projectlists" type="4" @on-click-item="openproject"></panel>
       </div>
-      <div slot="pulldown" class="xs-plugin-pulldown-container xs-plugin-pulldown-down" style="position: absolute; width: 100%; height: 60px; line-height: 60px; top: -60px; text-align: center;">
-        <span v-show="status.pulldownStatus === 'loading'"><load-more ></load-more></span>
-      </div>
-    </scroller>
+    </view-box>
+    <div v-transfer-dom>
+      <popup v-model="show" position="right" width="100%">
+        <div>
+          <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage">重大项目详细</x-header>
+        </div>
+      </popup>
+    </div>
   </div>
 </template>
 <script>
-import { Scroller, XHeader, LoadMore, Popover } from 'vux'
+import { XHeader, Tab, TabItem, ViewBox, Panel, Popup, TransferDom } from 'vux'
 export default {
   name: 'project', // 项目公开
-  components: { Scroller, XHeader, LoadMore, Popover }, // 注册组件
+  directives: {
+    TransferDom
+  },
+  components: { XHeader, Tab, TabItem, ViewBox, Panel, Popup }, // 注册组件
   data () { // 局内数据
     return {
-      n: 10,
-      status: {
-        pullupStatus: 'default',
-        pulldownStatus: 'default'
-      }
+      projectlists: [],
+      show: false,
+      UnBuiltLists: [],
+      NowBuiltLists: [],
+      haveBuiltLists: []
     }
   },
   methods: { // 方法函数
-    loadMore () {
-      setTimeout(() => {
-        this.n += 10
-        setTimeout(() => {
-          this.$refs.scroller.donePullup() // 设置上拉刷新操作完成，在数据加载后执行
-        }, 10)
-      }, 2000)
+    onItemClick (vag) {
+      if (vag === 1) {
+        this.projectlists = this.UnBuiltLists
+      } else if (vag === 2) {
+        this.projectlists = this.NowBuiltLists
+      } else if (vag === 3) {
+        this.projectlists = this.haveBuiltLists
+      }
     },
-    refresh () {
-      setTimeout(() => {
-        this.n = 10
-        this.$nextTick(() => {
-          setTimeout(() => {
-            this.$refs.scroller.donePulldown() // 	设置下拉刷新操作完成，在数据加载后执行
-          }, 10)
-        })
-      }, 2000)
+    openproject (item) { // 显示弹窗
+      this.show = true
+      console.log(item)
+    },
+    backpage () { // 关闭弹窗
+      this.show = false
+    },
+    getinfo () { // 项目状态“0”为未建，“1”为在建，“2”为已建
+      let that = this
+      this.$axios.get('http://110.53.162.165:5050/api/project/all').then(function (res) {
+        for (let i = 0, len = res.data.data.length; i < len; i++) {
+          if (res.data.data[i].ptype === 0) {
+            that.UnBuiltLists.push({
+              projectinfo: res.data.data[i],
+              title: res.data.data[i].proname,
+              desc: res.data.data[i].content,
+              meta: {
+                source: '未建',
+                date: res.data.data[i].pushdate
+              }
+            })
+          } else if (res.data.data[i].ptype === 1) {
+            that.NowBuiltLists.push({
+              projectinfo: res.data.data[i],
+              title: res.data.data[i].proname,
+              desc: res.data.data[i].content,
+              meta: {
+                source: '在建',
+                date: res.data.data[i].pushdate
+              }
+            })
+          } else if (res.data.data[i].ptype === 2) {
+            that.haveBuiltLists.push({
+              projectinfo: res.data.data[i],
+              title: res.data.data[i].proname,
+              desc: res.data.data[i].content,
+              meta: {
+                source: '已建',
+                date: res.data.data[i].pushdate
+              }
+            })
+          }
+        }
+      })
     }
-  },
-  ready () {
-    this.$nextTick(() => {
-      this.$refs.scroller.reset()
-    })
   },
   computed: { // 计算属性
 
@@ -70,29 +102,11 @@ export default {
 
   },
   mounted () { // 初始化函数
-
+    this.getinfo() // 取项目信息
+    this.projectlists = this.UnBuiltLists
   }
 }
 </script>
 <style lang="less" scoped>
-.quan-headbg{
-  position:relative;
-  width:100%;
-  background-image: url("../../assets/img/pyqtt.jpg");
-  background-size:cover;
-  display:block;
-  height: 260px;
-}
-.quan-headerpro{
-  margin-top: 210px;
-  margin-right: 20px;
-  float: right;
-  border-radius: 6px;
-}
-.quan-headername{
-  color: #fff;
-  margin-top: 230px;
-  margin-right: 20px;
-  float: right;
-}
+
 </style>
