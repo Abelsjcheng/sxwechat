@@ -37,14 +37,14 @@
                   </popover>
                 </div>
               </div>
-              <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0"> 
+              <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0">
                 <div style="border-bottom: 1px solid #D9D9D9;" v-show="pcircle.TbPcpraise && pcircle.TbPcpraise.length>0">
                   <i class="fa fa-heart-o"> </i>
                   <span v-for="(like,index) in pcircle.TbPcpraise" :key="index"> {{like.uname}}, </span> <!--点赞人的昵称 -->
                 </div>
                 <div v-show="pcircle.TbPccomment && pcircle.TbPccomment.length>0" v-for="(rcomment,rindex) in pcircle.TbPccomment" :key="rindex">
-                  <span>{{rcomment.runame}} :</span> <!--评论人姓名 -->
-                  <span style="color:#000" @click="reply(rcomment,index)">{{rcomment.ccontent}} </span> <!--评论内容 -->
+                  <span style="display: block;float: left;">{{rcomment.runame}} :</span> <!--评论人姓名 -->
+                  <span class="pcomment" @click="reply(rcomment,index)" v-html="rcomment.ccontent"> </span> <!--评论内容 -->
                 </div>
               </div>
             </cell>
@@ -63,8 +63,9 @@
       <div v-transfer-dom> <!--图片查看器 -->
         <previewer :list="imglist" ref="previewer" :options="options()"></previewer>
       </div>
-      <div v-transfer-dom>
-        <div style="position: absolute;bottom:0px;width:100%;background-color: #fbf9fe;"  v-show="openwindowshow.inputshow">
+      <div v-transfer-dom v-show="openwindowshow.inputshow">
+        <div class="weui-mask weui-mask_transparent" style="background: rgba(0, 0, 0, 0);" @click="openwindowshow.inputshow = false" > </div>
+        <div style="position: absolute;bottom:0px;width:100%;background-color: #fbf9fe;z-index: 5000;">
           <div class="quan-inputcell"> <!--评论输入框 -->
             <input type="text" :placeholder="inputplaceholder" v-model="mytext" ref="inputcomment" class="quan-input" @focus="onFocus" @keyup.enter="inputpcontent" @blur="onblur">
             <i slot="right" :class="openwindowshow.IsKeyorEmo?'fa fa-smile-o':'fa fa-keyboard-o'" style="font-size:34px;padding-left:5px;color: #999999;" @click="showemotion()" ></i>
@@ -85,13 +86,13 @@
   </div>
 </template>
 <script>
-import { XHeader, Actionsheet, TransferDom, Cell, Group, Popover, Previewer, Scroller, LoadMore, Popup, WechatEmotion as Emotion, Swiper, SwiperItem } from 'vux'
+import { XHeader, Actionsheet, TransferDom, Cell, Group, Popover, Previewer, Scroller, LoadMore, WechatEmotion as Emotion, Swiper, SwiperItem } from 'vux'
 export default {
   name: 'quan', // 朋友圈
   directives: {
     TransferDom
   },
-  components: { XHeader, Actionsheet, Cell, Group, Popover, Previewer, Scroller, LoadMore, Popup, Emotion, Swiper, SwiperItem }, // 注册组件
+  components: { XHeader, Actionsheet, Cell, Group, Popover, Previewer, Scroller, LoadMore, Emotion, Swiper, SwiperItem }, // 注册组件
   data () { // 局内数据
     return {
       imgWidth: '80px', // 说说图片大小
@@ -101,7 +102,7 @@ export default {
       },
       pid: 0, // 用于给当前说说/评论进行编号
       openwindowshow: {
-        showMenus: false,  // 菜单显示判断
+        showMenus: false, // 菜单显示判断
         pop: false, // 点赞评论功能弹窗显示判断
         inputshow: false, // 输入框弹窗显示判断
         emotionshow: false, // 表情框显示判断
@@ -474,7 +475,7 @@ export default {
         width: '100%',
         bottom: '0px',
         'background-color': '#fbf9fe'
-      },
+      }
     }
   },
   methods: { // 方法函数
@@ -547,7 +548,7 @@ export default {
       })
     },
     closepopup (val) { // popup弹窗关闭
-      this.$refs.inputcomment.blur() 
+      this.$refs.inputcomment.blur()
       this.openwindowshow.emotionshow = false
       this.openwindowshow.IsKeyorEmo = true
     },
@@ -580,13 +581,13 @@ export default {
         this.$refs.inputcomment.blur()
         this.$nextTick(() => {
           setTimeout(() => {
-            this.openwindowshow.IsKeyorEmo = false //显示键盘图标
+            this.openwindowshow.IsKeyorEmo = false // 显示键盘图标
             this.openwindowshow.emotionshow = true // 键盘->表情框
           }, 100)
         })
       } else {
         this.openwindowshow.emotionshow = false // 关闭表情框
-        this.openwindowshow.IsKeyorEmo = true  //显示笑脸图标
+        this.openwindowshow.IsKeyorEmo = true // 显示笑脸图标
         this.$nextTick(() => {
           this.$refs.inputcomment.focus() // 表情框->键盘
         })
@@ -594,14 +595,14 @@ export default {
     },
     inputpcontent () { // 输入框点击 小键盘回车键
       let that = this
-      if (this.replycomment != null || this.replycomment !== '') {
+      if (this.replycomment != null && this.replycomment !== '') {
         this.pcircles[this.pid].TbPccomment.push(
           {
             runame: '施景程 回复' + this.replycomment.uname,
             ccontent: this.mytext.replace(/\[[\u4E00-\u9FA5]{1,3}\]/gi, function (word) { // 转表情图片
               let newWord = word.replace(/\[|\]/gi, '')
               let index = that.list.indexOf(newWord)
-              return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`
+              return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" width="20px" align="top">`
             }) })
       } else {
         this.pcircles[this.pid].TbPccomment.push(
@@ -610,10 +611,11 @@ export default {
             ccontent: this.mytext.replace(/\[[\u4E00-\u9FA5]{1,3}\]/gi, function (word) {
               let newWord = word.replace(/\[|\]/gi, '')
               let index = that.list.indexOf(newWord)
-              return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`
+              return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" width="20px" align="top">`
             }) })
       }
       this.mytext = ''
+      this.replycomment = ''
       this.openwindowshow.inputshow = false
     },
     reply (pcomment, index) { // 回复评论打开弹窗
@@ -630,7 +632,7 @@ export default {
   computed: { // 计算属性
   },
   watch: { // 侦听器
-    'openwindowshow.inputshow'(val){
+    'openwindowshow.inputshow' (val) {
       if (val === false) {
         this.closepopup()
       }
@@ -639,22 +641,10 @@ export default {
   mounted () { // 初始化函数
     // 根据实际手机屏幕 获取图片宽高
     this.imgWidth = parseInt((Number(window.screen.width) - 140) / 3) + 'px'
-    let that=this
-    document.addEventListener('click',function(e){
-          if(e.target.className !== 'fa fa-smile-o' && e.target.className !== 'quan-input' && e.target.className !== 'quan-inputcell'&& e.target.className !== 'like' && e.target.className !== 'fa fa-keyboard-o'){
-            that.openwindowshow.inputshow = false
-          }
-    })
   }
 }
 </script>
 <style lang="less" scoped>
-.weui-panel{
-  margin-top: 0px
-}
-.weui-tab /deep/ .weui-tab__panel{
-  padding-bottom: 0px;
-}
 .quan-headbg{
   position:relative;
   width:100%;
@@ -677,11 +667,11 @@ export default {
 }
 .post-name{
   color: #1e4c97;
-  font-size: 13px;
+  font-size: 14px;
 }
 .post-text{
   margin-top: 3px;
-  font-size: 14px;
+  font-size: 16px;
   color:#000;
 }
 .post-time-ico{
@@ -690,7 +680,7 @@ export default {
   .post-time{
     float: left;
     margin-top: 5px;
-    font-size: 12px;
+    font-size: 13px;
   }
   .post-icon{
     float: right;
@@ -712,9 +702,13 @@ export default {
 }
 .post-content{
   background: #f3f3f3;
-  font-size: 13px;
+  font-size: 15px;
   color: #094dcc;
   padding: 5px;
+}
+.pcomment{
+  display: block;
+  color:#000;
 }
 .previewer-demo-img{
   margin-right: 5px;
@@ -735,13 +729,6 @@ export default {
     width: 100%;
   }
 }
-.weui-cell /deep/ .weui-input{
-  background-color: #fff;
-  height: 2.0em;
-  font-size: 17px;
-  line-height: 2.0em;
-}
-
 body /deep/ .vux-popover-arrow-right {
   border-top:0px;
   border-bottom:0px;
@@ -753,7 +740,6 @@ body /deep/ .vux-popover-arrow-right {
 .quan /deep/ .weui-loadmore{
   margin: auto auto;
 }
-
 
 .wechatEmotion-container{
     background: rgba(238, 238, 238, 0.5);
