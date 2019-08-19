@@ -65,7 +65,7 @@
       </div>
       <div v-transfer-dom v-show="openwindowshow.inputshow">
         <div class="weui-mask weui-mask_transparent" style="background: rgba(0, 0, 0, 0);" @click="openwindowshow.inputshow = false" > </div>
-        <div style="position: absolute;bottom:0px;width:100%;background-color: #fbf9fe;z-index: 5000;">
+        <div class="quan-footer">
           <div class="quan-inputcell"> <!--评论输入框 -->
             <input type="text" :placeholder="inputplaceholder" v-model="mytext" ref="inputcomment" class="quan-input" @focus="onFocus" @keyup.enter="inputpcontent" @blur="onblur">
             <i slot="right" :class="openwindowshow.IsKeyorEmo?'fa fa-smile-o':'fa fa-keyboard-o'" style="font-size:34px;padding-left:5px;color: #999999;" @click="showemotion()" ></i>
@@ -544,7 +544,7 @@ export default {
       this.openwindowshow.inputshow = true // 显示输入框
       this.$nextTick(() => {
         this.$refs.inputcomment.focus()
-        // document.querySelector('#pid'+index).scrollIntoView(); // 页面交互问题
+        document.querySelector('#pid'+index).scrollIntoView(); // 页面交互问题
       })
     },
     closepopup (val) { // popup弹窗关闭
@@ -555,6 +555,7 @@ export default {
     onFocus () { // 当表情框显示后input再焦距 时需关闭表情框
       this.openwindowshow.emotionshow = false
       this.openwindowshow.IsKeyorEmo = true
+      window.scrollTo(0, document.documentElement.clientHeight); // 解决ios键盘遮挡input
     },
     onblur () {
       // 解决苹果不回弹页面
@@ -712,6 +713,15 @@ export default {
 }
 .previewer-demo-img{
   margin-right: 5px;
+}
+.quan-footer{
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width:100%;
+  background-color: #fbf9fe;
+  z-index: 5000;
 }
 .quan-inputcell{
   display: -webkit-box;
