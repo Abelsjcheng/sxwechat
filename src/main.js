@@ -4,10 +4,10 @@ import router from './router/index.js'
 import store from './store/index.js'
 import 'font-awesome/less/font-awesome.less'
 import './styles/common.less'
-
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 Vue.config.productionTip = false
-const axios = require('axios')
-Vue.prototype.$axios = axios
+Vue.use(VueAxios, axios)
 // 移除移动端点击延迟
 const FastClick = require('fastclick')
 FastClick.attach(document.body)
