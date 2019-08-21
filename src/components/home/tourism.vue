@@ -2,7 +2,7 @@
     <!-- 旅游、休闲、农家乐页面待开发 -->
     <div style="height:100%;">
       <view-box ref="viewBox">
-        <div slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;">
+        <div slot="header" class="vux-scroller-header">
           <x-header style="background-color:rgba(250,250,250,0.3);color:#212121;">
             <div style="color:#212121;font-family:'华文行楷'">长沙县欢迎您！</div>
             </x-header>

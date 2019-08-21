@@ -1,8 +1,8 @@
 <template>
   <div style="height:100%;">
     <view-box ref="viewBox" body-padding-top="90px" body-padding-bottom="0" >
-      <div slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;">
-        <x-header class="vux-scroller-header">项目公开</x-header>
+      <div slot="header" class="vux-scroller-header">
+        <x-header>项目公开</x-header>
         <tab>
           <tab-item selected @on-item-click="onItemClick(1)" badge-label="1">未建</tab-item>
           <tab-item @on-item-click="onItemClick(2)" badge-label="2">在建</tab-item>
