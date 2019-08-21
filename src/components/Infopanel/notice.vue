@@ -1,17 +1,17 @@
 <template>
   <div>
     <panel :list="list" type="4"></panel>
-    <load-more tip="正在加载"></load-more>
+    <!-- <load-more tip="正在加载"></load-more> -->
   </div>
 </template>
 
 <script>
 
-import { Panel, LoadMore } from 'vux'
+import { Panel } from 'vux'
 
 export default {
   name: 'notice', // 公告
-  components: { Panel, LoadMore }, // 注册组件
+  components: { Panel }, // 注册组件
   data () { // 局内数据
     return {
       list: [
@@ -24,7 +24,6 @@ export default {
             replace: false
           },
           meta: {
-            // source: '政策',
             other: '评论 20',
             date: '10分钟前'
           }
@@ -38,7 +37,6 @@ export default {
             replace: false
           },
           meta: {
-            // source: '公告',
             other: '评论 20',
             date: '10分钟前'
           }
@@ -52,7 +50,6 @@ export default {
             replace: false
           },
           meta: {
-            // source: '政策',
             other: '评论 20',
             date: '10分钟前'
           }
@@ -66,16 +63,10 @@ export default {
             replace: false
           },
           meta: {
-            // source: '政策',
             other: '评论 20',
             date: '10分钟前'
           }
-        }
-      ]
-      // footer: {
-      //   title: '更多',
-      //   url: ''
-      // }
+        }]
     }
   },
   methods: { // 方法函数
