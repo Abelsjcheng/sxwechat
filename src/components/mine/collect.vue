@@ -10,7 +10,13 @@
             <!--上拉刷新和下拉加载-->
             <scroller lock-x scrollbar-y use-pullup use-pulldown @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" @on-scroll="onscroll" ref="scrller" height="-46" v-model="status">
                 <div>
-                    <panel :list="list" type="5" style="margin-top:0px;"></panel>
+                    <!-- <panel :list="list" type="5" style="margin-top:0px;"></panel> -->
+                    <group>
+                        <cell align-items="flex-start"  value-align="left" v-for="(pcircle,index) in pcircles" :key="index" :id="'pid'+index">
+                            <div>
+                            </div>
+                        </cell>
+                    </group>
                 </div>
                 <!--上拉刷新-->
                 <div slot="pullup" class="xs-plugin-pullup-container xs-plugin-pullup-up" style="position: absolute; width: 100%; height: 40px; bottom: -40px; text-align: center;">
@@ -24,6 +30,7 @@
         </view-box>
     </div>
 </template>
+
 <script>
 import { ViewBox, XHeader, Panel, Scroller, LoadMore } from 'vux'
 export default {
@@ -34,9 +41,10 @@ export default {
         status: {
           pullupStatus: 'default',
           pulldownStatus: 'default'
+        }
       }
-    }
-  },
+    },
+    
   methods: {
       click (key) {
           console.log(key)
@@ -75,7 +83,6 @@ export default {
     this.imgWidth = parseInt ((Number(window.screen.width) - 140 ) / 3) + 'px'
   },
   watch: {
-
   }
 }
 </script>
