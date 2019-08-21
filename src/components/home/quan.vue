@@ -1,62 +1,60 @@
 <template>
   <div class="quan" style="height:100%;">
-      <x-header :left-options="{backText: ''}">朋友圈
+    <ViewBox ref="viewBox" body-padding-bottom="0">
+      <x-header slot="header" :left-options="{backText: ''}" class="vux-scroller-header">朋友圈
         <x-icon slot="right" type="camera" size="35" style="fill:#fff;position:relative;top:-8px;"  @click="openwindowshow.showMenus = true"></x-icon>
       </x-header>
-      <scroller lock-x scrollbar-y use-pullup use-pulldown @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" @on-scroll="onScroll" ref="scroller" height="-46" v-model="status">
-        <div>
-          <div class="quan-headbg">
-            <div>
-              <img class="quan-headerpro" src="../../assets/img/my_head.png" width="66" height="66">
-              <span class="quan-headername">施景程</span>
-            </div>
+      <pull-to :top-load-method="refresh" @infinite-scroll="loadmore" :top-config="{stayDistance:90}"  @scroll="onScroll" >
+        <div class="quan-headbg">
+          <div>
+            <img class="quan-headerpro" src="../../assets/img/my_head.png" width="66" height="66">
+            <span class="quan-headername">施景程</span>
           </div>
-          <group>
-            <cell align-items="flex-start"  value-align="left" v-for="(pcircle,index) in pcircles" :key="index" :id="'pid'+index">
-              <img slot="title" :src="pcircle.headimg" width="45" height="45" style="margin-right:1em;border-radius: 6px;"> <!--发表说说的用户头像 -->
-              <div>
-                <span class="post-name">{{pcircle.name}} </span> <!--发表说说的用户昵称 -->
-                <div class="post-text" v-html="pcircle.pcontent"> </div> <!--说说的内容 -->
-                <div v-show="pcircle.imgurl && pcircle.imgurl.length>0"> <!-- 判断是否有图片-->
-                  <img :class="'previewer-demo-img'+index" v-for="(list,imgindex) in pcircle.imgurl" :key="imgindex" :src="list.src" width="100" :style="{width: imgWidth, height: imgWidth}" @click="show(pcircle.imgurl,imgindex,index)" >
-                </div>
-                <div class="post-time-ico">
-                  <div class="post-time">{{pcircle.adddate}}</div> <!--发表说说的时间 -->
-                  <popover placement="left" @on-show="openpop()" @on-hide="closepop()" :gutter=10 > <!--评论点赞功能弹窗 -->
-                    <div slot="content" class="popover-demo-content" v-show="openwindowshow.pop">
-                      <div class="like"  @click="isgood(index)">
-                        <i class="fa fa-heart-o" aria-hidden="true"></i>
-                        {{ pcircle.ispr?'取消': '赞' }}
-                      </div>
-                      <div class="like" @click="openpopup(index)">
-                        <i class="fa fa-comment-o" aria-hidden="true"></i>
-                        评论
-                      </div>
+        </div>
+        <group>
+          <cell align-items="flex-start"  value-align="left" v-for="(pcircle,index) in pcircles" :key="index" :id="'pid'+index">
+            <img slot="title" :src="pcircle.headimg" width="45" height="45" style="margin-right:1em;border-radius: 6px;"> <!--发表说说的用户头像 -->
+            <div>
+              <span class="post-name">{{pcircle.name}} </span> <!--发表说说的用户昵称 -->
+              <div class="post-text" v-html="pcircle.pcontent"> </div> <!--说说的内容 -->
+              <div v-show="pcircle.imgurl && pcircle.imgurl.length>0"> <!-- 判断是否有图片-->
+                <img :class="'previewer-demo-img'+index" v-for="(list,imgindex) in pcircle.imgurl" :key="imgindex" :src="list.src" width="100" :style="{width: imgWidth, height: imgWidth}" @click="show(pcircle.imgurl,imgindex,index)" >
+              </div>
+              <div class="post-time-ico">
+                <div class="post-time">{{pcircle.adddate}}</div> <!--发表说说的时间 -->
+                <popover placement="left" @on-show="openpop()" @on-hide="closepop()" :gutter=10 > <!--评论点赞功能弹窗 -->
+                  <div slot="content" class="popover-demo-content" v-show="openwindowshow.pop">
+                    <div class="like"  @click="isgood(index)">
+                      <i class="fa fa-heart-o" aria-hidden="true"></i>
+                      {{ pcircle.ispr?'取消': '赞' }}
                     </div>
-                    <i class="fa fa-flickr post-icon" ></i>
-                  </popover>
-                </div>
+                    <div class="like" @click="openpopup(index)">
+                      <i class="fa fa-comment-o" aria-hidden="true"></i>
+                      评论
+                    </div>
+                  </div>
+                  <i class="fa fa-flickr post-icon" ></i>
+                </popover>
               </div>
-              <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0">
-                <div style="border-bottom: 1px solid #D9D9D9;" v-show="pcircle.TbPcpraise && pcircle.TbPcpraise.length>0">
-                  <i class="fa fa-heart-o"> </i>
-                  <span v-for="(like,index) in pcircle.TbPcpraise" :key="index"> {{like.uname}}, </span> <!--点赞人的昵称 -->
-                </div>
-                <div v-show="pcircle.TbPccomment && pcircle.TbPccomment.length>0" v-for="(rcomment,rindex) in pcircle.TbPccomment" :key="rindex">
-                  <span style="display: block;float: left;">{{rcomment.runame}} :</span> <!--评论人姓名 -->
-                  <span class="pcomment" @click="reply(rcomment,index)" v-html="rcomment.ccontent"> </span> <!--评论内容 -->
-                </div>
+            </div>
+            <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0">
+              <div style="border-bottom: 1px solid #D9D9D9;" v-show="pcircle.TbPcpraise && pcircle.TbPcpraise.length>0">
+                <i class="fa fa-heart-o"> </i>
+                <span v-for="(like,index) in pcircle.TbPcpraise" :key="index"> {{like.uname}}, </span> <!--点赞人的昵称 -->
               </div>
-            </cell>
-          </group>
+              <div class="post-pcontent" v-show="pcircle.TbPccomment && pcircle.TbPccomment.length>0" v-for="(rcomment,rindex) in pcircle.TbPccomment" :key="rindex">
+                <span style="display: block;float: left;">{{rcomment.runame}} :</span> <!--评论人姓名 -->
+                <span class="pcomment" @click="reply(rcomment,index)" v-html="rcomment.ccontent"> </span> <!--评论内容 -->
+              </div>
+            </div>
+          </cell>
+        </group>
+        <div class="loading-bar">
+          <load-more tip="正在加载"></load-more>
         </div>
-        <div slot="pullup" class="xs-plugin-pullup-container xs-plugin-pullup-up" style="position: absolute; width: 100%; height: 40px; bottom: -40px; text-align: center;">
-          <span v-show="status.pullupStatus === 'loading'"><load-more tip="正在加载"></load-more></span>
-        </div>
-        <div slot="pulldown" class="xs-plugin-pulldown-container xs-plugin-pulldown-down" style="position: absolute; width: 100%; height: 60px; line-height: 60px; top: -60px; text-align: center;">
-          <span v-show="status.pulldownStatus === 'loading'"><load-more tip="正在加载"></load-more></span>
-        </div>
-      </scroller>
+      </pull-to>
+    </ViewBox>
+        <!--<load-more tip="正在加载"></load-more> -->
       <div v-transfer-dom>
         <actionsheet :menus="menus" v-model="openwindowshow.showMenus" @on-click-menu="click" show-cancel></actionsheet>
       </div>
@@ -86,13 +84,14 @@
   </div>
 </template>
 <script>
-import { XHeader, Actionsheet, TransferDom, Cell, Group, Popover, Previewer, Scroller, LoadMore, WechatEmotion as Emotion, Swiper, SwiperItem } from 'vux'
+import PullTo from 'vue-pull-to'
+import { XHeader, ViewBox, Actionsheet, TransferDom, Cell, Group, Popover, Previewer, LoadMore, WechatEmotion as Emotion, Swiper, SwiperItem } from 'vux'
 export default {
   name: 'quan', // 朋友圈
   directives: {
     TransferDom
   },
-  components: { XHeader, Actionsheet, Cell, Group, Popover, Previewer, Scroller, LoadMore, Emotion, Swiper, SwiperItem }, // 注册组件
+  components: { XHeader, ViewBox, Actionsheet, Cell, Group, Popover, Previewer, LoadMore, Emotion, Swiper, SwiperItem, PullTo }, // 注册组件
   data () { // 局内数据
     return {
       imgWidth: '80px', // 说说图片大小
@@ -114,10 +113,6 @@ export default {
       inputplaceholder: '评论', // 评论/ **回复 **
       replycomment: '', // 要回复那个人所发的评论信息
       list: ['微笑', '撇嘴', '色', '发呆', '得意', '流泪', '害羞', '闭嘴', '睡', '大哭', '尴尬', '发怒', '调皮', '呲牙', '惊讶', '难过', '酷', '冷汗', '抓狂', '吐', '偷笑', '可爱', '白眼', '傲慢', '饥饿', '困', '惊恐', '流汗', '憨笑', '大兵', '奋斗', '咒骂', '疑问', '嘘', '晕', '折磨', '衰', '骷髅', '敲打', '再见', '擦汗', '抠鼻', '鼓掌', '糗大了', '坏笑', '左哼哼', '右哼哼', '哈欠', '鄙视', '委屈', '快哭了', '阴险', '亲亲', '吓', '可怜', '菜刀', '西瓜', '啤酒', '篮球', '乒乓', '咖啡', '饭', '猪头', '玫瑰', '凋谢', '示爱', '爱心', '心碎', '蛋糕', '闪电', '炸弹', '刀', '足球', '瓢虫', '便便', '月亮', '太阳', '礼物', '拥抱', '强', '弱', '握手', '胜利', '抱拳', '勾引', '拳头', '差劲', '爱你', 'NO', 'OK', '爱情', '飞吻', '跳跳', '发抖', '怄火', '转圈', '磕头', '回头', '跳绳', '挥手', '激动', '街舞', '献吻', '左太极', '右太极'],
-      status: {
-        pullupStatus: 'default', // 上拉加载状态
-        pulldownStatus: 'default' // 下拉加载状态
-      },
       pcircles: [
         {
           pcid: 1, // 朋友圈编号
@@ -469,13 +464,7 @@ export default {
           comnum: null, // 评论用户的序列号（显示时排在第几位）
           aid: 430121101001 // 动态所属地区
         }
-      ],
-      Inputposition: {
-        position: 'fixed',
-        width: '100%',
-        bottom: '0px',
-        'background-color': '#fbf9fe'
-      }
+      ]
     }
   },
   methods: { // 方法函数
@@ -513,23 +502,14 @@ export default {
         }
       }
     },
-    loadMore () { // 上拉刷新
-      // get
+    refresh (loaded) { // 下拉加载
       setTimeout(() => {
-        setTimeout(() => {
-          this.$refs.scroller.donePullup() // 设置上拉刷新操作完成，在数据加载后执行
-        }, 10)
+        loaded('done')
       }, 2000)
     },
-    refresh () { // 下拉刷新
-      // get
+    loadmore () { // 上拉
       setTimeout(() => {
-        this.$nextTick(() => {
-          setTimeout(() => {
-            this.$refs.scroller.donePulldown() // 设置下拉刷新操作完成，在数据加载后执行
-          }, 10)
-        })
-      }, 2000)
+      }, 1000)
     },
     onScroll (pos) { // 页面滚动触发函数
       if (this.openwindowshow.pop) {
@@ -544,7 +524,7 @@ export default {
       this.openwindowshow.inputshow = true // 显示输入框
       this.$nextTick(() => {
         this.$refs.inputcomment.focus()
-        document.querySelector('#pid'+index).scrollIntoView(); // 页面交互问题
+        // document.querySelector('#pid' + index).scrollIntoView() // 页面定向
       })
     },
     closepopup (val) { // popup弹窗关闭
@@ -555,7 +535,7 @@ export default {
     onFocus () { // 当表情框显示后input再焦距 时需关闭表情框
       this.openwindowshow.emotionshow = false
       this.openwindowshow.IsKeyorEmo = true
-      window.scrollTo(0, document.documentElement.clientHeight); // 解决ios键盘遮挡input
+      window.scrollTo(0, document.documentElement.clientHeight) // 解决ios键盘遮挡input
     },
     onblur () {
       // 解决苹果不回弹页面
@@ -646,6 +626,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+@import "../../assets/styles/pull-to.less";
 .quan-headbg{
   position:relative;
   width:100%;
@@ -706,6 +687,9 @@ export default {
   font-size: 15px;
   color: #094dcc;
   padding: 5px;
+}
+.post-pcontent:active{
+  background-color: rgba(0,0,0,0.2)
 }
 .pcomment{
   display: block;
