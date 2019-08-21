@@ -1,63 +1,115 @@
 <template>
     <!-- 旅游、休闲、农家乐页面待开发 -->
-    <div style="height:100%;">
+    <div style="height:100%;background:rgba(002,121,181,0.3);">
       <view-box ref="viewBox">
-        <div slot="header" class="vux-scroller-header">
-          <x-header style="background-color:rgba(250,250,250,0.3);color:#212121;">
+        <div slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;">
+          <x-header style="background-color:rgba(250,250,250,0.2);color:#212121;">
             <div style="color:#212121;font-family:'华文行楷'">长沙县欢迎您！</div>
-            </x-header>
+          </x-header>
+        </div>
+        <div id="content" style="margin:8px;margin-top:40px;">
+        <!-- 农家乐部分 -->
+        <div>
+          <div id="subtitle">
+            <span>农家乐
+              <a href="http://www.360doc.com/content/16/1002/23/34253878_595400606.shtml" style="display:block;float:right">了解更多...</a>
+            </span>
           </div>
-          <div id="acd" style="width:100%;background-color:#adedea;">
-            <div style="position: relative; width: 100%;height:30%">
-              <a href="https://baike.so.com/doc/6735485-6949864.html">
-                <img src="https://c.cncnimg.cn/037/727/cb14_m.jpg" width="100%" alt="加载失败...">
-                <span>长沙橘子洲
-                  <span>又称橘洲、水陆洲，它位于长沙市区对面的湘江中流，是湘江下游众多冲积沙洲之一,介名山城市间，浮袅袅凌波上。</span>
-                </span>
-              </a>
-            </div>
-            <div style="position: relative; width: 100%;">
-              <a href="https://changsha.cncn.com/jingdian/yuelushan/">
-                <img src="https://c.cncnimg.cn/037/709/25d4_m.jpg" width="100%" alt="加载失败...">
-                <span>岳麓山
-                  <span>位于古城长沙的湘江两岸，总面积 36平方公里，由麓山、天马山、桃花岭、石佳岭四个景区及新民学会旧址、南津城士城头二景点组成。</span>
-                </span>
-              </a>
-            </div>
-            <div style="position: relative; width: 100%;">
-              <a href="https://changsha.cncn.com/jingdian/dufujiangge/">
-                <img src="https://c.cncnimg.cn/044/092/5bc9_m.jpg" width="100%" alt="加载失败...">
-                <span>杜甫江阁
-                  <span>江阁登临，可近观橘洲风景，远眺麓山烟云，饱览长沙山水洲城的美丽姿容,江阁漫步，可在绿荫葱茏中品读诗圣佳作，观赏名家书法。</span>
-                </span>
-              </a>
-            </div>
-            <div style="position: relative; width: 100%;">
-              <a href="https://changsha.cncn.com/jingdian/hunandajuyuan/">
-                <img src="https://c.cncnimg.cn/044/717/8873_m.jpg" width="100%" alt="加载失败..." @on-success="success" @on-error="error" class="ximg-demo" error-class="ximg-error">
-                <span>湖南大剧院
-                  <span>湖南大剧院隶属湖南省文化厅，是目前湖南文艺行业里一家高档次 、大规模的综合性多功能大型文艺演出场所之一。</span>
-                </span>
-              </a>
-            </div>
-            <div style="position: relative; width: 100%;">
-              <a href="https://changsha.cncn.com/jingdian/guanshan/">
-                <img src="https://c.cncnimg.cn/041/098/f879_m.jpg" width="100%" alt="加载失败...">
-                <span>关山古镇
-                  <span>走进关山古镇，就像走进了一段朴实的诗歌。整齐的仿古的古民居在绿色的田野上铺展开来。</span>
-                </span>
-              </a>
-            </div>
-            <div style="position: relative; width: 100%;">
-              <a href="https://changsha.cncn.com/jingdian/mawangduihanmuyizhi/">
-                <img src="https://p1.cncnimg.cn/jdpic/17/16015_m.jpg" width="100%" alt="加载失败...">
-                <span>马王堆汉墓遗址
-                  <span>马王堆汉墓遗址中，出土了著名的马王堆女尸，遗址在长沙市东郊马王堆医院内，三座墓坑中，一、二号墓坑已填塞，对外开放的只是三号墓坑和墓坑上的展览室。</span>
-                </span>
-              </a>
-            </div>
+          <div style="float:left;width:46%;margin:5px;">
+            <a href="http://www.cschenwu.cn/#page1">
+              <img src="http://www.0731xsxx.com/UploadFile//QQ%E6%88%AA%E5%9B%BE20140812083146.jpg" style="width:100%;" alt="">
+              <span>
+                辰午山庄
+              </span>
+            </a>
           </div>
-          <router-view></router-view>
+          <div style="float:left;width:46%;margin:5px;">
+            <a href="https://baike.so.com/doc/3455498-3636051.html">
+              <img src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qpic_cn/921ba06b4b0d830cc878098a71013cc4.jpg" style="width:100%;" alt="">
+              <span>
+                金太阳现代休闲农庄
+              </span>
+            </a>
+          </div>
+          <div style="float:left;width:46%;margin:5px;">
+            <a href="https://baike.so.com/doc/3057227-3222654.html">
+              <img src="https://p1.ssl.qhimg.com/dr/220__/t0127660e496a617375.jpg" style="width:100%;" alt="">
+              <span>
+                大明山庄
+              </span>
+            </a>
+          </div>
+          <div style="float:left;width:46%;margin:5px;">
+            <a href="https://www.qianlonghu.com/">
+              <img src="https://p1.ssl.qhimg.com/dr/270_500_/t01d7f8c1c34b6b36bc.jpg" style="width:100%;" alt="">
+              <span>
+                千龙湖生态旅游度假村
+              </span>
+            </a>
+          </div>
+        </div>
+        <!-- 旅游部分 -->
+        <div>
+          <div id="subtitle">
+           <span>旅游
+             <a href="http://www.bytravel.cn/view/index2356.html">了解更多...</a>
+            </span>
+          </div>
+          <div style="float:left;width:46%;margin:5px;">
+            <a href="https://baike.so.com/doc/6735485-6949864.html">
+              <img src="https://c.cncnimg.cn/037/727/cb14_m.jpg" style="width:100%;" alt="">
+              <span>
+                橘子洲
+              </span>
+            </a>
+          </div>
+          <div style="float:left;width:46%;margin:5px;">
+            <a href="https://baike.so.com/doc/4753705-4969111.html">
+              <img src="https://c.cncnimg.cn/037/709/25d4_m.jpg" style="width:100%;" alt="">
+              <span>
+                岳麓山
+              </span>
+            </a>
+          </div>
+           <div style="float:left;width:46%;margin:5px;">
+            <a href="https://baike.so.com/doc/5833974-6046801.html">
+              <img src="https://c.cncnimg.cn/044/092/5bc9_m.jpg" style="width:100%;" alt="">
+              <span>
+                杜甫江阁
+              </span>
+            </a>
+          </div>
+          <div style="float:left;width:46%;margin:5px;">
+            <a href="https://baike.so.com/doc/24636342-25522946.html">
+              <img src="https://c.cncnimg.cn/041/098/f879_m.jpg" style="width:100%;" alt="">
+              <span>
+                关山古镇
+              </span>
+            </a>
+          </div>
+        </div>
+          <!-- <dl>
+                <div>
+                    <dt>农家乐<a href="#" style="display:block;float:right">更多...</a></dt>
+                    <dd><a href="#">辰午山庄</a></dd>
+                    <dd><a href="#">金太阳现代休闲农庄</a></dd>
+                    <dd><a href="#">大明山庄</a></dd>
+                    <dd><a href="#">千龙湖生态旅游度假村</a></dd>
+                    <dd><a href="#">百果园农庄</a></dd>
+                    <dd><a href="#">龙头井农庄</a></dd>
+                    <dd><a href="#">和道源山庄</a></dd>
+                    <dd><a href="#">新江生态休闲园</a></dd>
+                    <dd><a href="#">长沙锦绣生态农庄</a></dd>
+                </div>
+                 -->
+        </div>
+        <router-view></router-view>
+        <!-- 了解更多 -->
+      <div slot="bottom">
+        <a href="http://www.changsha.com.cn/" style="width:100%;background:linear-gradient(to right, #bbf990, #fffff9);font-family:'华文楷体';display:block;float:right;">
+          <span style="border-left:3px solid #ff9;display:block;float:right;">去了解更多的旅游资讯......</span>
+        </a>
+      </div>
       </view-box>
     </div>
 </template>
@@ -68,20 +120,12 @@ export default {
   components: { XHeader, ViewBox }, // 注册组件
   data () { // 局内数据
     return {
-      list: [ ]
+      show1: false,
+      lists: []
     }
   },
-  methods: { // 方法函数
-    success (src, ele) {
-      console.log('success load', src)
-      const span = ele.parentNode.querySelector('span')
-      ele.parentNode.removeChild(span)
-    },
-    error (src, ele, msg) {
-      console.log('error load', msg, src)
-      const span = ele.parentNode.querySelector('span')
-      span.innerText = 'load error'
-    }
+  methods: {
+    
   },
   computed: { // 计算属性
 
@@ -93,44 +137,43 @@ export default {
 
   }
 }
-</script>u
+</script>
 <style lang="less" scoped>
- .ximg-demo {
-  width: 100%;
-  height: auto;
-}
-.ximg-error {
-  background-color: yellow;
-}
-.ximg-error:after {
-  content: '加载失败';
-  color: red;
-}
-#acd a span{
-  text-decoration: none;
-  font-size:18px;
-  color:#addfff;
-  position: absolute;
-  display:block;
-  position: absolute;
-  font-weight: bold;
-  width:100%;
-  top:30%;
-  transform:translateX(38%);
-  font-family:'华文仿宋';
-}
-#acd a span span{
-  display:block;
-  font-size:12px;
-  color:#fefefe;
-  font-weight: 100;
+#content #subtitle span{
   font-family:'华文行楷';
-  top:40px;
-  left:-58%;
-  width:80%;
+  display:block;
+  float:left;
+  width:285px;
+  background:linear-gradient(to right, #bbf990, #fffff9);
+  border-color: #ff0 !important;
+  border-bottom:1px solid #feff89;
+  border-left:5px solid transparent;
+  padding-left:8px;
 }
-#acd a:hover{
+#content #subtitle span a{
+  font-family:'华文行楷';
+  display:block;
+  float:right;
+  margin-right:10px;
+}
+img{
+  border-radius:5%;
+  height:100px;
+}
+a{
+  text-decoration: none;
+  color:#212121;
+}
+a span{
+  font-family:"华文楷体";
+  font-size:13px;
+}
+a:hover{
   color:#CC3300;
   text-decoration:underline;
+}
+.popup1 {
+  width:100%;
+  height:100%;
 }
 </style>

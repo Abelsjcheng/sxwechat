@@ -36,17 +36,16 @@
       </ul>
     </div>
     <div>
-      
     </div>
   </div>
 </template>
 
 <script>
-import { Swiper, SwiperItem, Divider} from 'vux'
+import { Swiper } from 'vux'
 
 const baseList = [{
   url: 'javascript:',
-  img:  require('../../assets/img/village/one.jpg'),
+  img: require('../../assets/img/village/one.jpg'),
   title: '茶坑'
 }, {
   url: 'javascript:',
@@ -68,9 +67,7 @@ const urlList = baseList.map((item, index) => ({
 
 export default {
   components: {
-    Swiper,
-    SwiperItem,
-    Divider
+    Swiper
   },
   ready () {
 
@@ -92,7 +89,7 @@ export default {
   }
 }
 </script>
-<style scoped> 
+<style scoped>
      a:hover{
             color:#900;
             text-decoration: underline;
