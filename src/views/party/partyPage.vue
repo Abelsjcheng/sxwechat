@@ -13,7 +13,7 @@
         <img slot="icon" :src="menu.img">
       </grid-item>
     </grid>
-    <panel header="推荐" :list="list" type="5"></panel>
+    <panel header="推荐" :list="list" type="5" @on-click-item="openproject"></panel>
     <card>
       <cell slot="header" link="/home">
         <span slot="title" class="cell-pwork-title">党员值班</span>
@@ -31,14 +31,29 @@
         </cell>
       </p>
     </card>
+    <div v-transfer-dom>
+      <popup v-model="show" position="right" width="100%">
+        <div>
+          <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage">推荐详情</x-header>
+          <div>
+            <infocontent/>
+          </div>
+        </div>
+      </popup>
+    </div>
   </div>
 </template>
 <script>
-import { Swiper, SwiperItem, Grid, GridItem, Panel, Card, Cell } from 'vux'
+import infocontent from '@/components/Infopanel/infocontent.vue'
+import { Swiper, SwiperItem, Grid, GridItem, Panel, Card, Cell, XHeader, Popup, TransferDom } from 'vux'
 export default {
-  components: { Swiper, SwiperItem, Grid, GridItem, Panel, Card, Cell },
+  directives: {
+    TransferDom
+  },
+  components: { Swiper, SwiperItem, Grid, GridItem, Panel, Card, Cell, XHeader, Popup, infocontent },
   data () {
     return {
+      show:false,
       listindex: 0,
       swiperlist: [
         { url: '/', img: require('../../assets/img/party/affair1.jpg'), title: '党员开会' },
@@ -100,6 +115,13 @@ export default {
   methods: {
     swiper_onIndexChange (index) {
       this.listindex = index
+    },
+    openproject (item) { // 显示弹窗
+      this.show = true
+      console.log(item)
+    },
+    backpage () { // 关闭弹窗
+      this.show = false
     }
   }
 }

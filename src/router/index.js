@@ -143,12 +143,6 @@ export default new Router({
       name: 'dianzan',
       component: () =>
         import('@/components/mine/dianzan')
-    },
-    {
-      path: '/mine_news',
-      name: 'news',
-      component: () =>
-        import('@/components/mine/news')
     }
   ]
 })

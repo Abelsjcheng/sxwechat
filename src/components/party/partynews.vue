@@ -7,7 +7,7 @@
       </div>
       <scroller lock-x scrollbar-y use-pullup use-pulldown @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" @on-scroll="onScroll" ref="scroller" height="-46" v-model="status">
         <div  style="padding-top:40px;">
-          <panel :list="list" type="4"></panel>
+          <panel :list="list" type="4" @on-click-item="openproject"></panel>
           <!-- <load-more tip="正在加载"></load-more> -->
         </div>
        <div slot="pullup" class="xs-plugin-pullup-container xs-plugin-pullup-up" style="position: absolute; width: 100%; height: 40px; bottom: -40px; text-align: center;">
@@ -17,18 +17,32 @@
           <span v-show="status.pulldownStatus === 'loading'"><load-more tip="正在加载"></load-more></span>
         </div>
       </scroller>
-      <router-view></router-view>
     </view-box>
+    <div v-transfer-dom>
+      <popup v-model="show" position="right" width="100%">
+        <div>
+          <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage">党建新闻详情</x-header>
+          <div>
+            <infocontent/>
+          </div>
+        </div>
+      </popup>
+    </div>
   </div>
 </template>
 <script>
-import { Panel, Scroller, LoadMore, ViewBox, XHeader } from 'vux'
+import infocontent from '@/components/Infopanel/infocontent.vue'
+import { Panel, Scroller, LoadMore, ViewBox, XHeader, Popup, TransferDom } from 'vux'
 export default {
   name: 'partynews', // 党建新闻
-  components: { Panel, Scroller, LoadMore, ViewBox, XHeader }, // 注册组件1
+  directives: {
+    TransferDom
+  },
+  components: { Panel, Scroller, LoadMore, ViewBox, XHeader, Popup, infocontent }, // 注册组件1
   data () { // 局内数据
     return {
-       status: {
+      show:false,
+      status: {
         pullupStatus: 'default',
         pulldownStatus: 'default'
       },
@@ -113,6 +127,13 @@ export default {
       }else if(this.openwindowshow.inputshow){
         this.$refs.inputcomment.blur()
       }
+    },
+    openproject (item) { // 显示弹窗
+      this.show = true
+      console.log(item)
+    },
+    backpage () { // 关闭弹窗
+      this.show = false
     }
   },
   computed: { // 计算属性

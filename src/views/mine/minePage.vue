@@ -1,8 +1,8 @@
 <template>
   <div>
     <card>
-      <div slot="header" style="margin-top: 10px;">
-        <cell title="施景程" link="/home" >
+      <div slot="header" style="margin-top: 10px;" @on-click-item ="showinfo">
+        <cell title="施景程"  @click.native="show = true" is-link>
             <img slot="icon" src="../../assets/img/my.png" style="border-radius: 50%;width: 3rem;">
         </cell>
       </div>
@@ -30,9 +30,11 @@
       </grid-item>
     </grid>
     <group>
-      <cell title="我的消息" is-link>
-        <i slot="icon" class="fa fa-commenting menu-cell-icon"></i>
-      </cell>
+      <div @on-item-click ="shownews">
+        <cell title="我的消息" @click.native="show1 = true" is-link>
+          <i slot="icon" class="fa fa-commenting menu-cell-icon"></i>
+        </cell>
+      </div>
       <cell title="账号换绑" is-link>
         <i slot="icon" class="fa fa-phone-square menu-cell-icon"></i>
       </cell>
@@ -42,12 +44,16 @@
         <i slot="icon" class="fa fa-power-off menu-cell-icon"></i>
       </cell>
     </group>
+    <myinfo :show="show" v-on:closepop="show =$event"/>
+    <mynews :show1="show1" v-on:closepop1="show1 =$event"/>
   </div>
 </template>
 <script>
+import myinfo from '../../components/mine/myinfo.vue'
+import mynews from '../../components/mine/mynews.vue'
 import { Card, Cell, Grid, GridItem, Group } from 'vux'
 export default {
-  components: { Card, Cell, Grid, GridItem, Group },
+  components: { Card, Cell, Grid, GridItem, Group, myinfo, mynews },
   data () {
     return {
       menus: [
@@ -55,7 +61,22 @@ export default {
         { label: '我的收藏', icon: 'fa fa-star', style: 'font-size: 24px;color: rgb(215, 185, 68);', path: '/mine_collect' },
         { label: '我的评论', icon: 'fa fa-comment', style: 'font-size: 24px;color: #828afc;', path: '/mine_comment' },
         { label: '我的点赞', icon: 'fa fa-thumbs-up', style: 'font-size: 24px;color: #f74c31;', path: '/mine_dianzan' }
-      ]
+      ],
+      show: false,
+      show1: false
+    }
+  },
+  methods: {
+    //  onClick () {
+    //   console.log('on click')
+    // },
+    showinfo(item) {
+      this.show = true
+      console.log(item)
+    },
+    shownews(item) {
+      this.show1 = true
+      console.log(item)
     }
   }
 }

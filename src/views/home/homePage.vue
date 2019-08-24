@@ -19,18 +19,33 @@
         <img slot="icon" :src="menu.img">
       </grid-item>
     </grid>
-    <panel header="最新消息" :footer="footer" :list="list" type="5"></panel>
+    <panel header="最新消息" :footer="footer" :list="list" type="5" @on-click-item="openproject"></panel>
     <panel header="合作伙伴推送" :footer="footer" :list="partners" type="1"></panel>
+    <div v-transfer-dom>
+      <popup v-model="show" position="right" width="100%">
+        <div>
+          <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage">消息详情</x-header>
+          <div>
+            <infocontent/>
+          </div>
+        </div>
+      </popup>
+    </div>
   </div>
 </template>
 <script>
-import { Card, Grid, GridItem, Panel } from 'vux'
+import infocontent from '@/components/Infopanel/infocontent.vue'
+import { Card, Grid, GridItem, Panel, XHeader,Popup, TransferDom } from 'vux'
 export default {
+  directives: {
+    TransferDom
+  },
   components: {
-    Card, Grid, GridItem, Panel
+    Card, Grid, GridItem, Panel, XHeader,Popup, TransferDom, infocontent 
   },
   data () {
     return {
+      show:false,
       menus: [
         { label: '资讯', img: require('../../assets/img/menus/info.png'), path: '/home_info' }, // 异步加载图片
         { label: '项目公开', img: require('../../assets/img/menus/project.png'), path: '/home_project' },
@@ -93,6 +108,15 @@ export default {
         title: '更多',
         url: '/home_partners'
       }
+    }
+  },
+  methods: { // 方法函数
+    openproject (item) { // 显示弹窗
+      this.show = true
+      console.log(item)
+    },
+    backpage () { // 关闭弹窗
+      this.show = false
     }
   }
 }

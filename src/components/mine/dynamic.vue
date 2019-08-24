@@ -2,8 +2,7 @@
   <div class="dynamic" style="height:100%;">
       <x-header :left-options="{backText: ''}" style="background-color:rgba(180,200,200,0.3);">
         <div style="color:#212121;font-family:'华文行楷'">我的动态</div>
-        <!-- <x-icon slot="right" type="camera" size="35" style="fill:#fff;position:relative;top:-8px;"  @click="openwindowshow.showMenus = true"></x-icon> -->
-      </x-header>
+        </x-header>
       <scroller lock-x scrollbar-y use-pullup use-pulldown @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" @on-scroll="onScroll" ref="scroller" height="-46" v-model="status">
         <div>
           <div class="dynamic-headbg">
@@ -13,42 +12,44 @@
             </div>
           </div>
           <group>
-            <cell align-items="flex-start"  value-align="left" v-for="(pcircle,index) in pcircles" :key="index" :id="'pid'+index">
-              <img slot="title" :src="pcircle.headimg" width="45" height="45" style="margin-right:1em;border-radius: 6px;"> <!--发表说说的用户头像 -->
-              <div>
-                <span class="post-name">{{pcircle.name}} </span> <!--发表说说的用户昵称 -->
-                <div class="post-text" v-html="pcircle.pcontent"> </div> <!--说说的内容 -->
-                <div v-show="pcircle.imgurl && pcircle.imgurl.length>0"> <!-- 判断是否有图片-->
-                  <img :class="'previewer-demo-img'+index" v-for="(list,imgindex) in pcircle.imgurl" :key="imgindex" :src="list.src" width="100" :style="{width: imgWidth, height: imgWidth}" @click="show(pcircle.imgurl,imgindex,index)" >
-                </div>
-                <div class="post-time-ico">
-                  <div class="post-time">{{pcircle.adddate}}</div> <!--发表说说的时间 -->
-                  <popover placement="left" @on-show="openpop()" @on-hide="closepop()" :gutter=10 > <!--评论点赞功能弹窗 -->
-                    <div slot="content" class="popover-demo-content" v-show="openwindowshow.pop">
-                      <div class="like"  @click="isgood(index)">
-                        <i class="fa fa-heart-o" aria-hidden="true"></i>
-                        {{ pcircle.ispr?'取消': '赞' }}
+            <div @on-click-item ="showinfo">
+              <cell align-items="flex-start" @click.native="show1 = true" value-align="left" v-for="(pcircle,index) in pcircles" :key="index" :id="'pid'+index">
+                <img slot="title" :src="pcircle.headimg" width="45" height="45" style="margin-right:1em;border-radius: 6px;"> <!--发表说说的用户头像 -->
+                <div>
+                  <span class="post-name">{{pcircle.name}} </span> <!--发表说说的用户昵称 -->
+                  <div class="post-text" v-html="pcircle.pcontent"> </div> <!--说说的内容 -->
+                  <div v-show="pcircle.imgurl && pcircle.imgurl.length>0"> <!-- 判断是否有图片-->
+                    <img :class="'previewer-demo-img'+index" v-for="(list,imgindex) in pcircle.imgurl" :key="imgindex" :src="list.src" width="100" :style="{width: imgWidth, height: imgWidth}" @click="show(pcircle.imgurl,imgindex,index)" >
+                  </div>
+                  <div class="post-time-ico">
+                    <div class="post-time">{{pcircle.adddate}}</div> <!--发表说说的时间 -->
+                    <popover placement="left" @on-show="openpop()" @on-hide="closepop()" :gutter=10 > <!--评论点赞功能弹窗 -->
+                      <div slot="content" class="popover-demo-content" v-show="openwindowshow.pop">
+                        <div class="like"  @click="isgood(index)">
+                          <i class="fa fa-heart-o" aria-hidden="true"></i>
+                          {{ pcircle.ispr?'取消': '赞' }}
+                        </div>
+                        <div class="like" @click="openpopup(index)">
+                          <i class="fa fa-comment-o" aria-hidden="true"></i>
+                          评论
+                        </div>
                       </div>
-                      <div class="like" @click="openpopup(index)">
-                        <i class="fa fa-comment-o" aria-hidden="true"></i>
-                        评论
-                      </div>
-                    </div>
-                    <i class="fa fa-flickr post-icon" ></i>
-                  </popover>
+                      <i class="fa fa-flickr post-icon" ></i>
+                    </popover>
+                  </div>
                 </div>
-              </div>
-              <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0"> 
-                <div style="border-bottom: 1px solid #D9D9D9;" v-show="pcircle.TbPcpraise && pcircle.TbPcpraise.length>0">
-                  <i class="fa fa-heart-o"> </i>
-                  <span v-for="(like,index) in pcircle.TbPcpraise" :key="index"> {{like.uname}}, </span> <!--点赞人的昵称 -->
+                <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0"> 
+                  <div style="border-bottom: 1px solid #D9D9D9;" v-show="pcircle.TbPcpraise && pcircle.TbPcpraise.length>0">
+                    <i class="fa fa-heart-o"> </i>
+                    <span v-for="(like,index) in pcircle.TbPcpraise" :key="index"> {{like.uname}}, </span> <!--点赞人的昵称 -->
+                  </div>
+                  <div v-show="pcircle.TbPccomment && pcircle.TbPccomment.length>0" v-for="(rcomment,rindex) in pcircle.TbPccomment" :key="rindex">
+                    <span>{{rcomment.runame}} :</span> <!--评论人姓名 -->
+                    <span style="color:#000" @click="reply(rcomment,index)">{{rcomment.ccontent}} </span> <!--评论内容 -->
+                  </div>
                 </div>
-                <div v-show="pcircle.TbPccomment && pcircle.TbPccomment.length>0" v-for="(rcomment,rindex) in pcircle.TbPccomment" :key="rindex">
-                  <span>{{rcomment.runame}} :</span> <!--评论人姓名 -->
-                  <span style="color:#000" @click="reply(rcomment,index)">{{rcomment.ccontent}} </span> <!--评论内容 -->
-                </div>
-              </div>
-            </cell>
+              </cell>
+            </div>
           </group>
         </div>
         <div slot="pullup" class="xs-plugin-pullup-container xs-plugin-pullup-up" style="position: absolute; width: 100%; height: 40px; bottom: -40px; text-align: center;">
@@ -58,9 +59,6 @@
           <span v-show="status.pulldownStatus === 'loading'"><load-more tip="正在加载"></load-more></span>
         </div>
       </scroller>
-      <div v-transfer-dom>
-        <actionsheet :menus="menus" v-model="openwindowshow.showMenus" @on-click-menu="click" show-cancel></actionsheet>
-      </div>
       <div v-transfer-dom> <!--图片查看器 -->
         <previewer :list="imglist" ref="previewer" :options="options()"></previewer>
       </div>
@@ -83,18 +81,21 @@
           </swiper>
         </div>
       </div>
+      <dynamicpop :show1="show1" v-on:closepop1="show1 =$event"/>
   </div>
 </template>
 <script>
+import dynamicpop from '../../components/mine/dynamicpop.vue'
 import { XHeader, Actionsheet, TransferDom, Cell, Group, Popover, Previewer, Scroller, LoadMore, Popup, WechatEmotion as Emotion, Swiper, SwiperItem } from 'vux'
 export default {
   name: 'dynamic', // 朋友圈
   directives: {
     TransferDom
   },
-  components: { XHeader, Actionsheet, Cell, Group, Popover, Previewer, Scroller, LoadMore, Popup, Emotion, Swiper, SwiperItem }, // 注册组件
+  components: { XHeader, dynamicpop, Actionsheet, Cell, Group, Popover, Previewer, Scroller, LoadMore, Popup, Emotion, Swiper, SwiperItem }, // 注册组件
   data () { // 局内数据
     return {
+      show1: false,
       imgWidth: '80px', // 说说图片大小
       pid: 0, // 用于给当前说说/评论进行编号
       openwindowshow: {
@@ -476,6 +477,10 @@ export default {
   methods: { // 方法函数
     click (key) { // 点击菜单
       console.log(key)
+    },
+    showinfo(item) {
+      this.show1 = true
+      console.log(item)
     },
     openpop () { // 打开评论点赞功能窗
       this.openwindowshow.pop = true
