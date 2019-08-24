@@ -2,7 +2,7 @@
     <!-- 资讯页面待开发 -->
     <div style="height:100%;">
       <view-box ref="viewBox" >
-        <div slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;">
+        <div slot="header" class="vux-scroller-header">
           <x-header>资讯</x-header>
           <!--取消搜索框自动置顶:auto-fixed="false"-->
           <div>

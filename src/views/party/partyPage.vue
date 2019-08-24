@@ -15,7 +15,7 @@
     </grid>
     <panel header="推荐" :list="list" type="5" @on-click-item="openproject"></panel>
     <card>
-      <cell slot="header" link="/home">
+      <cell slot="header" link="/party_work">
         <span slot="title" class="cell-pwork-title">党员值班</span>
       </cell>
       <p slot="content" class="card-padding">

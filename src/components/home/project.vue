@@ -1,8 +1,8 @@
 <template>
   <div style="height:100%;">
     <view-box ref="viewBox" body-padding-top="90px" body-padding-bottom="0" >
-      <div slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;">
-        <x-header class="vux-scroller-header">项目公开</x-header>
+      <div slot="header" class="vux-scroller-header">
+        <x-header>项目公开</x-header>
         <tab>
           <tab-item selected @on-item-click="onItemClick(1)" badge-label="1">未建</tab-item>
           <tab-item @on-item-click="onItemClick(2)" badge-label="2">在建</tab-item>
@@ -57,11 +57,10 @@ export default {
       this.show = false
     },
     getinfo () { // 项目状态“0”为未建，“1”为在建，“2”为已建
-      let that = this
-      this.$axios.get('http://110.53.162.165:5050/api/project/all').then(function (res) {
+      this.axios.get('http://110.53.162.165:5050/api/project/all').then((res) => {
         for (let i = 0, len = res.data.data.length; i < len; i++) {
           if (res.data.data[i].ptype === 0) {
-            that.UnBuiltLists.push({
+            this.UnBuiltLists.push({
               projectinfo: res.data.data[i],
               title: res.data.data[i].proname,
               desc: res.data.data[i].content,
@@ -71,7 +70,7 @@ export default {
               }
             })
           } else if (res.data.data[i].ptype === 1) {
-            that.NowBuiltLists.push({
+            this.NowBuiltLists.push({
               projectinfo: res.data.data[i],
               title: res.data.data[i].proname,
               desc: res.data.data[i].content,
@@ -81,7 +80,7 @@ export default {
               }
             })
           } else if (res.data.data[i].ptype === 2) {
-            that.haveBuiltLists.push({
+            this.haveBuiltLists.push({
               projectinfo: res.data.data[i],
               title: res.data.data[i].proname,
               desc: res.data.data[i].content,
