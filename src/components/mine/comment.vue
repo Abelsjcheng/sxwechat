@@ -32,10 +32,10 @@ export default {
     TransferDom
   },
   components: { ViewBox, XHeader, Panel, Popup, infocontent }, // 注册组件
-  data() {
-      return{
-          show:false,
-        list: [
+  data () {
+    return {
+      show: false,
+      list: [
         {
           src: '',
           title: '标题一',
@@ -89,21 +89,21 @@ export default {
           }
         }
       ]
-      }
+    }
   },
   methods: {
-      openproject (item) { // 显示弹窗
+    openproject (item) { // 显示弹窗
       this.show = true
       console.log(item)
     },
     backpage () { // 关闭弹窗
       this.show = false
-    },
+    }
   },
   computed: {
 
   },
-  mounted() {
+  mounted () {
 
   },
   watch: {

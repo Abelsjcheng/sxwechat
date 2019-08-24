@@ -41,7 +41,7 @@ export default {
   components: { Panel, Scroller, LoadMore, ViewBox, XHeader, Popup, infocontent }, // 注册组件1
   data () { // 局内数据
     return {
-      show:false,
+      show: false,
       status: {
         pullupStatus: 'default',
         pulldownStatus: 'default'
@@ -102,7 +102,7 @@ export default {
     }
   },
   methods: { // 方法函数
-   loadMore () { // 上拉刷新
+    loadMore () { // 上拉刷新
       // get
       setTimeout(() => {
         setTimeout(() => {
@@ -111,7 +111,7 @@ export default {
       }, 2000)
     },
     refresh () { // 下拉刷新
-      // get 
+      // get
       setTimeout(() => {
         this.$nextTick(() => {
           setTimeout(() => {
@@ -121,10 +121,10 @@ export default {
       }, 2000)
     },
     onScroll (pos) { // 页面滚动触发函数
-      if(this.openwindowshow.pop){
+      if (this.openwindowshow.pop) {
         console.log(1)
-        this.openwindowshow.pop=false
-      }else if(this.openwindowshow.inputshow){
+        this.openwindowshow.pop = false
+      } else if (this.openwindowshow.inputshow) {
         this.$refs.inputcomment.blur()
       }
     },

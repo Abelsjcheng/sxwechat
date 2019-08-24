@@ -53,7 +53,7 @@ export default {
   components: { Swiper, SwiperItem, Grid, GridItem, Panel, Card, Cell, XHeader, Popup, infocontent },
   data () {
     return {
-      show:false,
+      show: false,
       listindex: 0,
       swiperlist: [
         { url: '/', img: require('../../assets/img/party/affair1.jpg'), title: '党员开会' },

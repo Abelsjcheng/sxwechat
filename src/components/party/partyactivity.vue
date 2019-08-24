@@ -63,7 +63,7 @@ export default {
   components: { XHeader, ViewBox, Popup, Card, Cell, Group, CellBox }, // 注册组件
   data () { // 局内数据
     return {
-      show: false,
+      show: false
     }
   },
   methods: { // 方法函数
@@ -104,7 +104,7 @@ export default {
     text-align-last: justify;
   }
   .hd-form-item-value{
-    display: block;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+    display: block;
     overflow: hidden;
     word-break: normal;
     word-wrap: break-word;

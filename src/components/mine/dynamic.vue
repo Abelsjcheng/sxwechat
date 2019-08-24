@@ -38,7 +38,7 @@
                     </popover>
                   </div>
                 </div>
-                <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0"> 
+                <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0">
                   <div style="border-bottom: 1px solid #D9D9D9;" v-show="pcircle.TbPcpraise && pcircle.TbPcpraise.length>0">
                     <i class="fa fa-heart-o"> </i>
                     <span v-for="(like,index) in pcircle.TbPcpraise" :key="index"> {{like.uname}}, </span> <!--点赞人的昵称 -->
@@ -86,13 +86,13 @@
 </template>
 <script>
 import dynamicpop from '../../components/mine/dynamicpop.vue'
-import { XHeader, Actionsheet, TransferDom, Cell, Group, Popover, Previewer, Scroller, LoadMore, Popup, WechatEmotion as Emotion, Swiper, SwiperItem } from 'vux'
+import { XHeader, TransferDom, Cell, Group, Popover, Previewer, Scroller, LoadMore, WechatEmotion as Emotion, Swiper, SwiperItem } from 'vux'
 export default {
   name: 'dynamic', // 朋友圈
   directives: {
     TransferDom
   },
-  components: { XHeader, dynamicpop, Actionsheet, Cell, Group, Popover, Previewer, Scroller, LoadMore, Popup, Emotion, Swiper, SwiperItem }, // 注册组件
+  components: { XHeader, dynamicpop, Cell, Group, Popover, Previewer, Scroller, LoadMore, Emotion, Swiper, SwiperItem }, // 注册组件
   data () { // 局内数据
     return {
       show1: false,
@@ -471,14 +471,14 @@ export default {
         width: '100%',
         bottom: '0px',
         'background-color': '#fbf9fe'
-      },
+      }
     }
   },
   methods: { // 方法函数
     click (key) { // 点击菜单
       console.log(key)
     },
-    showinfo(item) {
+    showinfo (item) {
       this.show1 = true
       console.log(item)
     },
@@ -548,7 +548,7 @@ export default {
       })
     },
     closepopup (val) { // popup弹窗关闭
-      this.$refs.inputcomment.blur() 
+      this.$refs.inputcomment.blur()
       this.openwindowshow.emotionshow = false
       this.openwindowshow.IsKeyorEmo = true
     },
@@ -581,13 +581,13 @@ export default {
         this.$refs.inputcomment.blur()
         this.$nextTick(() => {
           setTimeout(() => {
-            this.openwindowshow.IsKeyorEmo = false //显示键盘图标
+            this.openwindowshow.IsKeyorEmo = false // 显示键盘图标
             this.openwindowshow.emotionshow = true // 键盘->表情框
           }, 100)
         })
       } else {
         this.openwindowshow.emotionshow = false // 关闭表情框
-        this.openwindowshow.IsKeyorEmo = true  //显示笑脸图标
+        this.openwindowshow.IsKeyorEmo = true // 显示笑脸图标
         this.$nextTick(() => {
           this.$refs.inputcomment.focus() // 表情框->键盘
         })
@@ -631,7 +631,7 @@ export default {
   computed: { // 计算属性
   },
   watch: { // 侦听器
-    'openwindowshow.inputshow'(val){
+    'openwindowshow.inputshow' (val) {
       if (val === false) {
         this.closepopup()
       }
@@ -640,11 +640,11 @@ export default {
   mounted () { // 初始化函数
     // 根据实际手机屏幕 获取图片宽高
     this.imgWidth = parseInt((Number(window.screen.width) - 140) / 3) + 'px'
-    let that=this
-    document.addEventListener('click',function(e){
-          if(e.target.className !== 'fa fa-smile-o' && e.target.className !== 'dynamic-input' && e.target.className !== 'dynamic-inputcell'&& e.target.className !== 'like' && e.target.className !== 'fa fa-keyboard-o'){
-            that.openwindowshow.inputshow = false
-          }
+    let that = this
+    document.addEventListener('click', function (e) {
+      if (e.target.className !== 'fa fa-smile-o' && e.target.className !== 'dynamic-input' && e.target.className !== 'dynamic-inputcell' && e.target.className !== 'like' && e.target.className !== 'fa fa-keyboard-o') {
+        that.openwindowshow.inputshow = false
+      }
     })
   }
 }
@@ -754,8 +754,6 @@ body /deep/ .vux-popover-arrow-right {
 .dynamic /deep/ .weui-loadmore{
   margin: auto auto;
 }
-
-
 .wechatEmotion-container{
     background: rgba(238, 238, 238, 0.5);
     .emotion-list{

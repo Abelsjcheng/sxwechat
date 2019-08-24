@@ -70,11 +70,11 @@ export default {
     //  onClick () {
     //   console.log('on click')
     // },
-    showinfo(item) {
+    showinfo (item) {
       this.show = true
       console.log(item)
     },
-    shownews(item) {
+    shownews (item) {
       this.show1 = true
       console.log(item)
     }

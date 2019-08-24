@@ -35,17 +35,17 @@
 </template>
 <script>
 import infocontent from '@/components/Infopanel/infocontent.vue'
-import { Card, Grid, GridItem, Panel, XHeader,Popup, TransferDom } from 'vux'
+import { Card, Grid, GridItem, Panel, XHeader, Popup, TransferDom } from 'vux'
 export default {
   directives: {
     TransferDom
   },
   components: {
-    Card, Grid, GridItem, Panel, XHeader,Popup, TransferDom, infocontent 
+    Card, Grid, GridItem, Panel, XHeader, Popup, TransferDom, infocontent
   },
   data () {
     return {
-      show:false,
+      show: false,
       menus: [
         { label: '资讯', img: require('../../assets/img/menus/info.png'), path: '/home_info' }, // 异步加载图片
         { label: '项目公开', img: require('../../assets/img/menus/project.png'), path: '/home_project' },

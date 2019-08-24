@@ -29,68 +29,67 @@
 <script>
 import { Popup, XHeader, XButton, Group, Cell, XInput, Selector, XAddress, Datetime, XTextarea, ChinaAddressData, TransferDom } from 'vux'
 export default {
-    name: 'myinfo',
-    directives: {
+  name: 'myinfo',
+  directives: {
     TransferDom
   },
-    components: { Popup, XHeader, XButton, Group, Cell, XInput, Selector, XAddress, Datetime, XTextarea },
-    data () {
-        return{
-            src: require('../../assets/img/my.png'), // 头像
-            addressData: ChinaAddressData,
-            addressValue: null, // 所属地区
-            rename: null, // 姓名
-            IdCard: null, // 身份证号
-            party: null, // 是否是党员
-            phone: null, // 手机号码
-            gender: null, // 性别
-            name: null, // 昵称
-            email: null,
-            time: null,
-            value:'',
-            list1: [{key: 'nan', value: '男'}, {key: 'nv', value: '女'}],
-            list2: [{key: 'yes', value: '是党员'}, {key: 'no', value: '不是党员'}],
-            area: [{key: 'muyun', value: '暮云区'}, {key: 'furong', value: '芙蓉区'}, {key: 'kaifu', value: '开福区'}],
-            showpop: this.show
-      }
-    },
-    props:["show"],
-    methods: {
-      backpage () { // 关闭弹窗
+  components: { Popup, XHeader, XButton, Group, Cell, XInput, Selector, XAddress, Datetime, XTextarea },
+  data () {
+    return {
+      src: require('../../assets/img/my.png'), // 头像
+      addressData: ChinaAddressData,
+      addressValue: null, // 所属地区
+      rename: null, // 姓名
+      IdCard: null, // 身份证号
+      party: null, // 是否是党员
+      phone: null, // 手机号码
+      gender: null, // 性别
+      name: null, // 昵称
+      email: null,
+      time: null,
+      value: '',
+      list1: [{ key: 'nan', value: '男' }, { key: 'nv', value: '女' }],
+      list2: [{ key: 'yes', value: '是党员' }, { key: 'no', value: '不是党员' }],
+      area: [{ key: 'muyun', value: '暮云区' }, { key: 'furong', value: '芙蓉区' }, { key: 'kaifu', value: '开福区' }],
+      showpop: this.show
+    }
+  },
+  props: ['show'],
+  methods: {
+    backpage () { // 关闭弹窗
       this.showpop = false
-      },
-      onChange (val) { // selector的 change事件
-        console.log(val)
-          },
-      change (val) {
-        console.log('on change', val)
-      },
-      onFocus (val, $event) {
-        console.log('on focus', val, $event)
-      },
-      onEnter (val) { // input输入完成后点击enter(确认)事件
-        console.log('click enter!', val)
-      },
-      onBlur (val) {
-        console.log('on blur', val)
-      },
-      closepop () {
-        this.showpop=false
-        this.$emit("closepop",this.showpop)
-      }
     },
-    computed:{
-      listenshow (){
-        return this.show;
-      }
+    onChange (val) { // selector的 change事件
+      console.log(val)
     },
-    watch:{
-      listenshow (vag) {
-        this.showpop=vag
-      }
-    } 
+    change (val) {
+      console.log('on change', val)
+    },
+    onFocus (val, $event) {
+      console.log('on focus', val, $event)
+    },
+    onEnter (val) { // input输入完成后点击enter(确认)事件
+      console.log('click enter!', val)
+    },
+    onBlur (val) {
+      console.log('on blur', val)
+    },
+    closepop () {
+      this.showpop = false
+      this.$emit('closepop', this.showpop)
+    }
+  },
+  computed: {
+    listenshow () {
+      return this.show
+    }
+  },
+  watch: {
+    listenshow (vag) {
+      this.showpop = vag
+    }
+  }
 }
-
 
 </script>
 <style lang="less" scoped>

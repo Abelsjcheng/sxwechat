@@ -29,7 +29,7 @@
                     </popover>
                   </div>
                 </div>
-                <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0"> 
+                <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0">
                   <div style="border-bottom: 1px solid #D9D9D9;" v-show="pcircle.TbPcpraise && pcircle.TbPcpraise.length>0">
                     <i class="fa fa-heart-o"> </i>
                     <span v-for="(like,index) in pcircle.TbPcpraise" :key="index"> {{like.uname}}, </span> <!--点赞人的昵称 -->
@@ -63,157 +63,136 @@
                 </swiper>
               </div>
             </div>
-            <!-- <ul id="comments_list">
-                <li class="comments">
-                <div class="com_top">
-                  <span class="photo">
-                      <img src="../../assets/img/my_head.png">
-                  </span>
-                  <span class="name" >施景程</span>
-                </div>
-                <hr>
-                <div class="com_content" style="margin:10px;text-indent:2em;">
-                值班地点: 暮云镇居委会二楼办公室联系方式: 18874083707
-                </div>
-                <hr>
-                <div class="com_bottom">
-                <span class="time">2017-04-18</span>
-                <span class="useful">
-                    <span class="like_num">1</span>点赞
-                </span>
-                </div>
-                </li>
-            </ul> -->
-        </div> 
+        </div>
       </popup>
     </div>
 </template>
 <script>
-import { Popup, XHeader, Actionsheet, Previewer, TransferDom, XButton, Panel, Group, Cell, Popover, WechatEmotion as Emotion, Swiper, SwiperItem  } from 'vux'
+import { Popup, XHeader, Previewer, TransferDom, Group, Cell, Popover, WechatEmotion as Emotion, Swiper, SwiperItem } from 'vux'
 export default {
-    name: 'dynamicpop',
-    directives: {
+  name: 'dynamicpop',
+  directives: {
     TransferDom
   },
-    components: { Popup, XHeader, Actionsheet, Previewer, XButton, Panel, Group, Cell, Popover, Emotion, Swiper, SwiperItem },
-    data() {
-        return{
-            showpop: this.show1,
-            imgWidth: '80px', // 说说图片大小
-            pid: 0, // 用于给当前说说/评论进行编号
-            openwindowshow: {
-              pop: false, // 点赞评论功能弹窗显示判断
-              inputshow: false, // 输入框弹窗显示判断
-              emotionshow: false, // 表情框显示判断
-              IsKeyorEmo: true // true:表情 false：键盘
+  components: { Popup, XHeader, Previewer, Group, Cell, Popover, Emotion, Swiper, SwiperItem },
+  data () {
+    return {
+      showpop: this.show1,
+      imgWidth: '80px', // 说说图片大小
+      pid: 0, // 用于给当前说说/评论进行编号
+      openwindowshow: {
+        pop: false, // 点赞评论功能弹窗显示判断
+        inputshow: false, // 输入框弹窗显示判断
+        emotionshow: false, // 表情框显示判断
+        IsKeyorEmo: true // true:表情 false：键盘
+      },
+      good: '赞', // 赞/取消
+      imglist: [], // 存储图片
+      mytext: '', // input的value
+      inputplaceholder: '评论', // 评论/ **回复 **
+      replycomment: '', // 要回复那个人所发的评论信息
+      list: ['微笑', '撇嘴', '色', '发呆', '得意', '流泪', '害羞', '闭嘴', '睡', '大哭', '尴尬', '发怒', '调皮', '呲牙', '惊讶', '难过', '酷', '冷汗', '抓狂', '吐', '偷笑', '可爱', '白眼', '傲慢', '饥饿', '困', '惊恐', '流汗', '憨笑', '大兵', '奋斗', '咒骂', '疑问', '嘘', '晕', '折磨', '衰', '骷髅', '敲打', '再见', '擦汗', '抠鼻', '鼓掌', '糗大了', '坏笑', '左哼哼', '右哼哼', '哈欠', '鄙视', '委屈', '快哭了', '阴险', '亲亲', '吓', '可怜', '菜刀', '西瓜', '啤酒', '篮球', '乒乓', '咖啡', '饭', '猪头', '玫瑰', '凋谢', '示爱', '爱心', '心碎', '蛋糕', '闪电', '炸弹', '刀', '足球', '瓢虫', '便便', '月亮', '太阳', '礼物', '拥抱', '强', '弱', '握手', '胜利', '抱拳', '勾引', '拳头', '差劲', '爱你', 'NO', 'OK', '爱情', '飞吻', '跳跳', '发抖', '怄火', '转圈', '磕头', '回头', '跳绳', '挥手', '激动', '街舞', '献吻', '左太极', '右太极'],
+      pcircles: [
+        {
+          pcid: 1, // 朋友圈编号
+          uid: 1, // 发布动态人id
+          name: '施景程', // 发布动态人姓名
+          pcontent: '值班地点: 暮云镇居委会二楼办公室联系方式: 18874083707 ', // 发布内容
+          headimg: require('../../assets/img/my_head.png'), // 头像地址
+          imgurl: [
+            {
+              id: 1,
+              src: require('../../assets/img/party/affair1.jpg'),
+              w: 800,
+              h: 400
+            }
+          ],
+          adddate: '2019-8-13', // 发布动态时间
+          prototal: 2, // 点赞总人数
+          TbPccomment: [ // 评论
+            {
+              coid: 1, // 评论id
+              pcid: 1, // 所属动态的id
+              replyid: 0, // 回复某评论的coid
+              uid: 1, // 评论人id
+              uname: '施景程', // 评论人姓名
+              ccontent: '评论测试', // 评论内容
+              cdate: '2018-11-11 17:57:53', // 评论日期
+              isusercom: 1, // 当前用户是否使这条评论的主人
+              runame: '施景程', // 重置回复人姓名 两种格式1.评论人姓名 2.评论人姓名 回复 被评论人姓名
+              aid: 430121101001, // 用户所属地区村社区 aid
+              to_uid: 0, // 被评论用户id
+              to_uname: null // 被评论用户姓名
             },
-            good: '赞', // 赞/取消
-            imglist: [], // 存储图片
-            mytext: '', // input的value
-            inputplaceholder: '评论', // 评论/ **回复 **
-            replycomment: '', // 要回复那个人所发的评论信息
-            list: ['微笑', '撇嘴', '色', '发呆', '得意', '流泪', '害羞', '闭嘴', '睡', '大哭', '尴尬', '发怒', '调皮', '呲牙', '惊讶', '难过', '酷', '冷汗', '抓狂', '吐', '偷笑', '可爱', '白眼', '傲慢', '饥饿', '困', '惊恐', '流汗', '憨笑', '大兵', '奋斗', '咒骂', '疑问', '嘘', '晕', '折磨', '衰', '骷髅', '敲打', '再见', '擦汗', '抠鼻', '鼓掌', '糗大了', '坏笑', '左哼哼', '右哼哼', '哈欠', '鄙视', '委屈', '快哭了', '阴险', '亲亲', '吓', '可怜', '菜刀', '西瓜', '啤酒', '篮球', '乒乓', '咖啡', '饭', '猪头', '玫瑰', '凋谢', '示爱', '爱心', '心碎', '蛋糕', '闪电', '炸弹', '刀', '足球', '瓢虫', '便便', '月亮', '太阳', '礼物', '拥抱', '强', '弱', '握手', '胜利', '抱拳', '勾引', '拳头', '差劲', '爱你', 'NO', 'OK', '爱情', '飞吻', '跳跳', '发抖', '怄火', '转圈', '磕头', '回头', '跳绳', '挥手', '激动', '街舞', '献吻', '左太极', '右太极'],
-             pcircles: [
-              {
-                pcid: 1, // 朋友圈编号
-                uid: 1, // 发布动态人id
-                name: '施景程', // 发布动态人姓名
-                pcontent: '值班地点: 暮云镇居委会二楼办公室联系方式: 18874083707 ', // 发布内容
-                headimg: require('../../assets/img/my_head.png'), // 头像地址
-                imgurl: [
-                  {
-                    id: 1,
-                    src: require('../../assets/img/party/affair1.jpg'),
-                    w: 800,
-                    h: 400
-                  }
-                ],
-                adddate: '2019-8-13', // 发布动态时间
-                prototal: 2, // 点赞总人数
-                TbPccomment: [ // 评论
-                  {
-                    coid: 1, // 评论id
-                    pcid: 1, // 所属动态的id
-                    replyid: 0, // 回复某评论的coid
-                    uid: 1, // 评论人id
-                    uname: '施景程', // 评论人姓名
-                    ccontent: '评论测试', // 评论内容
-                    cdate: '2018-11-11 17:57:53', // 评论日期
-                    isusercom: 1, // 当前用户是否使这条评论的主人
-                    runame: '施景程', // 重置回复人姓名 两种格式1.评论人姓名 2.评论人姓名 回复 被评论人姓名
-                    aid: 430121101001, // 用户所属地区村社区 aid
-                    to_uid: 0, // 被评论用户id
-                    to_uname: null // 被评论用户姓名
-                  },
-                  {
-                    coid: 2, // 评论id
-                    pcid: 1, // 所属动态的id
-                    replyid: 0,
-                    uid: 1,
-                    uname: '王李沙',
-                    ccontent: '评论回复测试',
-                    issensitive: 0,
-                    cdate: '2018-11-11 17:57:53',
-                    isusercom: 1,
-                    runame: '王李沙 回复 施景程',
-                    aid: 430121101001,
-                    to_uid: 0,
-                    to_uname: null
-                  }
-                ],
-                TbPcpraise: [
-                  {
-                    prid: null, // 点赞编号
-                    pcid: 2, // 对应动态编号
-                    uname: '施景程', // 点赞人姓名
-                    uid: 1, // 点赞人uid
-                    aid: null
-                  },
-                  {
-                    prid: null, // 点赞编号
-                    pcid: 2, // 对应动态编号
-                    uname: '王李沙', // 点赞人姓名
-                    uid: 1, // 点赞人uid
-                    aid: null
-                  }
-                ],
-                ismycircle: 1, // 是否是当前用户发的动态 1.是 0.不是
-                ispr: 1, // 当前用户是否已点赞 1.点了 0.没有点
-                prnum: 0, // 点赞用户的序列号（显示时排在第几位）
-                iscom: null, // 是否已评论
-                comnum: null, // 评论用户的序列号（显示时排在第几位）
-                aid: 430121101001 // 动态所属地区
-              }
-             ],
-             Inputposition: {
-              position: 'fixed',
-              width: '100%',
-              bottom: '0px',
-              'background-color': '#fbf9fe'
+            {
+              coid: 2, // 评论id
+              pcid: 1, // 所属动态的id
+              replyid: 0,
+              uid: 1,
+              uname: '王李沙',
+              ccontent: '评论回复测试',
+              issensitive: 0,
+              cdate: '2018-11-11 17:57:53',
+              isusercom: 1,
+              runame: '王李沙 回复 施景程',
+              aid: 430121101001,
+              to_uid: 0,
+              to_uname: null
+            }
+          ],
+          TbPcpraise: [
+            {
+              prid: null, // 点赞编号
+              pcid: 2, // 对应动态编号
+              uname: '施景程', // 点赞人姓名
+              uid: 1, // 点赞人uid
+              aid: null
             },
+            {
+              prid: null, // 点赞编号
+              pcid: 2, // 对应动态编号
+              uname: '王李沙', // 点赞人姓名
+              uid: 1, // 点赞人uid
+              aid: null
+            }
+          ],
+          ismycircle: 1, // 是否是当前用户发的动态 1.是 0.不是
+          ispr: 1, // 当前用户是否已点赞 1.点了 0.没有点
+          prnum: 0, // 点赞用户的序列号（显示时排在第几位）
+          iscom: null, // 是否已评论
+          comnum: null, // 评论用户的序列号（显示时排在第几位）
+          aid: 430121101001 // 动态所属地区
         }
+      ],
+      Inputposition: {
+        position: 'fixed',
+        width: '100%',
+        bottom: '0px',
+        'background-color': '#fbf9fe'
+      }
+    }
+  },
+  props: ['show1'],
+  methods: {
+    click (key) { // 点击菜单
+      console.log(key)
     },
-    props:["show1"],
-    methods: {
-      click (key) { // 点击菜单
-        console.log(key)
-      },
-      backpage () { // 关闭弹窗
+    backpage () { // 关闭弹窗
       this.showpop = false
-      },
-      closepop1 () {
-        this.showpop=false
-        this.$emit("closepop1",this.showpop)
-      },
-      addComment: function() {
-            this.$emit("submit",this.commentText);
-            this.commentText = "";
-        },
-        canelComment: function() {
-            this.$emit("canel");
-            this.commentText = "";
-        },
-        openpop () { // 打开评论点赞功能窗
+    },
+    closepop1 () {
+      this.showpop = false
+      this.$emit('closepop1', this.showpop)
+    },
+    addComment: function () {
+      this.$emit('submit', this.commentText)
+      this.commentText = ''
+    },
+    canelComment: function () {
+      this.$emit('canel')
+      this.commentText = ''
+    },
+    openpop () { // 打开评论点赞功能窗
       this.openwindowshow.pop = true
     },
     closepop () { // 关闭评论点赞功能窗
@@ -254,7 +233,7 @@ export default {
       })
     },
     closepopup (val) { // popup弹窗关闭
-      this.$refs.inputcomment.blur() 
+      this.$refs.inputcomment.blur()
       this.openwindowshow.emotionshow = false
       this.openwindowshow.IsKeyorEmo = true
     },
@@ -287,13 +266,13 @@ export default {
         this.$refs.inputcomment.blur()
         this.$nextTick(() => {
           setTimeout(() => {
-            this.openwindowshow.IsKeyorEmo = false //显示键盘图标
+            this.openwindowshow.IsKeyorEmo = false // 显示键盘图标
             this.openwindowshow.emotionshow = true // 键盘->表情框
           }, 100)
         })
       } else {
         this.openwindowshow.emotionshow = false // 关闭表情框
-        this.openwindowshow.IsKeyorEmo = true  //显示笑脸图标
+        this.openwindowshow.IsKeyorEmo = true // 显示笑脸图标
         this.$nextTick(() => {
           this.$refs.inputcomment.focus() // 表情框->键盘
         })
@@ -333,30 +312,30 @@ export default {
         this.$refs.inputcomment.focus()
       })
     }
+  },
+  computed: {
+    listenshow () {
+      return this.show1
+    }
+  },
+  watch: {
+    listenshow (vag) {
+      this.showpop = vag
     },
-    computed:{
-      listenshow (){
-        return this.show1;
-      }
-    },
-    watch:{
-      listenshow (vag) {
-        this.showpop=vag
-      },
-      'openwindowshow.inputshow'(val){
+    'openwindowshow.inputshow' (val) {
       if (val === false) {
         this.closepopup()
       }
     }
-    },
-     mounted () { // 初始化函数
+  },
+  mounted () { // 初始化函数
     // 根据实际手机屏幕 获取图片宽高
     this.imgWidth = parseInt((Number(window.screen.width) - 140) / 3) + 'px'
-    let that=this
-    document.addEventListener('click',function(e){
-          if(e.target.className !== 'fa fa-smile-o' && e.target.className !== 'dynamic-input' && e.target.className !== 'dynamic-inputcell'&& e.target.className !== 'like' && e.target.className !== 'fa fa-keyboard-o'){
-            that.openwindowshow.inputshow = false
-          }
+    let that = this
+    document.addEventListener('click', function (e) {
+      if (e.target.className !== 'fa fa-smile-o' && e.target.className !== 'dynamic-input' && e.target.className !== 'dynamic-inputcell' && e.target.className !== 'like' && e.target.className !== 'fa fa-keyboard-o') {
+        that.openwindowshow.inputshow = false
+      }
     })
   }
 }
@@ -364,16 +343,16 @@ export default {
 <style lang="less" scoped>
 .com_bottom .useful{
     float: right;
-    font-size: 10px; 
-    padding: 0 15px; 
+    font-size: 10px;
+    padding: 0 15px;
     text-align: center;
-    line-height: 20px; 
+    line-height: 20px;
     border-radius: 10px;
     color: #999999;
     border: 1px solid #999999;
 }
 .com_bottom .useful.usefulClick {
-    color: #F32D27; 
+    color: #F32D27;
     border: 1px solid #F32D27;
 }
 .weui-panel{

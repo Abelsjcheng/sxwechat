@@ -23,16 +23,16 @@
 import infocontent from '@/components/Infopanel/infocontent.vue'
 import { Popup, XHeader, TransferDom, XButton, Panel } from 'vux'
 export default {
-    name: 'mynews',
-    directives: {
+  name: 'mynews',
+  directives: {
     TransferDom
   },
-    components: { Popup, XHeader, XButton, Panel, infocontent },
-    data() {
-        return{
-            show:false,
-            showpop1:this.show1,
-            list: [
+  components: { Popup, XHeader, XButton, Panel, infocontent },
+  data () {
+    return {
+      show: false,
+      showpop1: this.show1,
+      list: [
         {
           src: '',
           title: '消息一',
@@ -73,35 +73,35 @@ export default {
           }
         }
       ]
-        }
+    }
+  },
+  props: ['show1'],
+  methods: {
+    backpage () { // 关闭我的消息弹窗
+      this.showpop1 = false
     },
-    props:["show1"],
-    methods: {
-      backpage () { // 关闭我的消息弹窗
-        this.showpop1 = false
-       },
-      closepop1 () {
-        this.showpop1=false
-        this.$emit("closepop1",this.showpop1)
-      },
-      openproject (item) { // 显示弹窗
-        this.show = true
-        console.log(item)
-        },
-      backpage1 () { // 关闭详情弹窗
-        this.show = false
-        }
+    closepop1 () {
+      this.showpop1 = false
+      this.$emit('closepop1', this.showpop1)
     },
-    computed:{
-      listenshow () {
-        return this.show1;
-      }
+    openproject (item) { // 显示弹窗
+      this.show = true
+      console.log(item)
     },
-    watch:{
-      listenshow (vag) {
-        this.showpop1=vag
-      }
-    } 
+    backpage1 () { // 关闭详情弹窗
+      this.show = false
+    }
+  },
+  computed: {
+    listenshow () {
+      return this.show1
+    }
+  },
+  watch: {
+    listenshow (vag) {
+      this.showpop1 = vag
+    }
+  }
 }
 </script>
 <style lang="less" scoped>

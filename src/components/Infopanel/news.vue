@@ -26,7 +26,7 @@ export default {
   components: { XHeader, Panel, Popup, infocontent }, // 注册组件
   data () { // 局内数据
     return {
-      show:false,
+      show: false,
       list: [
         {
           src: '',

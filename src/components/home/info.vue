@@ -41,12 +41,12 @@
 </template>
 <script>
 
-import { Search, XHeader, ViewBox, Tab, TabItem, Scroller, LoadMore  } from 'vux'
+import { Search, XHeader, ViewBox, Tab, TabItem, Scroller, LoadMore } from 'vux'
 
 export default {
   name: 'info', // 资讯
   components: {
-    Search, XHeader, ViewBox, Tab, TabItem, Scroller, LoadMore 
+    Search, XHeader, ViewBox, Tab, TabItem, Scroller, LoadMore
   }, // 注册组件
   data () { // 局内数据
     return {
@@ -55,7 +55,7 @@ export default {
       status: {
         pullupStatus: 'default',
         pulldownStatus: 'default'
-      },
+      }
     }
   },
   methods: { // 方法函数
@@ -95,7 +95,7 @@ export default {
       }, 2000)
     },
     refresh () { // 下拉刷新
-      // get 
+      // get
       setTimeout(() => {
         this.$nextTick(() => {
           setTimeout(() => {
@@ -105,13 +105,12 @@ export default {
       }, 2000)
     },
     onScroll (pos) { // 页面滚动触发函数
-      if(this.openwindowshow.pop){
+      if (this.openwindowshow.pop) {
         console.log(1)
-        this.openwindowshow.pop=false
-      }else if(this.openwindowshow.inputshow){
+        this.openwindowshow.pop = false
+      } else if (this.openwindowshow.inputshow) {
         this.$refs.inputcomment.blur()
       }
-      
     }
   },
   computed: { // 计算属性

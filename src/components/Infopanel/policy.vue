@@ -27,7 +27,7 @@ export default {
   components: { XHeader, Panel, Popup, infocontent }, // 注册组件
   data () { // 局内数据
     return {
-      show:false,
+      show: false,
       list: [
         {
           src: '',
@@ -155,7 +155,7 @@ export default {
   //       }
   //     },
   methods: { // 方法函数
-  openproject (item) { // 显示弹窗
+    openproject (item) { // 显示弹窗
       this.show = true
       console.log(item)
     },

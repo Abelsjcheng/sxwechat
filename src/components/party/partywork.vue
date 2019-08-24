@@ -9,16 +9,13 @@
             @on-focus="onFocus"
             ref="search"></search>
       </div>
-      
       <div style="padding: 10px 5px;">
-        
       </div>
     </view-box>
     <div v-transfer-dom>
       <popup v-model="showwork" position="right" width="100%">
         <div style="height:100%;">
           <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage"></x-header>
-          
         </div>
       </popup>
     </div>
@@ -34,13 +31,13 @@
   </div>
 </template>
 <script>
-import { XHeader, ViewBox, Popup, TransferDom, Search, InlineCalendar, Group } from 'vux'
+import { XHeader, ViewBox, Popup, TransferDom, Search, InlineCalendar } from 'vux'
 export default {
   name: 'partyactivity', // 党员活动
   directives: {
     TransferDom
   },
-  components: { XHeader, ViewBox, Popup, Search, InlineCalendar, Group }, // 注册组件
+  components: { XHeader, ViewBox, Popup, Search, InlineCalendar }, // 注册组件
   data () { // 局内数据
     return {
       showwork: false,
@@ -55,9 +52,9 @@ export default {
     backpage () { // 关闭弹窗
       this.showwork = false
     },
-    onFocus (){
-        this.$refs.search.setBlur()
-        this.showtime=true
+    onFocus () {
+      this.$refs.search.setBlur()
+      this.showtime = true
     }
   },
   computed: { // 计算属性
