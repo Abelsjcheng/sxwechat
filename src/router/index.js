@@ -146,9 +146,15 @@ export default new Router({
     },
     {
       path: '/mine_news',
-      name: 'news',
+      name: 'mine_news',
       component: () =>
         import('@/components/mine/news')
+    },
+    {
+      path: '/party_work',
+      name: 'party_work',
+      component: () =>
+        import('@/components/party/partywork')
     }
   ]
 })
