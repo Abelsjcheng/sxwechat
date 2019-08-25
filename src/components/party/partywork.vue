@@ -24,6 +24,8 @@
           <inline-calendar
             ref="calendar"
             class="inline-calendar-demo"
+            v-model="data"
+            @on-select-single-date="selectdata"
             >
             </inline-calendar>
       </popup>
@@ -42,19 +44,31 @@ export default {
     return {
       showwork: false,
       showtime: false,
-      value: ''
+      value: '',
+      data: 'TODAY'
     }
   },
   methods: { // 方法函数
     openguide (item) { // 显示弹窗
       this.showwork = true
+      
     },
     backpage () { // 关闭弹窗
       this.showwork = false
     },
-    onFocus () {
-      this.$refs.search.setBlur()
-      this.showtime = true
+    onFocus (){
+        this.$refs.search.setBlur()
+        this.showtime=true
+        
+    },
+    selectdata (vag){
+      this.value=vag
+    },
+    getpartywork(){
+      this.$nextTick(() => { //等待html渲染结束
+        console.log(this.data)
+        this.value=this.data
+      });
     }
   },
   computed: { // 计算属性
@@ -64,7 +78,7 @@ export default {
 
   },
   mounted () { // 初始化函数
-
+    this.getpartywork();
   }
 }
 </script>
