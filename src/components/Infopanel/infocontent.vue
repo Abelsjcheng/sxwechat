@@ -1,24 +1,21 @@
 <template>
-    <div>
-          <div id="desc" style="margin:10px;">
-            <ul id="comments_list" v-for="(article,index) in article" :key="index">
-                <li class="comments">
-                <div class="com_top">
-                    <h3 class="title">{{article.title}}</h3>
-                    <span class="time">{{article.time}}</span>
-                </div>
-                <hr>
-                <div class="com_content">{{article.text}}</div>
-                <hr>
-                <div class="com_bottom">
-                  <x-button class="useful" mini action-type="button" @click.native="praise">
-                      <span class="like_num" >{{article.praisenumber}}</span>点赞
-                  </x-button>
-                </div>
-                </li>
-            </ul>
+  <div id="desc" style="margin:10px;">
+    <ul id="comments_list" v-for="(article,index) in article" :key="index">
+      <li class="comments">
+        <div class="com_top">
+          <h3 class="title">{{article.title}}</h3>
+          <span class="time">{{article.time}}</span>
+        </div><hr>
+        <div class="com_content">{{article.text}}</div><hr>
+        <div class="com_bottom">
+          <x-button class="useful" mini action-type="button" @click.native="praise">
+            <span class="like_num" >{{article.praisenumber}}</span>点赞
+          </x-button>
+          <input id="ccontent" class="weui-input" type="text" style="border:1px solid #c8cccf;width: 98%;" placeholder="评论内容由此输入">
         </div>
-    </div>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
 import { XButton } from 'vux'
@@ -54,11 +51,10 @@ export default {
       ]
     }
   },
-  props: ['show'],
   methods: {
-    backpage () { // 关闭弹窗
-      this.showpop = false
-    },
+    // backpage () { // 关闭弹窗
+    //   this.showpop = false
+    // },
     addComment: function () {
       this.$emit('submit', this.commentText)
       this.commentText = ''
@@ -72,14 +68,14 @@ export default {
     // }
   },
   computed: {
-    listenshow () {
-      return this.show
-    }
+    // listenshow () {
+    //   return this.show
+    // }
   },
   watch: {
-    listenshow (vag) {
-      this.showpop = vag
-    }
+    // listenshow (vag) {
+    //   this.showpop = vag
+    // }
   }
 }
 </script>

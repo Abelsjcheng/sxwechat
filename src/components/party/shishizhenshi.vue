@@ -1,6 +1,6 @@
 <template>
   <div style="height:100%;">
-    <view-box ref="viewBox">
+    <view-box ref="viewBox" body-padding-bottom="0">
     <!-- 时事政治页面待开发 -->
       <div slot="header" style="position:absolute;left:0;top:0;z-index:100;width:100%;border-bottom:2px solid #901;background:#eee;">
         <!-- <x-header style="background:#ef0210">时事政治</x-header> -->
@@ -11,18 +11,15 @@
           </span>
         </div>
       </div>
-      <scroller lock-x scrollbar-y use-pullup use-pulldown @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" @on-scroll="onScroll" ref="scroller" height="-46" v-model="status">
-      <div style="padding-top:30px;">
+      <pull-to :top-load-method="refresh" @infinite-scroll="loadmore" :top-config="{stayDistance:90}"  @scroll="onScroll" >
+        <div style="padding-top:30px;">
         <panel :list="list" type="5" @on-click-item="openproject"></panel>
         <!-- <load-more tip="正在加载"></load-more> -->
       </div>
-       <div slot="pullup" class="xs-plugin-pullup-container xs-plugin-pullup-up" style="position: absolute; width: 100%; height: 40px; bottom: -40px; text-align: center;">
-          <span v-show="status.pullupStatus === 'loading'"><load-more tip="正在加载"></load-more></span>
-        </div>
-        <div slot="pulldown" class="xs-plugin-pulldown-container xs-plugin-pulldown-down" style="position: absolute; width: 100%; height: 60px; line-height: 60px; top: -60px; text-align: center;">
-          <span v-show="status.pulldownStatus === 'loading'"><load-more tip="正在加载"></load-more></span>
-        </div>
-      </scroller>
+       <div class="loading-bar">
+            <load-more tip="正在加载"></load-more>
+          </div>
+        </pull-to>
     </view-box>
     <div v-transfer-dom>
       <popup v-model="show" position="right" width="100%">
@@ -37,21 +34,18 @@
   </div>
 </template>
 <script>
+import PullTo from 'vue-pull-to'
 import infocontent from '@/components/Infopanel/infocontent.vue'
-import { ViewBox, Scroller, LoadMore, Panel, XHeader, Popup, TransferDom } from 'vux'
+import { ViewBox, LoadMore, Panel, XHeader, Popup, TransferDom } from 'vux'
 export default {
   name: 'shishizhenshi', // 时事政治
   directives: {
     TransferDom
   },
-  components: { ViewBox, Scroller, LoadMore, XHeader, Panel, Popup, infocontent }, // 注册组件
+  components: { ViewBox, LoadMore, XHeader, Panel, Popup, infocontent, PullTo }, // 注册组件
   data () { // 局内数据
     return {
       show: false,
-      status: {
-        pullupStatus: 'default',
-        pulldownStatus: 'default'
-      },
       list: [
         {
           src: 'https://c.cncnimg.cn/037/727/cb14_m.jpg',
@@ -150,30 +144,20 @@ export default {
     backpage () { // 关闭弹窗
       this.show = false
     },
-    loadMore () { // 上拉刷新
-      // get
+    refresh (loaded) { // 下拉加载
       setTimeout(() => {
-        setTimeout(() => {
-          this.$refs.scroller.donePullup() // 设置上拉刷新操作完成，在数据加载后执行
-        }, 10)
+        loaded('done')
       }, 2000)
     },
-    refresh () { // 下拉刷新
-      // get
+    loadmore () { // 上拉
       setTimeout(() => {
-        this.$nextTick(() => {
-          setTimeout(() => {
-            this.$refs.scroller.donePulldown() // 	设置下拉刷新操作完成，在数据加载后执行
-          }, 10)
-        })
-      }, 2000)
+      }, 1000)
     },
     onScroll (pos) { // 页面滚动触发函数
       if (this.openwindowshow.pop) {
-        console.log(1)
         this.openwindowshow.pop = false
       } else if (this.openwindowshow.inputshow) {
-        this.$refs.inputcomment.blur()
+        this.openwindowshow.inputshow = false
       }
     }
   },

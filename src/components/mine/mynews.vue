@@ -21,13 +21,13 @@
 <script>
 
 import infocontent from '@/components/Infopanel/infocontent.vue'
-import { Popup, XHeader, TransferDom, XButton, Panel } from 'vux'
+import { Popup, XHeader, TransferDom, Panel } from 'vux'
 export default {
   name: 'mynews',
   directives: {
     TransferDom
   },
-  components: { Popup, XHeader, XButton, Panel, infocontent },
+  components: { Popup, XHeader, Panel, infocontent },
   data () {
     return {
       show: false,

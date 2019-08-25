@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;">
     <!-- 扶贫工作页面待写 -->
-    <view-box ref="viewBox">
+    <view-box ref="viewBox" body-padding-bottom="0">
     <div slot="header" style="position:absolute;left:0;top:0;z-index:100;border-bottom:2px solid #ff0220 !important;background:rgba(250,230,250)">
         <div id="logo" style="margin:2px;background:rgba(255,192,255,1)">
           <img style="display:block;float:left;margin:5px;width:20%;height:44px;" src="../../assets/img/menus/helppoor.png" alt="">

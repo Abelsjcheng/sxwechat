@@ -1,7 +1,7 @@
 <template>
     <!-- 资讯页面待开发 -->
     <div style="height:100%;">
-      <view-box ref="viewBox" >
+      <view-box ref="viewBox" body-padding-bottom="0">
         <div slot="header" class="vux-scroller-header">
           <x-header>资讯</x-header>
           <!--取消搜索框自动置顶:auto-fixed="false"-->
@@ -25,37 +25,31 @@
             <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('/home_info/news')">新闻</tab-item>
           </tab>
         </div>
-        <scroller lock-x scrollbar-y use-pullup use-pulldown @on-pullup-loading="loadMore" @on-pulldown-loading="refresh" @on-scroll="onScroll" ref="scroller" height="-46" v-model="status">
+      <pull-to :top-load-method="refresh" @infinite-scroll="loadmore" :top-config="{stayDistance:90}"  @scroll="onScroll" >
           <div style="padding-top:130px;">
             <router-view></router-view>
           </div>
-          <div slot="pullup" class="xs-plugin-pullup-container xs-plugin-pullup-up" style="position: absolute; width: 100%; height: 40px; bottom: -40px; text-align: center;">
-          <span v-show="status.pullupStatus === 'loading'"><load-more tip="正在加载"></load-more></span>
-        </div>
-        <div slot="pulldown" class="xs-plugin-pulldown-container xs-plugin-pulldown-down" style="position: absolute; width: 100%; height: 60px; line-height: 60px; top: -60px; text-align: center;">
-          <span v-show="status.pulldownStatus === 'loading'"><load-more tip="正在加载"></load-more></span>
-        </div>
-      </scroller>
+          <div class="loading-bar">
+            <load-more tip="正在加载"></load-more>
+          </div>
+        </pull-to>
       </view-box>
     </div>
 </template>
 <script>
 
-import { Search, XHeader, ViewBox, Tab, TabItem, Scroller, LoadMore } from 'vux'
+import PullTo from 'vue-pull-to'
+import { Search, XHeader, ViewBox, Tab, TabItem, LoadMore } from 'vux'
 
 export default {
   name: 'info', // 资讯
   components: {
-    Search, XHeader, ViewBox, Tab, TabItem, Scroller, LoadMore
+    Search, XHeader, ViewBox, Tab, TabItem, LoadMore, PullTo
   }, // 注册组件
   data () { // 局内数据
     return {
       results: [],
-      value: 'test',
-      status: {
-        pullupStatus: 'default',
-        pulldownStatus: 'default'
-      }
+      value: 'test'
     }
   },
   methods: { // 方法函数
@@ -86,30 +80,20 @@ export default {
     open (url) {
       this.$router.push(url)
     },
-    loadMore () { // 上拉刷新
-      // get
+    refresh (loaded) { // 下拉加载
       setTimeout(() => {
-        setTimeout(() => {
-          this.$refs.scroller.donePullup() // 设置上拉刷新操作完成，在数据加载后执行
-        }, 10)
+        loaded('done')
       }, 2000)
     },
-    refresh () { // 下拉刷新
-      // get
+    loadmore () { // 上拉
       setTimeout(() => {
-        this.$nextTick(() => {
-          setTimeout(() => {
-            this.$refs.scroller.donePulldown() // 	设置下拉刷新操作完成，在数据加载后执行
-          }, 10)
-        })
-      }, 2000)
+      }, 1000)
     },
     onScroll (pos) { // 页面滚动触发函数
       if (this.openwindowshow.pop) {
-        console.log(1)
         this.openwindowshow.pop = false
       } else if (this.openwindowshow.inputshow) {
-        this.$refs.inputcomment.blur()
+        this.openwindowshow.inputshow = false
       }
     }
   },

@@ -41,7 +41,7 @@ export default {
     TransferDom
   },
   components: {
-    Card, Grid, GridItem, Panel, XHeader, Popup, TransferDom, infocontent
+    Card, Grid, GridItem, Panel, XHeader, Popup, infocontent
   },
   data () {
     return {

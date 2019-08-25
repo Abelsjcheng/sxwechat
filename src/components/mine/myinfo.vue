@@ -27,13 +27,13 @@
     </div>
 </template>
 <script>
-import { Popup, XHeader, XButton, Group, Cell, XInput, Selector, XAddress, Datetime, XTextarea, ChinaAddressData, TransferDom } from 'vux'
+import { Popup, XHeader, XButton, Group, Cell, XInput, Selector, Datetime, XTextarea, ChinaAddressData, TransferDom } from 'vux'
 export default {
   name: 'myinfo',
   directives: {
     TransferDom
   },
-  components: { Popup, XHeader, XButton, Group, Cell, XInput, Selector, XAddress, Datetime, XTextarea },
+  components: { Popup, XHeader, XButton, Group, Cell, XInput, Selector, Datetime, XTextarea },
   data () {
     return {
       src: require('../../assets/img/my.png'), // 头像
