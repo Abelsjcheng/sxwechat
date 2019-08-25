@@ -60,11 +60,11 @@ export default {
   methods: { // 方法函数
     openguide (item) { // 显示弹窗
       this.show = true
-      this.popinfo=item.guideinfo
+      this.popinfo = item.guideinfo
     },
     backpage () { // 关闭弹窗
       this.show = false
-    },
+    }
   },
   computed: { // 计算属性
   },

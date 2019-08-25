@@ -144,12 +144,12 @@ export default new Router({
       component: () =>
         import('@/components/mine/dianzan')
     },
-    {
-      path: '/mine_news',
-      name: 'mine_news',
-      component: () =>
-        import('@/components/mine/news')
-    },
+    // {
+    //   path: '/mine_news',
+    //   name: 'mine_news',
+    //   component: () =>
+    //     import('@/components/mine/news')
+    // },
     {
       path: '/party_work',
       name: 'party_work',
