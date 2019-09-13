@@ -5,29 +5,22 @@
         <div slot="header" class="vux-scroller-header">
           <x-header>资讯</x-header>
           <!--取消搜索框自动置顶:auto-fixed="false"-->
-          <div>
-         <search
-        @result-click="resultClick"
-        @on-change="getResult"
-        :results="results"
-        v-model="value"
-        position="absolute"
-        auto-scroll-to-top
-        top="46px"
-        @on-focus="onFocus"
-        @on-cancel="onCancel"
-        @on-submit="onSubmit"
-        ref="search"></search>
-        </div>
+          <search
+          @on-change="getResult"
+          v-model="value"
+          position="absolute"
+          :auto-fixed="false"
+          auto-scroll-to-top
+          ref="search"></search>
           <tab>
-            <tab-item selected badge-label="1" @on-item-click="open('/home_info/policy')">政策</tab-item>
-            <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('/home_info/notice')">公告</tab-item>
-            <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('/home_info/news')">新闻</tab-item>
+            <tab-item selected badge-label="1" @on-item-click="open('policy')">政策</tab-item>
+            <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('notice')">公告</tab-item>
+            <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('news')">新闻</tab-item>
           </tab>
         </div>
-      <pull-to :top-load-method="refresh" @infinite-scroll="loadmore" :top-config="{stayDistance:90}"  @scroll="onScroll" >
+        <pull-to  @infinite-scroll="loadmore"  >
           <div style="padding-top:130px;">
-            <router-view></router-view>
+            <infolist :list="infolist" />
           </div>
           <div class="loading-bar">
             <load-more tip="正在加载"></load-more>
@@ -37,64 +30,64 @@
     </div>
 </template>
 <script>
-
+import infolist from '@/components/Infopanel/infolist.vue'
 import PullTo from 'vue-pull-to'
 import { Search, XHeader, ViewBox, Tab, TabItem, LoadMore } from 'vux'
 
 export default {
   name: 'info', // 资讯
   components: {
-    Search, XHeader, ViewBox, Tab, TabItem, LoadMore, PullTo
+    Search, XHeader, ViewBox, Tab, TabItem, LoadMore, PullTo, infolist
   }, // 注册组件
   data () { // 局内数据
     return {
-      results: [],
-      value: 'test'
+      tab: 'notice', // 未搜索判断当前tab标签
+      value: '',
+      infolist: []
     }
   },
   methods: { // 方法函数
     setFocus () {
       this.$refs.search.setFocus()
     },
-    resultClick (item) {
-      window.alert('you click the result item: ' + JSON.stringify(item))
-    },
     getResult (val) {
-      console.log('on-change', val)
-      this.results = val ? getResult(this.value) : []
+      if (this.tab === 'policy') {
+        this.getinfolist('http://110.53.162.165:5050/api/policy/PolAll', val) // sql模糊查找
+      } else if (this.tab === 'notice') {
+        this.getinfolist('http://110.53.162.165:5050/api/policy/infoAll', val)
+      }
     },
-    onSubmit () {
-      this.$refs.search.setBlur()
-      this.$vux.toast.show({
-        type: 'text',
-        position: 'top',
-        text: 'on submit'
+    getinfolist (url, tit) {
+      this.axios.get(url, { params: { title: tit } }).then((res) => {
+        this.infolist = [] // 置空初始化
+        for (let i = 0, len = res.data.data.length; i < len; i++) {
+          this.infolist.push({
+            infocontent: res.data.data[i],
+            title: res.data.data[i].title,
+            desc: res.data.data[i].content,
+            meta: {
+              other: '评论:20',
+              date: res.data.data[i].reldate
+            }
+          })
+        }
       })
+        .catch(function (error) {
+          console.log(error)
+        })
     },
-    onFocus () {
-      console.log('on focus')
-    },
-    onCancel () {
-      console.log('on cancel')
-    },
-    open (url) {
-      this.$router.push(url)
-    },
-    refresh (loaded) { // 下拉加载
-      setTimeout(() => {
-        loaded('done')
-      }, 2000)
+    open (val) {
+      if (val === 'policy') {
+        this.tab = 'policy'
+        this.getinfolist('http://110.53.162.165:5050/api/policy/PolAll', '')
+      } else if (val === 'notice') {
+        this.tab = 'notice'
+        this.getinfolist('http://110.53.162.165:5050/api/policy/infoAll', '')
+      }
     },
     loadmore () { // 上拉
       setTimeout(() => {
       }, 1000)
-    },
-    onScroll (pos) { // 页面滚动触发函数
-      if (this.openwindowshow.pop) {
-        this.openwindowshow.pop = false
-      } else if (this.openwindowshow.inputshow) {
-        this.openwindowshow.inputshow = false
-      }
     }
   },
   computed: { // 计算属性
@@ -106,20 +99,10 @@ export default {
     //   }
   },
   mounted () { // 初始化函数
-
+    this.open('policy')
   }
 }
 
-function getResult (val) {
-  let rs = []
-  for (let i = 0; i < 20; i++) {
-    rs.push({
-      title: `${val} result: ${i + 1} `,
-      other: i
-    })
-  }
-  return rs
-}
 </script>
 
 <style lang="less" scoped>

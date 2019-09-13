@@ -1,81 +1,39 @@
 <template>
   <div id="desc" style="margin:10px;">
-    <ul id="comments_list" v-for="(article,index) in article" :key="index">
+    <ul id="comments_list">
       <li class="comments">
         <div class="com_top">
-          <h3 class="title">{{article.title}}</h3>
-          <span class="time">{{article.time}}</span>
+          <h3 class="title">{{info.title}}</h3>
+          <span class="time">{{info.reldate}}</span>
         </div><hr>
-        <div class="com_content">{{article.text}}</div><hr>
-        <div class="com_bottom">
-          <x-button class="useful" mini action-type="button" @click.native="praise">
-            <span class="like_num" >{{article.praisenumber}}</span>点赞
-          </x-button>
-          <input id="ccontent" class="weui-input" type="text" style="border:1px solid #c8cccf;width: 98%;" placeholder="评论内容由此输入">
-        </div>
+        <div class="com_content">{{info.content}}</div><hr>
       </li>
     </ul>
   </div>
 </template>
 <script>
-import { XButton } from 'vux'
 export default {
   name: 'infocontent',
-  components: { XButton },
+  components: {},
+  props: ['infocontent'], // 定义父组件向子组件传递的对象
   data () {
-    // 点赞
-    // $("#comments_list li.comments .useful").click(function(){
-    //     var $likeNum = $(this).find('.like_num');
-    //     var num = +$likeNum.text()
-    //     if(!$(this).hasClass('usefulClick')){
-    //       $(this).addClass('usefulClick');
-    //       $likeNum.text(++num);
-    //     }else{
-    //       console.log("tag has usefulClick");
-    //     }
-    // });
     return {
       commentText: '',
       uname: '王李沙',
-      article: [
-        {
-          title: '测试标题',
-          time: '2019-8-23 20:38:35',
-          text: '正文测试:假如我们一路有默契，那时光再长又有什么关系。我喜欢有感觉的文字。写的现实而温暖。带上你的耳机闭上眼睛来静静聆听这篇《就让我们，晚点在一起。然后一辈子。》',
-          praisenumber: '2',
-          cuname: '王李沙', // 评论人
-          runame: '施景程', // 回复人
-          ccontent: '评论测试',
-          rccontent: '回复评论测试'
-        }
-      ]
+      info: this.infocontent
     }
   },
   methods: {
-    // backpage () { // 关闭弹窗
-    //   this.showpop = false
-    // },
-    addComment: function () {
-      this.$emit('submit', this.commentText)
-      this.commentText = ''
-    },
-    canelComment: function () {
-      this.$emit('canel')
-      this.commentText = ''
-    }
-    // praise () {
-    //   this.praisenumber = praisenumber + 1
-    // }
   },
   computed: {
-    // listenshow () {
-    //   return this.show
-    // }
+    listeninfocontent () { 
+      return this.infocontent; // 监听父组件点击其他信息 并更新父组件向子组件传递的值
+    }
   },
   watch: {
-    // listenshow (vag) {
-    //   this.showpop = vag
-    // }
+    listeninfocontent (vag) {
+      this.info = vag // 将更新的信息赋值给当前页面变量进行存储
+    }
   }
 }
 </script>
