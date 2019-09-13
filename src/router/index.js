@@ -7,7 +7,7 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  // base: '/dist',
+  // base: '/sxwechat',
   routes: [
     {
       path: '/',
@@ -38,28 +38,7 @@ export default new Router({
     {
       path: '/home_info',
       name: 'info',
-      redirect: '/home_info/policy', // 登录加载home_info
-      component: () => import('@/components/home/info'),
-      children: [
-        {
-          path: 'policy', // 二级url路径
-          name: 'policy',
-          component: () =>
-              import('@/components/Infopanel/policy') // 路由跳转
-        },
-        {
-          path: 'notice', // 二级url路径
-          name: 'notice',
-          component: () =>
-              import('@/components/Infopanel/notice')
-        },
-        {
-          path: 'news', // 二级url路径
-          name: 'news',
-          component: () =>
-              import('@/components/Infopanel/news')
-        }
-      ]
+      component: () => import('@/components/home/info')
     },
     {
       path: '/home_project', // 二级url路径
