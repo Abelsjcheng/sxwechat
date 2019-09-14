@@ -3,12 +3,26 @@
     <ul id="comments_list">
       <li class="comments">
         <div class="com_top">
-          <h3 class="title">{{info.title}}</h3>
-          <span class="time">{{info.reldate}}</span>
+          <h3 class="title">{{infocontent.title}}</h3>
+          <span class="time">{{infocontent.reldate}}</span>
         </div><hr>
-        <div class="com_content">{{info.content}}</div><hr>
+        <div class="com_content">{{infocontent.content}}</div><hr>
       </li>
     </ul>
+    <div class="comment-footer">
+      <div class="comment-inputcell"> <!--评论输入框 -->
+        <input type="text" placeholder="说说你的看法" ref="inputcomment" class="comment-input">
+        <aside style="padding: 0 .3rem 0 .5rem;">
+          <i slot="right" class="fa fa-comment-o comment-icon" @click="showemotion()" ></i>
+        </aside>
+        <aside style="padding: 0 .3rem 0 .5rem;">
+          <i slot="right" class="fa fa-star-o comment-icon" @click="showemotion()" ></i>
+        </aside>
+        <aside style="padding: 0 .3rem 0 .5rem;">
+          <i slot="right" class="fa fa-share-alt comment-icon" @click="showemotion()" ></i>
+        </aside>
+      </div>
+    </div>
   </div>
 </template>
 <script>
