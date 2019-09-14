@@ -64,8 +64,8 @@ export default {
     },
     getpartywork () {
       this.$nextTick(() => { // 等待html渲染结束
-        console.log(this.data)
         this.value = this.data
+        this.showtime=false
       })
     }
   },
