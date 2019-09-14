@@ -20,7 +20,7 @@
         </div>
         <pull-to  @infinite-scroll="loadmore"  >
           <div style="padding-top:130px;">
-            <infolist :list="infolist" />
+            <infolist :list="infolist"  v-if="infolist.length"/> <!--异步请求的数据是会渲染两次的！第一次是请求没完成时，子组件去取值，是空！第二次才是请求成功返回，然后才有数据 -->
           </div>
           <div class="loading-bar">
             <load-more tip="正在加载"></load-more>
