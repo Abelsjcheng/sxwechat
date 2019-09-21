@@ -1,3 +1,16 @@
+.comment-header{
+  height: 3rem;
+  line-height: 3rem;
+  position: relative;
+  width:100%;
+}
+.comment-scroller-header{
+  width:100%;
+  position:fixed;
+  left:0;
+  top:0;
+  z-index:100;
+}
 .comment-footer{
     position: fixed;
     right: 0;
@@ -16,9 +29,11 @@
     align-items: center;
     padding: 5px 15px;
     .comment-input{
-      border: 0px;
+      border: 1px solid #e9e9e9;
+      border-radius: .06rem;
+      color: #aaa;
       height: 1.5em;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.5em;
       width: 100%;
     }
@@ -30,3 +45,91 @@
       color: #008af5;
     }
   }
+.comment-cancel{
+  border: 1px solid #e9e9e9;
+  border-radius: .3rem;
+  height: 2rem;
+  width:3.5rem;
+  float: left;
+  margin: 10px;
+}
+.comment-push{
+  border: 1px solid #e9e9e9;
+  border-radius: .3rem;
+  height: 2rem;
+  width:3.5rem;
+  float: right;
+  margin: 10px;
+}
+
+.wechatEmotion-container{
+  background: rgba(238, 238, 238, 0.5);
+  .emotion-list{
+    width: 100%;
+    padding: 10px 5px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 175px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    .emotion-list-item{
+      list-style: none;
+      float: left;
+      height: 27%;
+      width: 12.5%;
+      padding: 5px 0;
+      text-align: center;
+    }
+  }
+}
+.cell-comment-title{
+  font-size: 15px;
+  font-weight:bold;
+  border-left: 4px solid #008af5;
+  padding-left: 0.3em;
+}
+
+.comment-content{
+  margin-top: 3px;
+  font-size: 15px;
+  color:#000;
+}
+
+.comment-box-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .comment-name{
+    color: #000;
+    font-size: 13px;
+  }
+  .comment-time{
+    font-size: 10px;
+  }
+}
+
+.recomment-content{
+  background: #f3f3f3;
+  font-size: 15px;
+  padding: 5px;
+}
+.right-arrow{
+  position: absolute;
+  height:21px;
+  width: 30px;
+  .arrow{
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 1px solid #094dcc;
+    border-width: 1px 0 0 1px;
+    -webkit-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    transform: rotate(135deg);
+    top:4px;
+    
+  }
+  
+
+}
