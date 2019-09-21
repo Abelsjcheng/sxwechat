@@ -3,27 +3,28 @@
     <view-box ref="viewBox" body-padding-bottom="0">
       <x-header slot="header" class="vux-scroller-header">党员活动</x-header>
       <div style="padding: 10px 5px;">
-        <card >
-          <div slot="header" style="padding: 10px 10px;" @click="openguide('a')">
-            <img src="../../assets/img/party/affair1.jpg" style="width:100%;display:block;">
-            <span>长沙高校计算机学术研讨会 </span>
+        <card v-for="list in listactivity" :key="list">
+          
+          <div slot="header" style="padding: 10px 10px;" @click="openguide(list)">
+            <img :src="list.mpic" style="width:100%;display:block;">
+            <span>{{list.title}} </span>
           </div>
           <div slot="content" class="card-padding">
             <div class="hd-form-item" >
               <label class="hd-form-item-label">活动类型 </label>
-              <span class="hd-form-item-value"> 会议</span>
+              <span class="hd-form-item-value"> {{list.type}}</span>
             </div>
             <div class="hd-form-item" >
               <label class="hd-form-item-label">活动地点 </label>
-              <span class="hd-form-item-value"> 长沙市政府</span>
+              <span class="hd-form-item-value"> {{list.place}}</span>
             </div>
             <div class="hd-form-item" >
               <label class="hd-form-item-label">活动人数 </label>
-              <span class="hd-form-item-value"> 14</span>
+              <span class="hd-form-item-value"> {{list.number}}</span>
             </div>
             <div class="hd-form-item" >
               <label class="hd-form-item-label">活动时间 </label>
-              <span class="hd-form-item-value"> 2017-05-20</span>
+              <span class="hd-form-item-value"> {{list.date}}</span>
             </div>
           </div>
         </card>
@@ -33,19 +34,19 @@
       <popup v-model="show" position="right" width="100%">
         <div style="height:100%;">
           <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage"></x-header>
-          <h2>长沙高校计算机学术研讨会 </h2>
-          <img src="../../assets/img/party/affair1.jpg" style="width:100%;display:block;">
-          <group label-width="5em" label-margin-right="1.5em">
-            <cell title="活动类型" value="会议"  ></cell>
-            <cell title="活动地点" value="长沙市市政府"  ></cell>
-            <cell title="活动人数" value="14"  ></cell>
-            <cell title="活动开始时间" value="2018-11-01 18:58:21"  ></cell>
-            <cell title="活动结束时间" value="2018-11-01 18:58:21"  ></cell>
-            <cell title="活动发起时间" value="2018-11-01 18:58:21"  ></cell>
-            <cell title="活动发起人" value="管理员"  ></cell>
+          <h2>{{popcontent.title}} </h2>
+          <img :src="popcontent.mpic" style="width:100%;display:block;">
+          <group label-width="5em" label-margin-right="1.5em"  >
+            <cell title="活动类型" :value="popcontent.type"  ></cell>
+            <cell title="活动地点" :value="popcontent.place"  ></cell>
+            <cell title="活动人数" :value="popcontent.number"  ></cell>
+            <cell title="活动开始时间" :value="popcontent.date"  ></cell>
+            <cell title="活动结束时间" :value="popcontent.etime"  ></cell>
+            <cell title="活动发起时间" :value="popcontent.pushtime"  ></cell>
+            <cell title="活动发起人" :value="popcontent.uname"  ></cell>
             <cell title="活动简介"  ></cell>
-            <cell-box>
-              全国人民代表大会（简称为人大、人代会），《中华人民共和国宪法》规定，全国人民代表大会是中华人民共和国最高权力机关。它的常设机关是全国人民代表大会常务委员会。人民代表大会制度是中国的根本政治制度，是中国人民民主专政政权的组织形式，是中国的政体，是社会主义上层建筑的重要组成部分。
+            <cell-box v-html="popcontent.sum" style="font-family:'华文楷体';text-indent:2em;">
+
             </cell-box>
           </group>
         </div>
@@ -63,15 +64,40 @@ export default {
   components: { XHeader, ViewBox, Popup, Card, Cell, Group, CellBox }, // 注册组件
   data () { // 局内数据
     return {
-      show: false
+      show: false,
+      listactivity: [],
+      popcontent:{}
     }
   },
   methods: { // 方法函数
     openguide (item) { // 显示弹窗
+    this.popcontent=item;
       this.show = true
     },
     backpage () { // 关闭弹窗
       this.show = false
+    },
+    getactlist:function () {
+      this.listactivity=[]
+      this.axios.get('http://110.53.162.165:5050/api/party/listAll?',{params:{vtype:1,pageIndex:1,pageSize:20}}).then((res) =>{
+        console.log(res.data)
+        for (let i = 0,len=res.data.data.length; i < len; i++){
+          this.listactivity.push({
+            title: res.data.data[i].hdtitle,
+            type: res.data.data[i].hdtype,
+            mpic: res.data.data[i].hdpic,
+            place: res.data.data[i].hdloc,
+            number: res.data.data[i].hdnum,
+            etime: res.data.data[i].hdetime,
+            date: res.data.data[i].hdbtime,
+            pushtime: res.data.data[i].hdadddate,
+            uname: res.data.data[i].uname,
+            sum:res.data.data[i].hdsum
+          })
+        } // 请求成功函数    
+        }, function () { 
+        console.log('请求失败处理'); // 请求失败函数
+      })
     }
   },
   computed: { // 计算属性
@@ -81,7 +107,7 @@ export default {
 
   },
   mounted () { // 初始化函数
-
+    this.getactlist() // 初始化函数
   }
 }
 </script>

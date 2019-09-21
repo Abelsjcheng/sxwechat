@@ -1,129 +1,87 @@
 <template>
-    <!-- 旅游、休闲、农家乐页面待开发 -->
-    <div style="height:100%;background:rgba(002,121,181,0.3);">
-      <view-box ref="viewBox" body-padding-bottom="0">
-        <div slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;">
-          <x-header style="background-color:rgba(250,250,250,0.2);color:#212121;">
-            <div style="color:#212121;font-family:'华文行楷'">长沙县欢迎您！</div>
+  <div style="height:100%;">
+    <!-- 扶贫工作页面待写 -->
+    <view-box ref="viewBox" body-padding-bottom="0">
+      <div slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;">
+          <x-header>
+            <div style="color:#fff;font-family:'华文行楷'">长沙县欢迎您！</div>
           </x-header>
         </div>
-        <div id="content" style="margin:8px;margin-top:40px;">
-          <!-- 农家乐部分 -->
-          `<div>
-            <div id="subtitle">
-              <span>农家乐
-                <a href="http://www.360doc.com/content/16/1002/23/34253878_595400606.shtml" style="display:block;float:right">了解更多...</a>
-              </span>
-            </div>
-            <div style="float:left;width:46%;margin:5px;">
-              <a href="http://www.cschenwu.cn/#page1">
-                <img src="http://www.0731xsxx.com/UploadFile//QQ%E6%88%AA%E5%9B%BE20140812083146.jpg" style="width:100%;" alt="">
-                <span>
-                  辰午山庄
-                </span>
-              </a>
-            </div>
-            <div style="float:left;width:46%;margin:5px;">
-              <a href="https://baike.so.com/doc/3455498-3636051.html">
-                <img src="http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qpic_cn/921ba06b4b0d830cc878098a71013cc4.jpg" style="width:100%;" alt="">
-                <span>
-                  金太阳现代休闲农庄
-                </span>
-              </a>
-            </div>
-            <div style="float:left;width:46%;margin:5px;">
-              <a href="https://baike.so.com/doc/3057227-3222654.html">
-                <img src="https://p1.ssl.qhimg.com/dr/220__/t0127660e496a617375.jpg" style="width:100%;" alt="">
-                <span>
-                  大明山庄
-                </span>
-              </a>
-            </div>
-            <div style="float:left;width:46%;margin:5px;">
-              <a href="https://www.qianlonghu.com/">
-                <img src="https://p1.ssl.qhimg.com/dr/270_500_/t01d7f8c1c34b6b36bc.jpg" style="width:100%;" alt="">
-                <span>
-                  千龙湖生态旅游度假村
-                </span>
-              </a>
-            </div>
+      <div style="padding: 10px 5px;margin-top:35px">
+        <card v-for="list in listtourism" :key="list">
+          <div slot="header" style="padding: 10px 10px;" @click="openguide(list)">
+            <img :src="list.mpic" style="width:32%;display:block;float:left">
+            <span style="display:block;float:left;margin-left:10px">{{list.title}} </span>
+            <br><br>
+            <p style="text-indent:2em" v-html="list.content"></p>
           </div>
-          <!-- 旅游部分 -->
-          <div>
-            <div id="subtitle">
-            <span>旅游
-              <a href="http://www.bytravel.cn/view/index2356.html">了解更多...</a>
-              </span>
-            </div>
-            <div style="float:left;width:46%;margin:5px;">
-              <a href="https://baike.so.com/doc/6735485-6949864.html">
-                <img src="https://c.cncnimg.cn/037/727/cb14_m.jpg" style="width:100%;" alt="">
-                <span>
-                  橘子洲
-                </span>
-              </a>
-            </div>
-            <div style="float:left;width:46%;margin:5px;">
-              <a href="https://baike.so.com/doc/4753705-4969111.html">
-                <img src="https://c.cncnimg.cn/037/709/25d4_m.jpg" style="width:100%;" alt="">
-                <span>
-                  岳麓山
-                </span>
-              </a>
-            </div>
-            <div style="float:left;width:46%;margin:5px;">
-              <a href="https://baike.so.com/doc/5833974-6046801.html">
-                <img src="https://c.cncnimg.cn/044/092/5bc9_m.jpg" style="width:100%;" alt="">
-                <span>
-                  杜甫江阁
-                </span>
-              </a>
-            </div>
-            <div style="float:left;width:46%;margin:5px;">
-              <a href="https://baike.so.com/doc/24636342-25522946.html">
-                <img src="https://c.cncnimg.cn/041/098/f879_m.jpg" style="width:100%;" alt="">
-                <span>
-                  关山古镇
-                </span>
-              </a>
-            </div>
-          </div>
-          <!-- <dl>
-                <div>
-                    <dt>农家乐<a href="#" style="display:block;float:right">更多...</a></dt>
-                    <dd><a href="#">辰午山庄</a></dd>
-                    <dd><a href="#">金太阳现代休闲农庄</a></dd>
-                    <dd><a href="#">大明山庄</a></dd>
-                    <dd><a href="#">千龙湖生态旅游度假村</a></dd>
-                    <dd><a href="#">百果园农庄</a></dd>
-                    <dd><a href="#">龙头井农庄</a></dd>
-                    <dd><a href="#">和道源山庄</a></dd>
-                    <dd><a href="#">新江生态休闲园</a></dd>
-                    <dd><a href="#">长沙锦绣生态农庄</a></dd>
-                </div>
-                 -->
-          <a href="http://www.changsha.com.cn/" style="width:100%;background:linear-gradient(to right, #bbf990, #fffff9);font-family:'华文楷体';display:block;float:right;">
-            <span style="border-left:3px solid #ff9;display:block;float:right;">去了解更多的旅游资讯......</span>
-          </a>
+        </card>
+      </div>
+    </view-box>
+    <div v-transfer-dom>
+      <popup v-model="show" position="right" width="100%">
+        <div style="height:100%;">
+          <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage"></x-header>
+          <h2 style="text-align:center">{{popcontent.title}} </h2>
+          <img :src="popcontent.mpic" style="margin:10px;width:95%;display:block;">
+          <group label-width="5em" label-margin-right="1.5em"  >
+            <cell title="负责人" :value="popcontent.uname"  ></cell>
+            <cell title="建立日期" :value="popcontent.pushdate"  ></cell>
+            <cell title="联系方式" value="15875629854"></cell>
+            <cell title="总阅读数" :value="popcontent.number"></cell>
+            <cell title="备注" :value="popcontent.note"  ></cell>
+            <cell title="简介"></cell>
+            <cell-box style="font-family:'华文楷体';text-indent:2em;" v-html="popcontent.content">
+            </cell-box>
+          </group>
         </div>
-        <router-view></router-view>
-        <!-- 了解更多 -->
-
-      </view-box>
+      </popup>
     </div>
+  </div>
 </template>
 <script>
-import { XHeader, ViewBox } from 'vux'
+import { XHeader, ViewBox, Popup, TransferDom, Card, Cell, Group, CellBox } from 'vux'
 export default {
-  name: 'tourism', // 旅游、休闲、农家乐
-  components: { XHeader, ViewBox }, // 注册组件
+  name: 'tourism', // 旅游资讯 农家乐
+   directives: {
+    TransferDom
+  },
+  components: { XHeader, ViewBox, Popup, Card, Cell, Group, CellBox }, // 注册组件
   data () { // 局内数据
     return {
-      show1: false,
-      lists: []
+      show: false,
+      listtourism: [],
+      popcontent:{}
     }
   },
-  methods: {
+  methods: { // 方法函数
+ openguide (item) { // 显示弹窗
+    this.popcontent=item;
+      this.show = true
+    },
+    backpage () { // 关闭弹窗
+      this.show = false
+    },
+    getactlist:function () {
+      this.listtourism=[]
+      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:3,pageIndex:1,pageSize:20}}).then((res) =>{
+        console.log(res.data)
+        for (let i = 0,len=res.data.data.length; i < len; i++){
+          this.listtourism.push({
+            title: res.data.data[i].mtitle,
+            content: res.data.data[i].mcontent,
+            mpic: res.data.data[i].mpic,
+            number: res.data.data[i].greadtotal,
+            note: res.data.data[i].note,
+            pushdate: res.data.data[i].pushdate,
+            uname: res.data.data[i].uname,
+            // tel: res.data.data[i].tel
+          })
+        } // 请求成功函数    
+        }, function () { 
+          console.log('请求失败处理'); // 请求失败函数
+      })
+    }
   },
   computed: { // 计算属性
 
@@ -132,46 +90,33 @@ export default {
 
   },
   mounted () { // 初始化函数
-
+    this.getactlist()
   }
 }
 </script>
 <style lang="less" scoped>
-#content #subtitle span{
-  font-family:'华文行楷';
-  display:block;
-  float:left;
-  width:285px;
-  background:linear-gradient(to right, #bbf990, #fffff9);
-  border-color: #ff0 !important;
-  border-bottom:1px solid #feff89;
-  border-left:5px solid transparent;
-  padding-left:8px;
+.card-padding{
+  padding: 10px 15px;
+  font-size: .9em;
+  text-align: right;
+  color: #999;
+  line-height: 2;
 }
-#content #subtitle span a{
-  font-family:'华文行楷';
-  display:block;
-  float:right;
-  margin-right:10px;
-}
-img{
-  border-radius:5%;
-  height:100px;
-}
-a{
-  text-decoration: none;
-  color:#212121;
-}
-a span{
-  font-family:"华文楷体";
-  font-size:13px;
-}
-a:hover{
-  color:#CC3300;
-  text-decoration:underline;
-}
-.popup1 {
-  width:100%;
-  height:100%;
+.hd-form-item{
+  overflow: hidden;
+  .hd-form-item-label{
+    float: left;
+    margin-right: 1em;
+    min-width: 4em;
+    color: #999;
+    text-align: justify;
+    text-align-last: justify;
+  }
+  .hd-form-item-value{
+    display: block;
+    overflow: hidden;
+    word-break: normal;
+    word-wrap: break-word;
+  }
 }
 </style>

@@ -2,64 +2,101 @@
   <div style="height:100%;">
     <!-- 扶贫工作页面待写 -->
     <view-box ref="viewBox" body-padding-bottom="0">
-    <div slot="header" style="position:absolute;left:0;top:0;z-index:100;border-bottom:2px solid #ff0220 !important;background:rgba(250,230,250)">
-        <div id="logo" style="margin:2px;background:rgba(255,192,255,1)">
-          <img style="display:block;float:left;margin:5px;width:20%;height:44px;" src="../../assets/img/menus/helppoor.png" alt="">
-          <span style="display:block;float:left;margin-left:23px;font-family:'华文行楷';color:#212121;font-size:25px;letter-spacing:5px">扶贫工作
-            <span style="display:block;float:right;margin-right:32px;font-size:13px;margin-top:30px;margin-left:-10px;font-family:'楷体'">--长沙县</span>
-          </span>
+      <div slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;">
+      <x-header>
+        <div style="position:absolute;width:100%;border-bottom:2px solid #ff0220 !important">
+          <img style="display:block;float:left;margin:2px;width:12%;height:30px;" src="../../assets/img/menus/helppoor.png">
+           <span style="display:block;float:left;margin-left:20px;color:#fff;font-size:18px;letter-spacing:7px">扶贫工作</span>
         </div>
-    </div>
-    <div style="margin-top:60px;">
-      <div id="content" style="margin:8px;">
-            <dl>
-                <div>
-                    <dt>扶贫政策<a href="#" style="display:block;float:right">更多...</a></dt>
-                    <dd><a href="#">教育扶贫</a></dd>
-                    <dd><a href="#">医疗救助</a></dd>
-                    <dd><a href="#">危房改造</a></dd>
-                    <dd><a href="#">兜底保障</a></dd>
-                </div>
-                <div>
-                    <dt>扶贫优秀案例<a href="#" style="display:block;float:right">更多...</a></dt>
-                    <dd><a href="http://www.stdaily.com/kwtwpai/ktp/2016-11/15/content_328860.shtml">长沙县积极实施教育扶贫 不让一个学生因贫失学</a></dd>
-                    <dd><a href="#">长沙县积极实施教育扶贫 不让一个学生因贫失学</a></dd>
-                    <dd><a href="#">长沙县积极实施教育扶贫 不让一个学生因贫失学</a></dd>
-                </div>
-                <div>
-                    <dt>扶贫新闻<a href="#" style="display:block;float:right">更多...</a></dt>
-                    <dd><a href="#">关于2019年第二批特色种养业到户</a></dd>
-                    <dd><a href="#">湖南省长沙市扶贫办一行来临交流学习脱贫攻坚工作</a></dd>
-                    <dd><a href="#">关于组织申报2019年省级重点产业扶贫项目的通知</a></dd>
-                </div>
-                <div>
-                    <dt>扶贫项目<a href="#" style="display:block;float:right">更多...</a></dt>
-                    <dd><a href="#">关于拨付2019年第二季度扶贫小额信贷财政贴息和雨露计划（补充）资金的公示</a></dd>
-                    <dd><a href="http://www.csx.gov.cn/csx/zwgk/xxgkml/bmxxgkml/xnlj/fpzjap56/2543641/index.html">长沙县2018年农村饮水安全巩固提升工程第一批省级投资计划分解公示</a></dd>
-                    <dd><a href="http://www.csx.gov.cn/csx/zwgk/xxgkml/bmxxgkml/xnlj/fpzjap56/2541601/index.html">2017年县级产业精准扶贫项目立项公示</a></dd>
-                </div>
-                <div>
-                    <dt>扶贫需求<a href="#" style="display:block;float:right">更多...</a></dt>
-                    <dd><a href="#">某某村农产品堆积滞销</a></dd>
-                    <dd><a href="#">某某村农产品堆积滞销</a></dd>
-                    <dd><a href="#">某某村农产品堆积滞销</a></dd>
-                </div>
-            </dl>
-        </div>
-    </div>
+      </x-header>
+      </div>
+      <div style="padding: 10px 5px;margin-top:35px">
+        <card v-for="list in listhelp" :key="list">
+          <div slot="header" style="padding: 10px 10px;" @click="openguide(list)">
+            <img :src="list.mpic" style="width:32%;display:block;float:left">
+            <span style="display:block;float:left;margin-left:10px">{{list.title}} </span>
+            <br><br>
+            <p> 备注:{{list.note}}</p>
+          </div>
+          <div slot="content" class="card-padding">
+            <div class="hd-form-item" >
+              <label class="hd-form-item-label">发起人 </label>
+              <span class="hd-form-item-value"> {{list.uname}}</span>
+            </div>
+            <div class="hd-form-item" >
+              <label class="hd-form-item-label">阅读点击数 </label>
+              <span class="hd-form-item-value"> {{list.number}}</span>
+            </div>
+            <div class="hd-form-item" >
+              <label class="hd-form-item-label">建立日期 </label>
+              <span class="hd-form-item-value"> {{list.pushtime}}</span>
+            </div>
+          </div>
+        </card>
+      </div>
     </view-box>
+    <div v-transfer-dom>
+      <popup v-model="show" position="right" width="100%">
+        <div style="height:100%;">
+          <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage"></x-header>
+          <h2 style="text-align:center">{{popcontent.title}} </h2>
+          <img :src="popcontent.mpic" style="margin:10px;width:95%;display:block;">
+          <group label-width="5em" label-margin-right="1.5em"  >
+            <cell title="发起人" :value="popcontent.uname"  ></cell>
+            <cell title="建立日期" :value="popcontent.pushtime"  ></cell>
+            <cell title="总阅读数" :value="popcontent.number"></cell>
+            <cell title="备注" :value="popcontent.note"  ></cell>
+            <cell title="简介"></cell>
+            <cell-box style="font-family:'华文楷体';text-indent:2em;" v-html="popcontent.content">
+            </cell-box>
+          </group>
+        </div>
+      </popup>
+    </div>
   </div>
 </template>
 <script>
-import { ViewBox } from 'vux'
+import { XHeader, ViewBox, Popup, TransferDom, Card, Cell, Group, CellBox } from 'vux'
 export default {
   name: 'helppoor', // 扶贫工作
-  components: { ViewBox }, // 注册组件
+   directives: {
+    TransferDom
+  },
+  components: { XHeader, ViewBox, Popup, Card, Cell, Group, CellBox }, // 注册组件
   data () { // 局内数据
     return {
+      show: false,
+      listhelp: [],
+      popcontent:{}
     }
   },
   methods: { // 方法函数
+ openguide (item) { // 显示弹窗
+    this.popcontent=item;
+      this.show = true
+    },
+    backpage () { // 关闭弹窗
+      this.show = false
+    },
+    getactlist:function () {
+      this.listhelp = []
+      this.axios.get('http://110.53.162.165:5050/api/party/listAll?', { params: { vtype: 3, pageIndex: 1, pageSize: 20 } }).then((res) => {
+        console.log(res.data)
+        for (let i = 0, len = res.data.data.length; i < len; i++) {
+          this.listhelp.push({
+            title: res.data.data[i].mtitle,
+            content: res.data.data[i].mcontent,
+            mpic: res.data.data[i].mpic,
+            number: res.data.data[i].greadtotal,
+            note: res.data.data[i].note,
+            pushtime: res.data.data[i].pushdate,
+            uname: res.data.data[i].uname
+          })
+        } // 请求成功函数
+      }, function () {
+        console.log('请求失败处理') // 请求失败函数
+      })
+    }
   },
   computed: { // 计算属性
 
@@ -68,30 +105,33 @@ export default {
 
   },
   mounted () { // 初始化函数
-
+    this.getactlist()
   }
 }
 </script>
 <style lang="less" scoped>
-dt{
-  font-family:'华文楷体';
-  font-weight: bold;
-  color:#212121;
-  background:linear-gradient(to bottom, #ff0000, #ff9999);
-  border-color: #ff0220 !important;
-  border-bottom:1px solid #1e5b6b;
-  border-left:5px solid transparent;
-  padding-left:8px;
+.card-padding{
+  padding: 10px 15px;
+  font-size: .9em;
+  text-align: right;
+  color: #999;
+  line-height: 2;
 }
-dd{
-  border-left:1px solid #ff5555;
-  border-bottom:1px dashed #ff3333
-}
-a{
-  text-decoration: none;
-  color:#212121;
-}
-a:hover{
-  text-decoration: underline
+.hd-form-item{
+  overflow: hidden;
+  .hd-form-item-label{
+    float: left;
+    margin-right: 1em;
+    min-width: 4em;
+    color: #999;
+    text-align: justify;
+    text-align-last: justify;
+  }
+  .hd-form-item-value{
+    display: block;
+    overflow: hidden;
+    word-break: normal;
+    word-wrap: break-word;
+  }
 }
 </style>

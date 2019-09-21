@@ -40,8 +40,8 @@ export default {
   methods: {
   },
   computed: {
-    listeninfocontent () { 
-      return this.infocontent; // 监听父组件点击其他信息 并更新父组件向子组件传递的值
+    listeninfocontent () {
+      return this.infocontent // 监听父组件点击其他信息 并更新父组件向子组件传递的值
     }
   },
   watch: {

@@ -535,7 +535,7 @@ export default {
     onFocus () { // 当表情框显示后input再焦距 时需关闭表情框
       this.openwindowshow.emotionshow = false
       this.openwindowshow.IsKeyorEmo = true
-      //window.scrollTo(0, document.documentElement.clientHeight) // 解决ios键盘遮挡input
+      // window.scrollTo(0, document.documentElement.clientHeight) // 解决ios键盘遮挡input
     },
     onblur () {
       // 解决苹果不回弹页面

@@ -1,47 +1,53 @@
 <template>
   <div>
-    <swiper loop auto :list="demo06_list" :index="demo06_index" @on-index-change="demo06_onIndexChange">
-
-    </swiper>
-    <div>
-      <ul>
-        <div class="link-top"></div>
-        <li class="style">
-          <h3><a href="#" target="_blank">颠覆你传统印象的农村</a></h3>
-          <i><div class="clear"></div></i>
-          <p>计划到2018年各市全面完成县域乡村建设规划编制，到2019年全市实现村庄规划全覆盖，全面推行乡村建设规划许可管理</p>
-          <span class="left">2019-08-09</span>
-        </li>
-        <div class="link-top"></div>
-        <li class="style">
-          <h3><a href="#" target="_blank">巧做赏花经济</a></h3>
-          <i><div class="clear"></div></i>
-          <p>4月21日，位于东港区南湖镇樵业子村的紫驭康源油用牡丹基地内，500亩油用牡丹进入盛花期，吸引着骑行爱好者前来观赏</p>
-          <span class="left">2019-08-07</span>
-        </li>
-        <div class="link-top"></div>
-        <li class="style">
-          <h3><a href="#" target="_blank">村规民约成就美丽乡村</a></h3>
-          <i><div class="clear"></div></i>
-          <p>“爱护环境讲卫生，生活垃圾不乱扔；柴草杂物不乱放，村容整洁心情爽……”</p>
-          <span class="left">2019-08-17</span>
-        </li>
-        <div class="link-top"></div>
-        <li class="style">
-          <h3><a href="#" target="_blank">优秀代表村民</a></h3>
-          <i><div class="clear"></div></i>
-          <p>先后被评为“山东省农业旅游示范点”、“济南市十大都市农业园区”，该村支部书记、村主任王臣也被授予“山东省劳动模范”称号。</p>
-          <span class="left">2019-08-09</span>
-        </li>
-      </ul>
-    </div>
-    <div>
-    </div>
+    <view-box ref="viewBox">
+      <div slot="header" style="position:absolute;width:100%;z-index:100;">
+        <x-header style="width:100%;position:absolute;left:0;top:0;z-index:100;">美丽乡村</x-header>
+      </div>
+      <div style="margin-top:46px;">
+        <swiper loop auto :list="demo06_list" :index="demo06_index" @on-index-change="demo06_onIndexChange">
+        </swiper>
+        <div>
+          <ul>
+            <villagepanel v-for="i in 5" :key="i"></villagepanel>
+            <!-- <div class="link-top"></div>
+            <li class="style">
+              <h3><a href="#" target="_blank">颠覆你传统印象的农村</a></h3>
+              <i><div class="clear"></div></i>
+              <p>计划到2018年各市全面完成县域乡村建设规划编制，到2019年全市实现村庄规划全覆盖，全面推行乡村建设规划许可管理</p>
+              <span class="left">2019-08-09</span>
+            </li>
+            <div class="link-top"></div>
+            <li class="style">
+              <h3><a href="#" target="_blank">巧做赏花经济</a></h3>
+              <i><div class="clear"></div></i>
+              <p>4月21日，位于东港区南湖镇樵业子村的紫驭康源油用牡丹基地内，500亩油用牡丹进入盛花期，吸引着骑行爱好者前来观赏</p>
+              <span class="left">2019-08-07</span>
+            </li>
+            <div class="link-top"></div>090-
+            <li class="style">
+              <h3><a href="#" target="_blank">村规民约成就美丽乡村</a></h3>
+              <i><div class="clear"></div></i>
+              <p>“爱护环境讲卫生，生活垃圾不乱扔；柴草杂物不乱放，村容整洁心情爽……”</p>
+              <span class="left">2019-08-17</span>
+            </li>
+            <div class="link-top"></div>
+            <li class="style">
+              <h3><a href="#" target="_blank">优秀代表村民</a></h3>
+              <i><div class="clear"></div></i>
+              <p>先后被评为“山东省农业旅游示范点”、“济南市十大都市农业园区”，该村支部书记、村主任王臣也被授予“山东省劳动模范”称号。</p>
+              <span class="left">2019-08-09</span>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </view-box>
   </div>
 </template>
 
 <script>
-import { Swiper } from 'vux'
+import villagepanel from '@/components/Infopanel/villagepanel.vue'
+import { Swiper, XHeader, ViewBox, } from 'vux'
 
 const baseList = [{
   url: 'javascript:',
@@ -67,7 +73,7 @@ const urlList = baseList.map((item, index) => ({
 
 export default {
   components: {
-    Swiper
+    Swiper, villagepanel, XHeader, ViewBox
   },
   ready () {
 

@@ -62,7 +62,7 @@ export default {
       ],
       menus: [
         { label: '党建新闻', img: require('../../assets/img/menus/partynews.png'), path: '/party_partynews' }, // 异步加载图片
-        { label: '时事政治', img: require('../../assets/img/menus/shishizhenshi.png'), path: '/party_shishizhenshi' },
+        { label: '党员学习', img: require('../../assets/img/menus/shishizhenshi.png'), path: '/party_shishizhenshi' },
         { label: '党员活动', img: require('../../assets/img/menus/partyactivity.png'), path: '/party_partyactivity' },
         { label: '扶贫工作', img: require('../../assets/img/menus/helppoor.png'), path: '/party_helppoor' }
       ],
