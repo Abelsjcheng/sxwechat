@@ -6,6 +6,8 @@ import 'font-awesome/less/font-awesome.less'
 import './assets/styles/common.less'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import qs from 'qs'
+Vue.prototype.qs = qs 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 // 移除移动端点击延迟

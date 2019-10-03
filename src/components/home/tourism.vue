@@ -1,12 +1,12 @@
 <template>
   <div style="height:100%;">
-    <!-- 扶贫工作页面待写 -->
+    <!-- 农家乐页面待写 -->
     <view-box ref="viewBox" body-padding-bottom="0">
       <div slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;">
-          <x-header>
-            <div style="color:#fff;font-family:'华文行楷'">长沙县欢迎您！</div>
-          </x-header>
-        </div>
+        <x-header>
+          <div style="color:#fff;font-family:'华文行楷'">长沙县欢迎您！</div>
+        </x-header>
+      </div>
       <div style="padding: 10px 5px;margin-top:35px">
         <card v-for="list in listtourism" :key="list">
           <div slot="header" style="padding: 10px 10px;" @click="openguide(list)">
@@ -55,8 +55,8 @@ export default {
     }
   },
   methods: { // 方法函数
- openguide (item) { // 显示弹窗
-    this.popcontent=item;
+    openguide (item) { // 显示弹窗
+      this.popcontent=item;
       this.show = true
     },
     backpage () { // 关闭弹窗

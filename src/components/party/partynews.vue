@@ -60,6 +60,7 @@ export default {
   components: { Panel, LoadMore, ViewBox, XHeader, Popup, PullTo }, // 注册组件1
   data () { // 局内数据
     return {
+      title: '',
       show: false,
       list: [],
       popcontent: {}

@@ -37,7 +37,7 @@
                 </popover>
               </div>
             </div>
-            <div class="post-content" v-show="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0">
+            <div class="post-content" v-if="pcircle.TbPcpraise.length>0 || pcircle.TbPccomment.length>0">
               <div style="border-bottom: 1px solid #D9D9D9;" v-show="pcircle.TbPcpraise && pcircle.TbPcpraise.length>0">
                 <i class="fa fa-heart-o"> </i>
                 <span v-for="(like,index) in pcircle.TbPcpraise" :key="index"> {{like.uname}}, </span> <!--点赞人的昵称 -->
@@ -735,25 +735,6 @@ body /deep/ .vux-popover-arrow-right {
   margin: auto auto;
 }
 
-.wechatEmotion-container{
-    background: rgba(238, 238, 238, 0.5);
-    .emotion-list{
-      width: 100%;
-      padding: 10px 5px;
-      display: flex;
-      flex-wrap: wrap;
-      height: 175px;
-      overflow-y: auto;
-      box-sizing: border-box;
-      .emotion-list-item{
-        list-style: none;
-        float: left;
-        height: 27%;
-        width: 12.5%;
-        padding: 5px 0;
-        text-align: center;
-      }
-    }
-  }
+
 
 </style>

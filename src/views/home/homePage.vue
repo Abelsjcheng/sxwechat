@@ -4,7 +4,7 @@
       <div slot="content">
         <a class="weather-box">
           <div class="weather-box__bd">
-            <h4 style="font-size:40px">5°C</h4>
+            <h4 style="font-size:40px">{{temp}}°C</h4>
             <span>当前天气:晴</span>
             <p class="weather-box__desc">今日长沙县</p>
           </div>
@@ -45,6 +45,7 @@ export default {
   },
   data () {
     return {
+      temp: '',
       show: false,
       menus: [
         { label: '资讯', img: require('../../assets/img/menus/info.png'), path: '/home_info' }, // 异步加载图片
@@ -117,7 +118,17 @@ export default {
     },
     backpage () { // 关闭弹窗
       this.show = false
+    },
+    gettemp:function () {
+      this.temp = ''
+      this.axios.get('http://110.53.162.165:5050/api/rivervis/commentCount').then((res) =>{
+        console.log(res.data)
+        this.temp = res.data.data[0].temp
+      })
     }
+  },
+  mounted () {
+    this.gettemp()
   }
 }
 </script>

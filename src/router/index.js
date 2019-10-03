@@ -134,6 +134,12 @@ export default new Router({
       name: 'party_work',
       component: () =>
         import('@/components/party/partywork')
+    },
+    {
+      path: '/panel_comment', // 全部评论路径
+      name: 'comment',
+      component: () =>
+        import('@/components/Infopanel/comment')
     }
   ]
 })
