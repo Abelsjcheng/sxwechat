@@ -6,6 +6,6 @@ module.exports = {
         })
     },
     publicPath: process.env.NODE_ENV === 'production'
-    ? '/dist/'
+    ? '/sxwechat/'
     : '/' //tomcat配置
 }

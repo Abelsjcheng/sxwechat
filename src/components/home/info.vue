@@ -15,10 +15,10 @@
           <tab>
             <tab-item selected badge-label="1" @on-item-click="open('policy')">政策</tab-item>
             <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('notice')">公告</tab-item>
-            <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('news')">新闻</tab-item>
+            <!-- <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('news')">新闻</tab-item> -->
           </tab>
         </div>
-        <pull-to  @infinite-scroll="loadmore"  >
+        <pull-to  @infinite-scroll="loadmore">
           <div style="padding-top:130px;">
             <infolist :list="infolist"  v-if="infolist.length"/> <!--异步请求的数据是会渲染两次的！第一次是请求没完成时，子组件去取值，是空！第二次才是请求成功返回，然后才有数据 -->
           </div>

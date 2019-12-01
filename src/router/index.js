@@ -6,8 +6,8 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
-  // base: '/sxwechat',
+ // base: process.env.BASE_URL,
+   base: '/sxwechat',
   routes: [
     {
       path: '/',

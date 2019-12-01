@@ -1,7 +1,7 @@
 <template>
   <div class="quan" style="height:100%;">
     <ViewBox ref="viewBox" body-padding-bottom="0">
-      <x-header slot="header" :left-options="{backText: ''}" class="vux-scroller-header">朋友圈
+      <x-header slot="header" :left-options="{backText: ''}" class="vux-scroller-header">云圈
         <x-icon slot="right" type="camera" size="35" style="fill:#fff;position:relative;top:-8px;"  @click="openwindowshow.showMenus = true"></x-icon>
       </x-header>
       <pull-to :top-load-method="refresh" @infinite-scroll="loadmore" :top-config="{stayDistance:90}"  @scroll="onScroll" >

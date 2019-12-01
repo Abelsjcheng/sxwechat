@@ -10,10 +10,11 @@
       <div style="padding: 10px 5px;margin-top:35px">
         <card v-for="list in listtourism" :key="list">
           <div slot="header" style="padding: 10px 10px;" @click="openguide(list)">
-            <img :src="list.mpic" style="width:32%;display:block;float:left">
+            <img :src="list.mpic" style="width:88px;height:70px;;display:block;float:left;margin:5px;">
             <span style="display:block;float:left;margin-left:10px">{{list.title}} </span>
             <br><br>
-            <p style="text-indent:2em" v-html="list.content"></p>
+            <span style="display:block;float:left;font-size:12px;color:#999;margin-left:10px;margin-bottom:10px;">{{list.uname}} | {{list.pushdate}}</span>
+            <!-- <p style="text-indent:2em" v-html="list.content"></p> -->
           </div>
         </card>
       </div>
@@ -22,17 +23,21 @@
       <popup v-model="show" position="right" width="100%">
         <div style="height:100%;">
           <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage"></x-header>
+          <div>
+            <span>
           <h2 style="text-align:center">{{popcontent.title}} </h2>
           <img :src="popcontent.mpic" style="margin:10px;width:95%;display:block;">
+          </span></div>
           <group label-width="5em" label-margin-right="1.5em"  >
             <cell title="负责人" :value="popcontent.uname"  ></cell>
             <cell title="建立日期" :value="popcontent.pushdate"  ></cell>
             <cell title="联系方式" value="15875629854"></cell>
-            <cell title="总阅读数" :value="popcontent.number"></cell>
-            <cell title="备注" :value="popcontent.note"  ></cell>
-            <cell title="简介"></cell>
-            <cell-box style="font-family:'华文楷体';text-indent:2em;" v-html="popcontent.content">
-            </cell-box>
+            <!-- <cell title="总阅读数" :value="popcontent.number"></cell>
+            <cell title="备注" :value="popcontent.note"  ></cell> 
+            <cell title="简介"></cell>-->
+            <p style="font-family:'华文楷体';text-indent:2em;padding:10px;" v-html="popcontent.content"></p>
+            <!-- <cell-box style="font-family:'华文楷体';text-indent:2em;" v-html="popcontent.content"> 
+            </cell-box>-->
           </group>
         </div>
       </popup>
