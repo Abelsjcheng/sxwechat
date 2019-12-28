@@ -1,7 +1,7 @@
 <template>
   <div style="height:100%;">
     <view-box ref="viewBox" body-padding-bottom="0">
-      <x-header slot="header" class="vux-scroller-header">办事指南</x-header>
+      <x-header slot="header" class="vux-scroller-header">小村家事</x-header>
       <div>
         <panel :list="guidelists" type="4" @on-click-item="openguide"></panel>
       </div>
@@ -26,7 +26,7 @@
 <script>
 import { XHeader, ViewBox, Panel, Popup, TransferDom, Group, Cell, CellBox } from 'vux'
 export default {
-  name: 'workguide', // 办事指南
+  name: 'workguide', // 小村家事
   directives: {
     TransferDom
   },
@@ -47,8 +47,8 @@ export default {
         },
         {
           guideinfo: {},
-          title: '便民指南',
-          desc: '便民服务',
+          title: '小村家事',
+          desc: '小村家事',
           meta: {
             source: '管理员',
             date: '2018-10-27 18:58:21'

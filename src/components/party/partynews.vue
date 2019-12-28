@@ -100,7 +100,6 @@ export default {
             title: res.data.data[i].mtitle,
             src: res.data.data[i].mpic,
             desc: res.data.data[i].mcontent,
-            date: res.data.data[i].pushdate,
             meta: {
               other: '评论:20',
               date: res.data.data[i].pushdate

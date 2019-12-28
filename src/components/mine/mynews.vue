@@ -31,7 +31,7 @@ export default {
   data () {
     return {
       show: false,
-      content: {}, // 存储传给 infocontent 的额数据
+      content: {}, // 存储传给 infocontent 的数据
       showpop1: this.show1,
       list: [
         {
@@ -94,23 +94,23 @@ export default {
       this.show = false
     },
     getmynews:function () { // 数据请求函数
-      // this.axios.get('http://110.53.162.165:5050/api/party/listAll?',{params:{vtype:0,pageIndex:1,pageSize:20 } }).then((res) => {
-      //   console.log(res.data)
-      //    for (let i = 0, len = res.data.data.length; i < len; i++) {
-      //     this.list.push({
-      //       title: res.data.data[i].mtitle,
-      //       src: res.data.data[i].mpic,
-      //       content: res.data.data[i].mcontent,
-      //       reldate: res.data.data[i].pushdate,
-      //       meta: {
-      //         other: '评论:20',
-      //         date: res.data.data[i].pushdate
-      //       }
-      //     })
-      //   } // 请求成功函数
-      // }, function () {
-      //   console.log('请求失败处理') // 请求失败函数
-      // })
+      this.axios.get('http://110.53.162.165:5050/api/party/listAll?',{params:{vtype:0,pageIndex:1,pageSize:20 } }).then((res) => {
+        console.log(res.data)
+         for (let i = 0, len = res.data.data.length; i < len; i++) {
+          this.list.push({
+            title: res.data.data[i].mtitle,
+            src: res.data.data[i].mpic,
+            content: res.data.data[i].mcontent,
+            reldate: res.data.data[i].pushdate,
+            meta: {
+              other: '评论:20',
+              date: res.data.data[i].pushdate
+            }
+          })
+        } // 请求成功函数
+      }, function () {
+        console.log('请求失败处理') // 请求失败函数
+      })
     }
   },
   computed: {

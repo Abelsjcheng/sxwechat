@@ -1,4 +1,5 @@
 <template>
+<div>
   <div>
     <card>
       <div slot="content">
@@ -19,6 +20,9 @@
         <img slot="icon" :src="menu.img">
       </grid-item>
     </grid>
+    <!-- <group>
+      <cell-box></cell-box>
+    </group> -->
     <panel header="最新消息" :footer="footer" :list="list" type="5" @on-click-item="openproject"></panel>
     <panel header="合作伙伴推送" :footer="footer" :list="partners" type="1"></panel>
     <div v-transfer-dom>
@@ -32,8 +36,11 @@
       </popup>
     </div>
   </div>
+    <modal :show="showModal" :title="'今天的值班党员'" ></modal>
+  </div>
 </template>
 <script>
+import modal from '@/components/Infopanel/modal.vue'
 import infocontent from '@/components/Infopanel/infocontent.vue'
 import { Card, Grid, GridItem, Panel, XHeader, Popup, TransferDom } from 'vux'
 export default {
@@ -41,17 +48,19 @@ export default {
     TransferDom
   },
   components: {
-    Card, Grid, GridItem, Panel, XHeader, Popup, infocontent
+    Card, Grid, GridItem, Panel, XHeader, Popup, infocontent, modal
   },
   data () {
     return {
       temp: '',
+      showModal: false,
+      title: '弹窗标题',
       show: false,
       menus: [
-        { label: '资讯', img: require('../../assets/img/menus/info.png'), path: '/home_info' }, // 异步加载图片
-        { label: '项目公开', img: require('../../assets/img/menus/project.png'), path: '/home_project' },
+        { label: '村务公开', img: require('../../assets/img/menus/info.png'), path: '/home_info' }, // 异步加载图片
+        { label: '数据分析', img: require('../../assets/img/menus/project.png'), path: '/home_project' },
         { label: '暮云圈', img: require('../../assets/img/menus/quan.png'), path: '/home_quan' },
-        { label: '办事指南', img: require('../../assets/img/menus/workguide.png'), path: '/home_workguide' },
+        { label: '小村家事', img: require('../../assets/img/menus/workguide.png'), path: '/home_workguide' },
         { label: '美丽乡村', img: require('../../assets/img/menus/village.png'), path: '/home_village' },
         { label: '农家乐', img: require('../../assets/img/menus/Tourism.png'), path: '/home_tourism' }
       ],
@@ -112,6 +121,16 @@ export default {
     }
   },
   methods: { // 方法函数
+    hideModal() {
+      //关闭弹窗
+      this.showModal = false
+    },
+    showWindow() {
+      this.showModal = false
+    },
+    changeRoute() {
+      this.$router.push('/views/home/homgpage');
+    },
     openproject (item) { // 显示弹窗
       this.show = true
       console.log(item)

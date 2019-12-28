@@ -1,54 +1,54 @@
 <template>
   <div style="height:100%;">
-    <view-box ref="viewBox" body-padding-top="90px" body-padding-bottom="0" >
+    <view-box ref="viewBox" body-padding-top="46px" body-padding-bottom="0" >
       <div slot="header" class="vux-scroller-header">
-        <x-header>项目公开</x-header>
-        <tab>
-          <tab-item selected @on-item-click="onItemClick(1)" badge-label="1">未建</tab-item>
-          <tab-item @on-item-click="onItemClick(2)" badge-label="2">在建</tab-item>
-          <tab-item @on-item-click="onItemClick(3)" badge-label="3">已建</tab-item>
-        </tab>
+        <x-header>数据分析</x-header>
       </div>
-      <div>
-        <panel :list="projectlists" type="4" @on-click-item="openproject"></panel>
+        <div style="">
+          <div id="div" class="card one" style="background:#299;">
+            <span  @on-click-item="openproject">性别比例</span>
+         </div>
+          <div class="card one" style="background:#688;">
+            <span>低保户</span>
+          </div>
+          <div class="card tow" style="background:#688;">
+            <span>新增人口</span>
+          </div>
+          <div class="card tow" style="background:#299;">
+            <span>年龄段</span>
+          </div>
+          <div class="card bottom" style="background:#499; width:98%;">
+            <span>复 原 军 人 的 比 例</span>
+          </div>
       </div>
     </view-box>
     <div v-transfer-dom>
       <popup v-model="show" position="right" width="100%">
         <div>
-          <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage">重大项目详细</x-header>
+          <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage">详情</x-header>
         </div>
       </popup>
     </div>
+    <alertdata :show="showModal" :title="'数据'"/>
   </div>
 </template>
 <script>
-import { XHeader, Tab, TabItem, ViewBox, Panel, Popup, TransferDom } from 'vux'
+import alertdata from '@/components/Infopanel/alertdata.vue'
+import { XHeader, ViewBox, Popup, Cell, TransferDom } from 'vux'
 export default {
-  name: 'project', // 项目公开
+  name: 'project', // 数据分析
   directives: {
     TransferDom
   },
-  components: { XHeader, Tab, TabItem, ViewBox, Panel, Popup }, // 注册组件
+  components: { XHeader, ViewBox, Popup, Cell, alertdata }, // 注册组件
   data () { // 局内数据
     return {
-      projectlists: [],
+      // projectlists: [],
       show: false,
-      UnBuiltLists: [],
-      NowBuiltLists: [],
-      haveBuiltLists: []
+      showModal: false,
     }
   },
   methods: { // 方法函数
-    onItemClick (vag) {
-      if (vag === 1) {
-        this.projectlists = this.UnBuiltLists
-      } else if (vag === 2) {
-        this.projectlists = this.NowBuiltLists
-      } else if (vag === 3) {
-        this.projectlists = this.haveBuiltLists
-      }
-    },
     openproject (item) { // 显示弹窗
       this.show = true
       console.log(item)
@@ -56,42 +56,18 @@ export default {
     backpage () { // 关闭弹窗
       this.show = false
     },
-    getinfo () { // 项目状态“0”为未建，“1”为在建，“2”为已建
-      this.axios.get('http://110.53.162.165:5050/api/project/all').then((res) => {
-        for (let i = 0, len = res.data.data.length; i < len; i++) {
-          if (res.data.data[i].ptype === 0) {
-            this.UnBuiltLists.push({
-              projectinfo: res.data.data[i],
-              title: res.data.data[i].proname,
-              desc: res.data.data[i].content,
-              meta: {
-                source: '未建',
-                date: res.data.data[i].pushdate
-              }
-            })
-          } else if (res.data.data[i].ptype === 1) {
-            this.NowBuiltLists.push({
-              projectinfo: res.data.data[i],
-              title: res.data.data[i].proname,
-              desc: res.data.data[i].content,
-              meta: {
-                source: '在建',
-                date: res.data.data[i].pushdate
-              }
-            })
-          } else if (res.data.data[i].ptype === 2) {
-            this.haveBuiltLists.push({
-              projectinfo: res.data.data[i],
-              title: res.data.data[i].proname,
-              desc: res.data.data[i].content,
-              meta: {
-                source: '已建',
-                date: res.data.data[i].pushdate
-              }
-            })
-          }
-        }
-      })
+    hideModal() {
+      //关闭弹窗
+      this.showModal = false
+    },
+    showWindow() {
+      this.showModal = false
+    },
+    changeRoute() {
+      this.$router.push('/welcom/page2');
+    },
+    showdata() {
+      this.showModal = true
     }
   },
   computed: { // 计算属性
@@ -101,11 +77,32 @@ export default {
 
   },
   mounted () { // 初始化函数
-    this.getinfo() // 取项目信息
-    this.projectlists = this.UnBuiltLists
+    // this.getinfo() // 取项目信息
+    // this.projectlists = this.UnBuiltLists
   }
 }
 </script>
 <style lang="less" scoped>
-
+.card{
+  height:146px;
+  width:48%;
+  float:left;
+  margin: 3px;
+}
+div{
+  text-align: center;
+  vertical-align: middle;
+}
+span{
+  text-align: center;
+  line-height: 100px;
+  height: 100px;
+  width: 100%;
+  font-weight: bold;
+  font-size: 20px;
+  display: block;
+  position: relative;
+  top:50%;
+  transform:translateY(-50%);
+}
 </style>

@@ -35,6 +35,11 @@
           <i slot="icon" class="fa fa-commenting menu-cell-icon"></i>
         </cell>
       </div>
+      <div @on-citem-click ="showComp">
+        <cell title="投诉" @click.native="show2 = true" is-link>
+          <i slot="icon" class="fa fa-pencil fa-fw"></i>
+        </cell>
+      </div>
       <cell title="账号换绑" is-link>
         <i slot="icon" class="fa fa-phone-square menu-cell-icon"></i>
       </cell>
@@ -46,14 +51,16 @@
     </group>
     <myinfo :show="show" v-on:closepop="show =$event"/>
     <mynews :show1="show1" v-on:closepop1="show1 =$event"/>
+    <complaint :show2="show2" v-on:closepop2="show2 =$event"/>
   </div>
 </template>
 <script>
 import myinfo from '../../components/mine/myinfo.vue'
 import mynews from '../../components/mine/mynews.vue'
+import complaint from '../../components/mine/panel/complaint.vue'
 import { Card, Cell, Grid, GridItem, Group } from 'vux'
 export default {
-  components: { Card, Cell, Grid, GridItem, Group, myinfo, mynews },
+  components: { Card, Cell, Grid, GridItem, Group, myinfo, mynews, complaint },
   data () {
     return {
       menus: [
@@ -63,7 +70,8 @@ export default {
         { label: '我的点赞', icon: 'fa fa-thumbs-up', style: 'font-size: 24px;color: #f74c31;', path: '/mine_dianzan' }
       ],
       show: false,
-      show1: false
+      show1: false,
+      show2:false,
     }
   },
   methods: {
@@ -76,6 +84,10 @@ export default {
     },
     shownews (item) {
       this.show1 = true
+      console.log(item)
+    },
+    showComp (item) {
+      this.show2 = true
       console.log(item)
     }
   }

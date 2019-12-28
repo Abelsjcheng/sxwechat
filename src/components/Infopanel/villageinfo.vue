@@ -4,8 +4,8 @@
             <swiper loop auto :list="village_list" :index="village_index" @on-index-change="village_onIndexChange">
             </swiper>
         </div>
-        <div>
-            <p>星辰在线5月27日讯（通讯员 徐拓）<span style="color: rgb(102, 102, 102);"></span></p>
+        <div style="matgin-top:50px;">
+            <p v-html="villageinfo.content"></p>
         </div>
     </div>
 </template>
@@ -42,10 +42,10 @@ export default {
             village_list: urlList,
             village_index: 0,
             swiperItemIndex: 1,
-            title: '',
-            content: ''
+            title: ''
         }
     },
+    props: ['villageinfo'],
     ready () {
 
     },

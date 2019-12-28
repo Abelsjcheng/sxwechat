@@ -16,7 +16,7 @@
           <div>
             <x-header class="vux-scroller-header" :list="list" :left-options="{preventGoBack: true}" @on-click-back="backpage1">{{list.mtitle}}</x-header>
             <div>
-              <villageinfo :villageinfo="content"/>
+              <villageinfo :villageinfo="contentvil"/>
             </div>
           </div>
         </popup>
@@ -64,7 +64,7 @@ export default {
       swiperItemIndex: 1,
       show: false,
       list: [],
-      content: {},
+      contentvil: {},
     }
   },
   props: ['showvil'],
@@ -83,7 +83,7 @@ export default {
     },
     openproject (item) { // 显示弹窗
       this.show = true
-      this.content = item.villageinfo // 打开popup时使content中存储的值赋给villagecontent
+      this.contentvil = item // 打开popup时使单个panel中存储的值赋给contentvil
       console.log(item)
     },
     backpage1 () { // 关闭详情弹窗
@@ -99,7 +99,6 @@ export default {
             title: res.data.data[i].mtitle,
             src: res.data.data[i].mpic,
             content: res.data.data[i].mcontent,
-            reldate: res.data.data[i].pushdate,
             meta: {
               other: res.data.data[i].uname,
               date: res.data.data[i].pushdate

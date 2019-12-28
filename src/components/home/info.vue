@@ -15,7 +15,7 @@
           <tab>
             <tab-item selected badge-label="1" @on-item-click="open('policy')">政策</tab-item>
             <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('notice')">公告</tab-item>
-            <!-- <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('news')">新闻</tab-item> -->
+            <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('news')">新闻</tab-item>
           </tab>
         </div>
         <pull-to  @infinite-scroll="loadmore">
@@ -82,6 +82,9 @@ export default {
         this.getinfolist('http://110.53.162.165:5050/api/policy/PolAll', '')
       } else if (val === 'notice') {
         this.tab = 'notice'
+        this.getinfolist('http://110.53.162.165:5050/api/policy/infoAll', '')
+      } else if (val === 'news') {
+        this.tab ='news'
         this.getinfolist('http://110.53.162.165:5050/api/policy/infoAll', '')
       }
     },

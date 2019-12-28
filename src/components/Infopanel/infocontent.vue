@@ -24,8 +24,13 @@
             </div>
             <div>
               <!-- 点赞 -->
-            <i class="fa fa-heart-o fa-5x animated swing" style="font-size:15px;" @click="colour" v-if="show" >{{addgood(comment.good)}}</i>
-             <i class="fa fa-heart fa-5x animated swing" :class="fontclass" style="font-size:15px;" @click="colour" v-if="!show" >{{comment.good}}</i>
+              <!-- 避免v-if和v-for同时在一个标签中使用的冲突，使用ul和li标签 -->
+              <ul v-if="show" >
+            <i class="fa fa-heart-o fa-5x animated swing" style="font-size:15px;"  v-for="(comment,index) in comment" :key="index" @click="colour(index)">{{comment.good}}</i>
+             </ul>
+             <ul v-if="!show">
+             <i class="fa fa-heart fa-5x animated swing" :class="fontclass" style="font-size:15px;" v-for="(comment,index) in comment" :key="index" @click="colour(index)" >{{comment.good}}</i>
+            </ul>
             <!-- 评论别人的评论 -->
             <i class="fa fa-comment-o" style="font-size:15px;color: #999999;margin-left:5px" @click="onFocus()" ></i>
             </div>
@@ -95,14 +100,14 @@
   </div>
 </template>
 <script>
-import { XHeader, Popup, TransferDom, XTextarea, Cell, Group, WechatEmotion as Emotion, Swiper, SwiperItem, Toast  } from 'vux'
+import { Popup, TransferDom, XTextarea, Cell, Group, WechatEmotion as Emotion, Swiper, SwiperItem, Toast  } from 'vux'
 import { timingSafeEqual } from 'crypto'
 export default {
   name: 'infocontent',
   directives: {
     TransferDom
   },
-  components: { XHeader, Popup, XTextarea, Cell, Group, Emotion, Swiper, SwiperItem, Toast },
+  components: { Popup, XTextarea, Cell, Group, Emotion, Swiper, SwiperItem, Toast },
   props: ['infocontent','commentslist'], // 定义父组件向子组件传递的对象
   data () {
     return {
@@ -129,20 +134,20 @@ export default {
         this.show = false;
         this.fontclass = "hover";
         return function() {
-          this.good = good++;
+          this[index].good++;
         }
       }
       else if (!this.show) {
         this.show = true;
         this.fontclass = "";
         return function() {
-          this.good = good--;
+          this[index].good--;
         }
       }
     },
-    addgood (good) {
+    // addgood (good) {
 
-    },
+    // },
     onFocus () { 
       console.log(1)
       this.commentshow = true
