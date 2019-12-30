@@ -4,6 +4,9 @@
 > 作者：sjcheng   
 > 版本：0.0.1   
 
+# 效果演示
+[查看效果请戳这里](http://110.53.162.164:1080/sxwechat/)
+
 ## Project setup
 ```
 npm install
