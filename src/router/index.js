@@ -6,8 +6,8 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
-  // base: '/sxwechat',
+ // base: process.env.BASE_URL,
+   base: '/sxwechat',
   routes: [
     {
       path: '/',
@@ -134,6 +134,12 @@ export default new Router({
       name: 'party_work',
       component: () =>
         import('@/components/party/partywork')
+    },
+    {
+      path: '/panel_comment', // 全部评论路径
+      name: 'comment',
+      component: () =>
+        import('@/components/Infopanel/comment')
     }
   ]
 })

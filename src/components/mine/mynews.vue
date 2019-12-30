@@ -11,7 +11,7 @@
         <div>
           <x-header class="vux-scroller-header" :left-options="{preventGoBack: true}" @on-click-back="backpage1">详情</x-header>
           <div>
-            <infocontent/>
+            <infocontent :infocontent="content" />
           </div>
         </div>
       </popup>
@@ -31,6 +31,7 @@ export default {
   data () {
     return {
       show: false,
+      content: {}, // 存储传给 infocontent 的数据
       showpop1: this.show1,
       list: [
         {
@@ -86,10 +87,30 @@ export default {
     },
     openproject (item) { // 显示弹窗
       this.show = true
+      this.content = item.infocontent // 打开popup时使content中存储的值赋给infocontent
       console.log(item)
     },
     backpage1 () { // 关闭详情弹窗
       this.show = false
+    },
+    getmynews:function () { // 数据请求函数
+      this.axios.get('http://110.53.162.165:5050/api/party/listAll?',{params:{vtype:0,pageIndex:1,pageSize:20 } }).then((res) => {
+        console.log(res.data)
+         for (let i = 0, len = res.data.data.length; i < len; i++) {
+          this.list.push({
+            title: res.data.data[i].mtitle,
+            src: res.data.data[i].mpic,
+            content: res.data.data[i].mcontent,
+            reldate: res.data.data[i].pushdate,
+            meta: {
+              other: '评论:20',
+              date: res.data.data[i].pushdate
+            }
+          })
+        } // 请求成功函数
+      }, function () {
+        console.log('请求失败处理') // 请求失败函数
+      })
     }
   },
   computed: {

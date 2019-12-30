@@ -5,7 +5,7 @@
       <popup v-model="show" position="right" width="100%" @on-show="popupshow">
         <div style="height:100%">
           <div class="comment-scroller-header">
-            <x-header  :left-options="{preventGoBack: true}" @on-click-back="backpage">公告详情</x-header>
+            <x-header  :left-options="{preventGoBack: true}" @on-click-back="backpage">详情</x-header>
           </div>
           <infocontent :infocontent="content" :commentslist="commentlist" />
         </div>
@@ -41,6 +41,7 @@ export default {
     },
     popupshow () {
       this.axios.get('http://110.53.162.165:5050/api/comment/infoAll', { params: { proid: this.content.poinid, pageSize:5, pageIndex:1 } }).then((res) => {
+        console.log(res.data)
         this.commentlist = res.data.data
       })
         .catch(function (error) {

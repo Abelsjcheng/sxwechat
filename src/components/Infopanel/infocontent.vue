@@ -6,10 +6,11 @@
           <h3 class="title">{{infocontent.title}}</h3>
           <span class="time">{{infocontent.reldate}}</span>
         </div><hr>
-        <div class="com_content">{{infocontent.content}}</div><hr>
+        <div class="com_content">{{infocontent.content}}</div>
+        <div style="margin-right:10%;color:#999;font-size:13px;">阅读量:15</div><hr>
       </li>
     </ul>
-    <group>
+    <group style="padding-bottom:36px">
       <cell>
         <span slot="title" class="cell-comment-title">评论</span>
       </cell>
@@ -22,23 +23,34 @@
               <p class="comment-time">{{comment.cdate}} </p>
             </div>
             <div>
-            <i class="fa fa-thumbs-o-up" style="font-size:15px;color: #999999;" @click="showemotion()" >{{comment.good}}</i>
-            <i class="fa fa-comment-o" style="font-size:15px;color: #999999;margin-left:5px" @click="showemotion()" ></i>
+              <!-- 点赞 -->
+              <!-- 避免v-if和v-for同时在一个标签中使用的冲突，使用ul和li标签 -->
+              <ul v-if="show" >
+            <i class="fa fa-heart-o fa-5x animated swing" style="font-size:15px;"  v-for="(comment,index) in comment" :key="index" @click="colour(index)">{{comment.good}}</i>
+             </ul>
+             <ul v-if="!show">
+             <i class="fa fa-heart fa-5x animated swing" :class="fontclass" style="font-size:15px;" v-for="(comment,index) in comment" :key="index" @click="colour(index)" >{{comment.good}}</i>
+            </ul>
+            <!-- 评论别人的评论 -->
+            <i class="fa fa-comment-o" style="font-size:15px;color: #999999;margin-left:5px" @click="onFocus()" ></i>
             </div>
           </div>
           <div class="comment-content" v-html="ccontentemoji(comment.ccontent)"> </div> <!--说说的内容 -->
           <div class="recomment-content" v-if="comment.recomment !=null && comment.recomment.length >0 " ><!--评论回复 -->
-              <div>
-                <span >等人 </span> 
-                <span style="color: #094dcc" >共1条回复 </span>
-                <span class="right-arrow">
+              <div v-for="(recomment,index) in comment.recomment" :key="index">
+                <span >{{recomment.uname}}等人 </span> 
+                <span style="color: #094dcc" >共{{comment.recomment.length}}条回复 </span>
+                <!-- <span class="right-arrow">
                   <span class="arrow"> </span>
+                </span> --><br>
+                <span style="color: #094dcc">{{recomment.uname}}:
+                  <span style="color:#212121;">回复测试</span>
                 </span>
               </div>
             </div>
         </div>
       </cell>
-      <cell style="width: 100%;" link="">
+      <cell style="width: 100%;" link="/panel_comment">
         <p slot="title" style="text-align: center;color:#008af5;font-size:15px">全部评论</p>
       </cell>
     </group>
@@ -48,6 +60,7 @@
         <aside style="padding: 0 .3rem 0 .5rem;">
           <i slot="right" class="fa fa-comment-o comment-icon" @click="showemotion()" ></i>
         </aside>
+        <!-- 收藏图标 -->
         <aside style="padding: 0 .3rem 0 .5rem;">
           <i slot="right" :class="Ifcolstar?'fa fa-star comment-icon':'fa fa-star-o comment-icon'"  @click="showtoastcol()"></i>
         </aside>
@@ -87,16 +100,18 @@
   </div>
 </template>
 <script>
-import { XHeader, Popup, TransferDom, XTextarea, Cell, Group, WechatEmotion as Emotion, Swiper, SwiperItem, Toast  } from 'vux'
+import { Popup, TransferDom, XTextarea, Cell, Group, WechatEmotion as Emotion, Swiper, SwiperItem, Toast  } from 'vux'
+import { timingSafeEqual } from 'crypto'
 export default {
   name: 'infocontent',
   directives: {
     TransferDom
   },
-  components: { XHeader, Popup, XTextarea, Cell, Group, Emotion, Swiper, SwiperItem, Toast },
+  components: { Popup, XTextarea, Cell, Group, Emotion, Swiper, SwiperItem, Toast },
   props: ['infocontent','commentslist'], // 定义父组件向子组件传递的对象
   data () {
     return {
+      title: '',
       commentText: '',
       uname: '王李沙',
       commentshow: false, // pop弹窗
@@ -105,12 +120,35 @@ export default {
       showcoltoast: false, // 收藏提示
       Ifcolstar: false, // 收藏图标切换
       showcoltoasttext: '您已收藏',
+      show: true,
+      fontclass: "",
       showComtoasttext: '请输入评论内容',
+      good: 0,
       list: ['微笑', '撇嘴', '色', '发呆', '得意', '流泪', '害羞', '闭嘴', '睡', '大哭', '尴尬', '发怒', '调皮', '呲牙', '惊讶', '难过', '酷', '冷汗', '抓狂', '吐', '偷笑', '可爱', '白眼', '傲慢', '饥饿', '困', '惊恐', '流汗', '憨笑', '大兵', '奋斗', '咒骂', '疑问', '嘘', '晕', '折磨', '衰', '骷髅', '敲打', '再见', '擦汗', '抠鼻', '鼓掌', '糗大了', '坏笑', '左哼哼', '右哼哼', '哈欠', '鄙视', '委屈', '快哭了', '阴险', '亲亲', '吓', '可怜', '菜刀', '西瓜', '啤酒', '篮球', '乒乓', '咖啡', '饭', '猪头', '玫瑰', '凋谢', '示爱', '爱心', '心碎', '蛋糕', '闪电', '炸弹', '刀', '足球', '瓢虫', '便便', '月亮', '太阳', '礼物', '拥抱', '强', '弱', '握手', '胜利', '抱拳', '勾引', '拳头', '差劲', '爱你', 'NO', 'OK', '爱情', '飞吻', '跳跳', '发抖', '怄火', '转圈', '磕头', '回头', '跳绳', '挥手', '激动', '街舞', '献吻', '左太极', '右太极']
     }
   },
   methods: {
-    onFocus () {
+
+    colour () {//点赞功能
+      if (this.show) {
+        this.show = false;
+        this.fontclass = "hover";
+        return function() {
+          this[index].good++;
+        }
+      }
+      else if (!this.show) {
+        this.show = true;
+        this.fontclass = "";
+        return function() {
+          this[index].good--;
+        }
+      }
+    },
+    // addgood (good) {
+
+    // },
+    onFocus () { 
       console.log(1)
       this.commentshow = true
     },
@@ -121,6 +159,12 @@ export default {
     addEmotion (emotion) { // input中添加表情
       this.commentText = this.commentText + '[' + emotion + ']'
     },
+    // praise () { //点赞功能
+    //   var good=2;
+    //   return function(){
+    //     this.good=good++;
+    //   }
+    // },
     showemotion () { // 点击表情/keybroad图标
       this.emotionshow = !this.emotionshow;
     },
@@ -141,7 +185,7 @@ export default {
           good: 0
         }
         // post需加入qs将json格式直接转化为data所需的格式（?pcid=11&ccontent=测试）
-        this.axios.post('http://localhost:5050/api/comment/insertInfoCM',this.qs.stringify(comment) ).then((res) => {
+        this.axios.post('http://110.53.162.165:5050/api/comment/insertInfoCM',this.qs.stringify(comment) ).then((res) => {
           this.showComtoasttext = '发布成功'
           this.showtoast = true
           this.commentText = ''
@@ -209,5 +253,8 @@ export default {
 .com_bottom .useful.usefulClick {
     color: #F32D27;
     border: 1px solid #F32D27;
+}
+.hover {
+  color: #ee3f4d;
 }
 </style>

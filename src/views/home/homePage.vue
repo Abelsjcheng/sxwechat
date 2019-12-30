@@ -1,10 +1,11 @@
 <template>
+<div>
   <div>
     <card>
       <div slot="content">
         <a class="weather-box">
           <div class="weather-box__bd">
-            <h4 style="font-size:40px">5°C</h4>
+            <h4 style="font-size:40px">{{temp}}°C</h4>
             <span>当前天气:晴</span>
             <p class="weather-box__desc">今日长沙县</p>
           </div>
@@ -19,6 +20,9 @@
         <img slot="icon" :src="menu.img">
       </grid-item>
     </grid>
+    <!-- <group>
+      <cell-box></cell-box>
+    </group> -->
     <panel header="最新消息" :footer="footer" :list="list" type="5" @on-click-item="openproject"></panel>
     <panel header="合作伙伴推送" :footer="footer" :list="partners" type="1"></panel>
     <div v-transfer-dom>
@@ -32,8 +36,11 @@
       </popup>
     </div>
   </div>
+    <modal :show="showModal" :title="'今天的值班党员'" ></modal>
+  </div>
 </template>
 <script>
+import modal from '@/components/Infopanel/modal.vue'
 import infocontent from '@/components/Infopanel/infocontent.vue'
 import { Card, Grid, GridItem, Panel, XHeader, Popup, TransferDom } from 'vux'
 export default {
@@ -41,16 +48,19 @@ export default {
     TransferDom
   },
   components: {
-    Card, Grid, GridItem, Panel, XHeader, Popup, infocontent
+    Card, Grid, GridItem, Panel, XHeader, Popup, infocontent, modal
   },
   data () {
     return {
+      temp: '',
+      showModal: false,
+      title: '弹窗标题',
       show: false,
       menus: [
-        { label: '资讯', img: require('../../assets/img/menus/info.png'), path: '/home_info' }, // 异步加载图片
-        { label: '项目公开', img: require('../../assets/img/menus/project.png'), path: '/home_project' },
+        { label: '村务公开', img: require('../../assets/img/menus/info.png'), path: '/home_info' }, // 异步加载图片
+        { label: '数据分析', img: require('../../assets/img/menus/project.png'), path: '/home_project' },
         { label: '暮云圈', img: require('../../assets/img/menus/quan.png'), path: '/home_quan' },
-        { label: '办事指南', img: require('../../assets/img/menus/workguide.png'), path: '/home_workguide' },
+        { label: '小村家事', img: require('../../assets/img/menus/workguide.png'), path: '/home_workguide' },
         { label: '美丽乡村', img: require('../../assets/img/menus/village.png'), path: '/home_village' },
         { label: '农家乐', img: require('../../assets/img/menus/Tourism.png'), path: '/home_tourism' }
       ],
@@ -111,13 +121,33 @@ export default {
     }
   },
   methods: { // 方法函数
+    hideModal() {
+      //关闭弹窗
+      this.showModal = false
+    },
+    showWindow() {
+      this.showModal = false
+    },
+    changeRoute() {
+      this.$router.push('/views/home/homgpage');
+    },
     openproject (item) { // 显示弹窗
       this.show = true
       console.log(item)
     },
     backpage () { // 关闭弹窗
       this.show = false
+    },
+    gettemp:function () {
+      this.temp = ''
+      this.axios.get('http://110.53.162.165:5050/api/rivervis/commentCount').then((res) =>{
+        console.log(res.data)
+        this.temp = res.data.data[0].temp
+      })
     }
+  },
+  mounted () {
+    this.gettemp()
   }
 }
 </script>

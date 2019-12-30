@@ -9,6 +9,7 @@
                     </cell> -->
                     <cell title="头像">
                         <img :src="src" style="height:39px;width:39px;">
+                        
                     </cell>
                     <x-input title = "姓名:" placeholder="请输入姓名" v-model="rename" text-align="right" is-type="china-name" @on-blur="onBlur"  @on-enter="onEnter" @on-change="change" :show-clear="true" @on-focus="onFocus"></x-input>
                     <x-input title = "身份证号:" placeholder="请输入身份证号" v-model = "IdCard" text-align= "right" @on-blur="onBlur"  @on-enter="onEnter" @on-change="change" :show-clear="true" @on-focus="onFocus"></x-input>
@@ -54,8 +55,10 @@ export default {
       showpop: this.show
     }
   },
+ 
   props: ['show'],
   methods: {
+    
     backpage () { // 关闭弹窗
       this.showpop = false
     },

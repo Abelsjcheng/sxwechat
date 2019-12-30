@@ -18,7 +18,7 @@
             <tab-item badge-background="#38C972" badge-color="#fff" badge-label="2" @on-item-click="open('news')">新闻</tab-item>
           </tab>
         </div>
-        <pull-to  @infinite-scroll="loadmore"  >
+        <pull-to  @infinite-scroll="loadmore">
           <div style="padding-top:130px;">
             <infolist :list="infolist"  v-if="infolist.length"/> <!--异步请求的数据是会渲染两次的！第一次是请求没完成时，子组件去取值，是空！第二次才是请求成功返回，然后才有数据 -->
           </div>
@@ -82,6 +82,9 @@ export default {
         this.getinfolist('http://110.53.162.165:5050/api/policy/PolAll', '')
       } else if (val === 'notice') {
         this.tab = 'notice'
+        this.getinfolist('http://110.53.162.165:5050/api/policy/infoAll', '')
+      } else if (val === 'news') {
+        this.tab ='news'
         this.getinfolist('http://110.53.162.165:5050/api/policy/infoAll', '')
       }
     },

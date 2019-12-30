@@ -65,7 +65,7 @@ export default {
     getpartywork () {
       this.$nextTick(() => { // 等待html渲染结束
         this.value = this.data
-        this.showtime=false
+        this.showtime = false
       })
     }
   },
