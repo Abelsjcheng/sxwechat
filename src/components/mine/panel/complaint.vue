@@ -2,7 +2,7 @@
 <div>
     <div v-transfer-dom>
         <popup v-model="showpop2" position="right" width="100%">
-         <x-header :left-options="{preventGoBack: true}" @on-click-back="backpage">投诉建议</x-header>
+         <!-- <x-header :left-options="{preventGoBack: true}" @on-click-back="backpage" v-if="title">{{title}}</x-header> -->
            <div>
             <Group>
                <flexbox>
@@ -24,13 +24,13 @@
 </template>
 <script>
 
-import { Popup, XButton, Flexbox, FlexboxItem, XHeader, TransferDom, XTextarea, XInput, Cell, Group, Swiper, SwiperItem, Toast } from 'vux'
+import { Popup, XButton, Flexbox, XInput, FlexboxItem, XHeader, TransferDom, XTextarea, Group, Toast } from 'vux'
 export default {
   name: 'complaint',
   directives: {
     TransferDom
   },
-  components: { Popup, XButton, Flexbox, FlexboxItem, XHeader, XTextarea, XInput, Cell, Group, Swiper, SwiperItem, Toast },
+  components: { Popup, XButton, Flexbox, XInput, FlexboxItem, XHeader, XTextarea, Group, Toast },
   data () {
     return {
       show: false,
@@ -40,15 +40,16 @@ export default {
       compshow: false, // pop弹窗
       emotionshow: false, // 表情框显示
       showtoast: false, // 评论输入提示
-      showcoltoast: false, // 收藏提示
-      Ifcolstar: false, // 收藏图标切换
-      showcoltoasttext: '您已收藏',
-      show: true,
       fontclass: "",
       showComtoasttext: '请输入内容',
-      good: 0,
     }
   },
+  // props: {
+  //       //标题
+  //       title: {
+  //           type: String
+  //       }
+  //   },
   props: ['show2'],
   methods: {
     backpage () { // 关闭我的消息弹窗

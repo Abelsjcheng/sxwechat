@@ -41,10 +41,10 @@ export default new Router({
       component: () => import('@/components/home/info')
     },
     {
-      path: '/home_project', // 二级url路径
-      name: 'project',
+      path: '/home_dataAnalysis', // 二级url路径
+      name: 'dataAnalysis',
       component: () =>
-          import('@/components/home/project')
+          import('@/components/home/dataAnalysis')
     },
     {
       path: '/home_quan', // 二级url路径
@@ -53,10 +53,10 @@ export default new Router({
           import('@/components/home/quan')
     },
     {
-      path: '/home_workguide', // 二级url路径
-      name: 'workguide',
+      path: '/home_xiaocunEvents', // 二级url路径
+      name: 'xiaocunEvents',
       component: () =>
-          import('@/components/home/workguide')
+          import('@/components/home/xiaocunEvents')
     },
     {
       path: '/home_village', // 二级url路径

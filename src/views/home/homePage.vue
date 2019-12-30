@@ -23,7 +23,7 @@
     <!-- <group>
       <cell-box></cell-box>
     </group> -->
-    <panel header="最新消息" :footer="footer" :list="list" type="5" @on-click-item="openproject"></panel>
+    <panel header="最新消息" :footer="footer" :list="list" type="5" @on-click-item="opendataAnalysis"></panel>
     <panel header="合作伙伴推送" :footer="footer" :list="partners" type="1"></panel>
     <div v-transfer-dom>
       <popup v-model="show" position="right" width="100%">
@@ -58,9 +58,9 @@ export default {
       show: false,
       menus: [
         { label: '村务公开', img: require('../../assets/img/menus/info.png'), path: '/home_info' }, // 异步加载图片
-        { label: '数据分析', img: require('../../assets/img/menus/project.png'), path: '/home_project' },
+        { label: '数据分析', img: require('../../assets/img/menus/dataAnalysis.png'), path: '/home_dataAnalysis' },
         { label: '暮云圈', img: require('../../assets/img/menus/quan.png'), path: '/home_quan' },
-        { label: '小村家事', img: require('../../assets/img/menus/workguide.png'), path: '/home_workguide' },
+        { label: '小村家事', img: require('../../assets/img/menus/xiaocunEvents.png'), path: '/home_xiaocunEvents' },
         { label: '美丽乡村', img: require('../../assets/img/menus/village.png'), path: '/home_village' },
         { label: '农家乐', img: require('../../assets/img/menus/Tourism.png'), path: '/home_tourism' }
       ],
@@ -131,7 +131,7 @@ export default {
     changeRoute() {
       this.$router.push('/views/home/homgpage');
     },
-    openproject (item) { // 显示弹窗
+    opendataAnalysis (item) { // 显示弹窗
       this.show = true
       console.log(item)
     },
