@@ -1,12 +1,14 @@
 <template>
+<!-- 美丽乡村规划组件界面 -->
   <div>
       <div v-transfer-dom>
         <popup v-model="showvil" position="right" width="100%">
           <x-header :left-options="{preventGoBack: true}" @on-click-back="backpage">美丽乡村规划</x-header>
           <!-- 循环模式 -->
           <div>
-            <swiper loop auto :list="village_list" :index="village_index" @on-index-change="village_onIndexChange">
-            </swiper>
+            <!-- <swiper loop auto :list="village_list" :index="village_index" @on-index-change="village_onIndexChange">
+            </swiper> -->
+            <img style="width:100%;height:150px;" :src="img" alt="">
             <panel type="5" :list="list" @on-click-item="openproject"></panel>
           </div>
         </popup>
@@ -65,6 +67,7 @@ export default {
       show: false,
       list: [],
       contentvil: {},
+      img:''
     }
   },
   props: ['showvil'],
@@ -108,6 +111,17 @@ export default {
       }, function () {
         console.log('请求失败处理') // 请求失败函数
       })
+    },
+     getImginfo:function () { // 数据请求函数
+      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:0,pageIndex:1,pageSize:20 } }).then((res) => {
+        this.village_list = [] // 置空初始化
+        console.log(res.data)
+          for (let i = 0, len = res.data.data.length; i < len; i++) {
+            this.img = res.data.data[i].mpic
+         } // 请求成功函数
+      }, function () {
+        console.log('请求失败处理') // 请求失败函数
+      })
     }
   },
   computed: {
@@ -123,6 +137,7 @@ export default {
   },
   mounted () { // 初始化函数
   this.getvilinfo()
+  this.getImginfo()
   // 根据手机手机屏幕，获取图片高宽
     // this.imgWidth = parseInt((Number(window.screen.width) - 140) / 3) + 'px'
   }

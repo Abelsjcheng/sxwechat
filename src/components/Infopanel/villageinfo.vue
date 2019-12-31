@@ -1,4 +1,5 @@
 <template>
+<!-- 美丽乡村详情页面 -->
     <div>
         <div>
             <swiper loop auto :list="village_list" :index="village_index" @on-index-change="village_onIndexChange">
