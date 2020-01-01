@@ -64,7 +64,7 @@
 <script>
 import myinfo from '../../components/mine/myinfo.vue'
 import mynews from '../../components/mine/mynews.vue'
-import complaint from '../../components/mine/panel/complaint.vue'
+import complaint from '../../components/mine/complaint.vue'
 import alert from '../../components/mine/panel/alert.vue'
 import { Card, Cell, Grid, GridItem, Group, Actionsheet, Toast } from 'vux'
 export default {
