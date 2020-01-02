@@ -14,7 +14,7 @@
       <div v-transfer-dom>
         <popup v-model="show" position="right" width="100%">
           <div>
-            <x-header class="vux-scroller-header" :list="list" :left-options="{preventGoBack: true}" @on-click-back="backpage1">{{list.mtitle}}</x-header>
+            <x-header class="vux-scroller-header" :list="list" :left-options="{preventGoBack: true}" @on-click-back="backpageDor">{{list.mtitle}}</x-header>
             <div>
               <villageinfo :villageinfo="contentvil"/>
             </div>
@@ -26,20 +26,17 @@
 <script>
 
 import villageinfo from '@/components/Infopanel/villageinfo.vue'
-import { Popup, XHeader, Swiper, Panel, TransferDom } from 'vux'
+import { Popup, XHeader, Panel, TransferDom } from 'vux'
 
 export default {
   name: 'DormitoryMana',
   directives: {
     TransferDom
   },
-  components: { Popup, XHeader, Swiper, Panel, villageinfo },
+  components: { Popup, XHeader, Panel, villageinfo },
   data() {
     return {
       showpop1: this.showDorMana,
-      village_list: urlList,
-      village_index: 0,
-      swiperItemIndex: 1,
       show: false,
       list: [],
       contentvil: {},
@@ -54,18 +51,12 @@ export default {
     backpage () { // 关闭弹窗
       this.showDorMana = false
     },
-    onSwiperItemIndexChange (index) {
-      console.log('demo item change', index)
-    },
-    village_onIndexChange (index) {
-      this.village_index = index
-    },
     openproject (item) { // 显示弹窗
       this.show = true
       this.contentvil = item // 打开popup时使单个panel中存储的值赋给contentvil
       console.log(item)
     },
-    backpage1 () { // 关闭详情弹窗
+    backpageDor () { // 关闭详情弹窗
       this.show = false
     },
       getvilinfo:function () { // 数据请求函数
@@ -78,6 +69,7 @@ export default {
             title: res.data.data[i].mtitle,
             src: res.data.data[i].mpic,
             content: res.data.data[i].mcontent,
+            readtotal: res.data.data[i].greadtotal,
             meta: {
               other: res.data.data[i].uname,
               date: res.data.data[i].pushdate

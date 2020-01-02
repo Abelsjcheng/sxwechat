@@ -53,9 +53,10 @@
              <ul id="comments_list">
               <li class="comments">
                 <div class="com_top" style="padding:5px;">
-                  <h3 class="title">{{popcontent.title}}</h3>
-                  <!-- <span>{{popcontent.meta.source}} | </span>
-                  <span class="time">{{popcontent.meta.date}}</span> -->
+                  <div style="text-align:center;font-weight:bold;font-size:18px;margin:10px 0;">
+                    <h3 class="title">{{popcontent.title}}</h3>
+                  </div>
+                 <!--  <span>{{popcontent.meta.source}} | {{popcontent.meta.date}}</span> -->
                 </div><hr>
                 <div style="padding:10px;padding-bottom:15px;">
                   <div>
@@ -69,7 +70,6 @@
               </li>
             </ul>
            </div>
-           <Group></Group>
         </div>
       </popup>
     </div>
@@ -93,7 +93,6 @@ export default {
       img: '',
       title: '',
       readtotal: '',
-      compText: '',
       popcontent:{},
       showComtoasttext: '请输入内容',
        menus: { // 发表说说菜单
