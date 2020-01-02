@@ -16,7 +16,7 @@
       <div v-transfer-dom>
         <popup v-model="show" position="right" width="100%">
           <div>
-            <x-header class="vux-scroller-header" :list="list" :left-options="{preventGoBack: true}" @on-click-back="backpage1">{{list.mtitle}}</x-header>
+            <x-header class="vux-scroller-header" :list="list" :left-options="{preventGoBack: true}" @on-click-back="backpage1">{{list.title}}</x-header>
             <div>
               <villageinfo :villageinfo="contentvil"/>
             </div>
@@ -29,28 +29,6 @@
 
 import villageinfo from '@/components/Infopanel/villageinfo.vue'
 import { Popup, XHeader, Swiper, Panel, TransferDom } from 'vux'
- 
-const baseList = [{
-  url: 'javascript:',
-  img: require('../../assets/img/village/one.jpg'),
-  title: '茶坑'
-}, {
-  url: 'javascript:',
-  img: require('../../assets/img/village/two.jpg'),
-  title: '梁启超故居'
-}, {
-  url: 'javascript:',
-  img: require('../../assets/img/village/three.jpg'),
-  title: '梁启超纪念馆',
-  fallbackImg: '../../assets/img/village/one.jpg'
-}]
-const urlList = baseList.map((item, index) => ({
-  url: '/home_tourism',
-  // 转向农家乐旅游信息
-  img: item.img,
-  fallbackImg: item.fallbackImg,
-  title: `${item.title}`
-}))
 
 export default {
   name: 'villagepanel',
@@ -95,8 +73,8 @@ export default {
       getvilinfo:function () { // 数据请求函数
       this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:0,pageIndex:1,pageSize:20 } }).then((res) => {
         this.list = [] // 置空初始化
-        console.log(res.data)
-          for (let i = 0, len = res.data.data.length; i < len; i++) {
+        // console.log(res.data)
+          for (let i = 1, len = res.data.data.length; i < len; i++) {
            this.list.push({
              villageinfo: res.data.data[i],
             title: res.data.data[i].mtitle,
@@ -115,7 +93,7 @@ export default {
      getImginfo:function () { // 数据请求函数
       this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:0,pageIndex:1,pageSize:20 } }).then((res) => {
         this.village_list = [] // 置空初始化
-        console.log(res.data)
+        // console.log(res.data)
           for (let i = 0, len = res.data.data.length; i < len; i++) {
             this.img = res.data.data[i].mpic
          } // 请求成功函数

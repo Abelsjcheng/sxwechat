@@ -40,9 +40,11 @@
           <i slot="icon" class="fa fa-pencil fa-fw"></i>
         </cell>
       </div>
-      <cell title="账号换绑" is-link>
-        <i slot="icon" class="fa fa-phone-square menu-cell-icon"></i>
-      </cell>
+      <div>
+        <cell title="账号换绑"  @click.native="showAlert = true" is-link>
+          <i slot="icon" class="fa fa-phone-square menu-cell-icon"></i>
+        </cell>
+      </div>
     </group>
     <group>
       <cell title="退出" is-link>
@@ -51,16 +53,22 @@
     </group>
     <myinfo :show="show" v-on:closepop="show =$event"/>
     <mynews :show1="show1" v-on:closepop1="show1 =$event"/>
-    <complaint :show2="show2" v-on:closepop2="show2 =$event"/>
+    <complaint :show2="show2" :title="'投诉建议'" v-on:closepop2="show2 =$event"/>
+    <!-- 解绑确认 -->
+    <actionsheet v-model="showAlert" :menus="menus3" @on-click-menu="onDelete" show-cancel></actionsheet>
+    <!-- 解绑成功后的提示 -->
+    <toast v-model="showSuccess">{{'解绑成功'}}</toast>
+
   </div>
 </template>
 <script>
 import myinfo from '../../components/mine/myinfo.vue'
 import mynews from '../../components/mine/mynews.vue'
-import complaint from '../../components/mine/panel/complaint.vue'
-import { Card, Cell, Grid, GridItem, Group } from 'vux'
+import complaint from '../../components/mine/complaint.vue'
+import alert from '../../components/mine/panel/alert.vue'
+import { Card, Cell, Grid, GridItem, Group, Actionsheet, Toast } from 'vux'
 export default {
-  components: { Card, Cell, Grid, GridItem, Group, myinfo, mynews, complaint },
+  components: { Card, Cell, Grid, GridItem, Group, myinfo, mynews, complaint, Actionsheet, Toast, alert },
   data () {
     return {
       menus: [
@@ -71,13 +79,18 @@ export default {
       ],
       show: false,
       show1: false,
-      show2:false,
+      show2: false,
+      showAlert: false,
+      showSuccess: false,
+      menus3: [
+        '确定解绑吗?<br/><span style="color:#919191;font-size:12px;">解绑后后无法正常使用系统了</span>','<span style="color:red;">确认解绑</span>'
+      ]
     }
   },
   methods: {
-    //  onClick () {
-    //   console.log('on click')
-    // },
+    onDelete () {
+      this.showSuccess = true
+    },
     showinfo (item) {
       this.show = true
       console.log(item)
@@ -129,5 +142,13 @@ export default {
   font-size:23px;
   color: #6d82ec;
   width:20px;
+}
+.popup0 {
+  padding-bottom:15px;
+  height:200px;
+}
+.popup1 {
+  width:100%;
+  height:100%;
 }
 </style>

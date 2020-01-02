@@ -1,10 +1,10 @@
 <template>
-<!-- 美丽乡村规划组件界面 -->
+<!-- 文化活动组件界面 -->
   <div>
       <div v-transfer-dom>
-        <popup v-model="showvil" position="right" width="100%">
-          <x-header :left-options="{preventGoBack: true}" @on-click-back="backpage">美丽乡村规划</x-header>
-          <!-- 循环模式 -->
+        <popup v-model="showCulActiv" position="right" width="100%">
+          <x-header :left-options="{preventGoBack: true}" @on-click-back="backpage">文化活动</x-header>
+          <!-- 循环模式 loop auto-->
           <div>
             <!-- <swiper loop auto :list="village_list" :index="village_index" @on-index-change="village_onIndexChange">
             </swiper> -->
@@ -30,37 +30,37 @@
 import villageinfo from '@/components/Infopanel/villageinfo.vue'
 import { Popup, XHeader, Swiper, Panel, TransferDom } from 'vux'
  
-const baseList = [{
-  url: 'javascript:',
-  img: require('../../assets/img/village/one.jpg'),
-  title: '茶坑'
-}, {
-  url: 'javascript:',
-  img: require('../../assets/img/village/two.jpg'),
-  title: '梁启超故居'
-}, {
-  url: 'javascript:',
-  img: require('../../assets/img/village/three.jpg'),
-  title: '梁启超纪念馆',
-  fallbackImg: '../../assets/img/village/one.jpg'
-}]
-const urlList = baseList.map((item, index) => ({
-  url: '/home_tourism',
-  // 转向农家乐旅游信息
-  img: item.img,
-  fallbackImg: item.fallbackImg,
-  title: `${item.title}`
-}))
+// const baseList = [{
+//   url: 'javascript:',
+//   img: require('../../assets/img/village/one.jpg'),
+//   title: '茶坑'
+// }, {
+//   url: 'javascript:',
+//   img: require('../../assets/img/village/two.jpg'),
+//   title: '梁启超故居'
+// }, {
+//   url: 'javascript:',
+//   img: require('../../assets/img/village/three.jpg'),
+//   title: '梁启超纪念馆',
+//   fallbackImg: '../../assets/img/village/one.jpg'
+// }]
+// const urlList = baseList.map((item, index) => ({
+//   url: '/home_tourism',
+//   // 转向农家乐旅游信息
+//   img: item.img,
+//   fallbackImg: item.fallbackImg,
+//   title: `${item.title}`
+// }))
 
 export default {
-  name: 'villagepanel',
+  name: 'culActiv',
   directives: {
     TransferDom
   },
   components: { Popup, XHeader, Swiper, Panel, villageinfo },
   data() {
     return {
-      showpop1: this.showvil,
+      showpop1: this.showCulActiv,
       village_list: urlList,
       village_index: 0,
       swiperItemIndex: 1,
@@ -70,13 +70,13 @@ export default {
       img:''
     }
   },
-  props: ['showvil'],
+  props: ['showCulActiv'],
   ready () {
 
   },
   methods: { // 方法函数
     backpage () { // 关闭弹窗
-      this.showvil = false
+      this.showCulActiv = false
     },
     onSwiperItemIndexChange (index) {
       console.log('demo item change', index)
@@ -93,12 +93,12 @@ export default {
       this.show = false
     },
       getvilinfo:function () { // 数据请求函数
-      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:0,pageIndex:1,pageSize:20 } }).then((res) => {
+      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:2,pageIndex:1,pageSize:20 } }).then((res) => {
         this.list = [] // 置空初始化
-        console.log(res.data)
-          for (let i = 0, len = res.data.data.length; i < len; i++) {
+        //  console.log(res.data)
+          for (let i = 1, len = res.data.data.length; i < len; i++) {
            this.list.push({
-             villageinfo: res.data.data[i],
+            villageinfo: res.data.data[i],
             title: res.data.data[i].mtitle,
             src: res.data.data[i].mpic,
             content: res.data.data[i].mcontent,
@@ -113,9 +113,9 @@ export default {
       })
     },
      getImginfo:function () { // 数据请求函数
-      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:0,pageIndex:1,pageSize:20 } }).then((res) => {
+      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:2,pageIndex:1,pageSize:20 } }).then((res) => {
         this.village_list = [] // 置空初始化
-        console.log(res.data)
+        // console.log(res.data)
           for (let i = 0, len = res.data.data.length; i < len; i++) {
             this.img = res.data.data[i].mpic
          } // 请求成功函数
@@ -126,7 +126,7 @@ export default {
   },
   computed: {
     listenshow () {
-      return this.showvil
+      return this.showCulActiv
     }
   },
   watch: {

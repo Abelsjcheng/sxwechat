@@ -1,13 +1,11 @@
 <template>
-<!-- 美丽乡村规划组件界面 -->
+<!-- 我爱我村组件界面 -->
   <div>
       <div v-transfer-dom>
-        <popup v-model="showvil" position="right" width="100%">
-          <x-header :left-options="{preventGoBack: true}" @on-click-back="backpage">美丽乡村规划</x-header>
+        <popup v-model="showMyvil" position="right" width="100%">
+          <x-header :left-options="{preventGoBack: true}" @on-click-back="backpage">我爱我村</x-header>
           <!-- 循环模式 -->
           <div>
-            <!-- <swiper loop auto :list="village_list" :index="village_index" @on-index-change="village_onIndexChange">
-            </swiper> -->
             <img style="width:100%;height:150px;" :src="img" alt="">
             <panel type="5" :list="list" @on-click-item="openproject"></panel>
           </div>
@@ -53,30 +51,29 @@ const urlList = baseList.map((item, index) => ({
 }))
 
 export default {
-  name: 'villagepanel',
+  name: 'myvil',
   directives: {
     TransferDom
   },
   components: { Popup, XHeader, Swiper, Panel, villageinfo },
   data() {
     return {
-      showpop1: this.showvil,
+      showpop1: this.showMyvil,
       village_list: urlList,
       village_index: 0,
       swiperItemIndex: 1,
       show: false,
       list: [],
       contentvil: {},
-      img:''
     }
   },
-  props: ['showvil'],
+  props: ['showMyvil'],
   ready () {
 
   },
   methods: { // 方法函数
     backpage () { // 关闭弹窗
-      this.showvil = false
+      this.showMyvil = false
     },
     onSwiperItemIndexChange (index) {
       console.log('demo item change', index)
@@ -93,10 +90,10 @@ export default {
       this.show = false
     },
       getvilinfo:function () { // 数据请求函数
-      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:0,pageIndex:1,pageSize:20 } }).then((res) => {
+      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:1,pageIndex:1,pageSize:20 } }).then((res) => {
         this.list = [] // 置空初始化
         console.log(res.data)
-          for (let i = 0, len = res.data.data.length; i < len; i++) {
+          for (let i = 1, len = res.data.data.length; i < len; i++) {
            this.list.push({
              villageinfo: res.data.data[i],
             title: res.data.data[i].mtitle,
@@ -112,10 +109,10 @@ export default {
         console.log('请求失败处理') // 请求失败函数
       })
     },
-     getImginfo:function () { // 数据请求函数
-      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:0,pageIndex:1,pageSize:20 } }).then((res) => {
+    getImginfo:function () { // 数据请求函数
+      this.axios.get('http://110.53.162.165:5050/api/beaCountry/ListBeaCountry?',{params:{vtype:1,pageIndex:1,pageSize:20 } }).then((res) => {
         this.village_list = [] // 置空初始化
-        console.log(res.data)
+        // console.log(res.data)
           for (let i = 0, len = res.data.data.length; i < len; i++) {
             this.img = res.data.data[i].mpic
          } // 请求成功函数
@@ -126,7 +123,7 @@ export default {
   },
   computed: {
     listenshow () {
-      return this.showvil
+      return this.showMyvil
     }
   },
   watch: {
@@ -137,7 +134,6 @@ export default {
   },
   mounted () { // 初始化函数
   this.getvilinfo()
-  this.getImginfo()
   // 根据手机手机屏幕，获取图片高宽
     // this.imgWidth = parseInt((Number(window.screen.width) - 140) / 3) + 'px'
   }
