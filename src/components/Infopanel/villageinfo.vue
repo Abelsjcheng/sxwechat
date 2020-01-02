@@ -1,17 +1,26 @@
 <template>
 <!-- 美丽乡村详情页面 -->
-    <div>
+    <div style="margin:3px 5px;">
         <div>
-            <swiper loop auto :list="village_list" :index="village_index" @on-index-change="village_onIndexChange">
-            </swiper>
+            <div style="text-align:center;font-weight:bold;font-size:18px;margin:10px 0;">
+                 <h3>{{villageinfo.title}}</h3>
+            </div>
+            <span>{{villageinfo.meta.other}} | {{villageinfo.meta.date}}</span>
+            <hr>
+            <img :src="villageinfo.src" style="height:200px;width:100%; margin-top:5px;">
         </div>
-        <div style="matgin-top:50px;">
+        <div style="matgin-top:50px;text-indent:2em;">
             <p v-html="villageinfo.content"></p>
+        </div>
+        <hr>
+        <div style="float:right;">
+            <span>此文阅读量：{{villageinfo.readtotal}}</span>
         </div>
     </div>
 </template>
 <script>
-import { Swiper } from 'vux' // 导入组件
+
+import { Swiper, XHeader } from 'vux' // 导入组件
 
 const baseList = [{
   url: 'javascript:',
@@ -37,7 +46,7 @@ const urlList = baseList.map((item, index) => ({
 
 export default {
     name: 'villageinfo', //美丽乡村详情
-    components: { Swiper }, // 注册组件
+    components: { Swiper, XHeader }, // 注册组件
     data () {
         return {
             village_list: urlList,
@@ -78,5 +87,8 @@ export default {
     margin:3px;
     text-indent:2em;
     font-size:14px;
+}
+span{
+    color:#919191;
 }
 </style>

@@ -14,7 +14,7 @@
       <div v-transfer-dom>
         <popup v-model="show" position="right" width="100%">
           <div>
-            <x-header class="vux-scroller-header" :list="list" :left-options="{preventGoBack: true}" @on-click-back="backpage1">{{list.mtitle}}</x-header>
+            <x-header class="vux-scroller-header" :list="list" :left-options="{preventGoBack: true}" @on-click-back="backpagemyvil">{{list.mtitle}}</x-header>
             <div>
               <villageinfo :villageinfo="contentvil"/>
             </div>
@@ -26,42 +26,17 @@
 <script>
 
 import villageinfo from '@/components/Infopanel/villageinfo.vue'
-import { Popup, XHeader, Swiper, Panel, TransferDom } from 'vux'
- 
-const baseList = [{
-  url: 'javascript:',
-  img: require('../../assets/img/village/one.jpg'),
-  title: '茶坑'
-}, {
-  url: 'javascript:',
-  img: require('../../assets/img/village/two.jpg'),
-  title: '梁启超故居'
-}, {
-  url: 'javascript:',
-  img: require('../../assets/img/village/three.jpg'),
-  title: '梁启超纪念馆',
-  fallbackImg: '../../assets/img/village/one.jpg'
-}]
-const urlList = baseList.map((item, index) => ({
-  url: '/home_tourism',
-  // 转向农家乐旅游信息
-  img: item.img,
-  fallbackImg: item.fallbackImg,
-  title: `${item.title}`
-}))
+import { Popup, XHeader, Panel, TransferDom } from 'vux'
 
 export default {
   name: 'myvil',
   directives: {
     TransferDom
   },
-  components: { Popup, XHeader, Swiper, Panel, villageinfo },
+  components: { Popup, XHeader, Panel, villageinfo },
   data() {
     return {
       showpop1: this.showMyvil,
-      village_list: urlList,
-      village_index: 0,
-      swiperItemIndex: 1,
       show: false,
       list: [],
       contentvil: {},
@@ -86,7 +61,7 @@ export default {
       this.contentvil = item // 打开popup时使单个panel中存储的值赋给contentvil
       console.log(item)
     },
-    backpage1 () { // 关闭详情弹窗
+    backpagemyvil () { // 关闭详情弹窗
       this.show = false
     },
       getvilinfo:function () { // 数据请求函数
@@ -99,6 +74,7 @@ export default {
             title: res.data.data[i].mtitle,
             src: res.data.data[i].mpic,
             content: res.data.data[i].mcontent,
+            readtotal: res.data.data[i].greadtotal,
             meta: {
               other: res.data.data[i].uname,
               date: res.data.data[i].pushdate
